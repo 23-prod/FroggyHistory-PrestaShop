@@ -1,0 +1,21 @@
+{
+	"name": "Froggy History",
+	"tab" : "front_office_features",
+	"version": "1",
+	"need_instance": 0,
+
+	"hooks": [
+		"actionObjectAddAfter", "actionObjectUpdateAfter", "actionObjectDeleteAfter",
+		"actionAdminEditAfter", "actionAdminUpdateAfter", "actionAdminSaveAfter", "actionAdminDeleteBefore", "actionAdminDuplicateAfter",
+		"actionAdminControllerSetMedia", "displayAdminEmployeesForm", "displayAdminProductsExtra",
+	],
+
+	"configurations" : {
+		"GH_ACCESS" : "",
+	},
+
+	"sql" : {
+		"install" : [ "install.sql" ],
+		"uninstall" : [ "uninstall.sql" ]
+	}
+}
