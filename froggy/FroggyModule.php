@@ -240,7 +240,7 @@ class FroggyModule extends Module
 			}
 
 			foreach ($this->sql[$type] as $file) {
-				if (!file_exists(__DIR__.'/'.$file)) {
+				if (!file_exists(_PS_MODULE_DIR_.$this->name.'/sql/'.$file)) {
 					throw new Exception('This SQL file not exists');
 				}
 
