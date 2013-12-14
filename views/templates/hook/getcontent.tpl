@@ -18,7 +18,7 @@
 *}
 
 <fieldset id="froggyhistory_fieldset">
-	<legend><img src="{$froggyhistory.module_dir}logo.png" alt="" width="16" />{l s='Gold History' mod='froggyhistory'}</legend>
+	<legend><img src="{$froggyhistory.module_dir}logo.png" alt="" width="16" />{l s='Froggy History' mod='froggyhistory'}</legend>
 	<h3>{l s='General History' mod='froggyhistory'}</h3>
 	<div id="froggyhistory_list">
 		<p align="center"><img src="../modules/froggyhistory/views/img/loader.gif" /></p>
