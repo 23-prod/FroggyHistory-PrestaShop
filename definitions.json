@@ -7,11 +7,11 @@
 	"hooks": [
 		"actionObjectAddAfter", "actionObjectUpdateAfter", "actionObjectDeleteAfter",
 		"actionAdminEditAfter", "actionAdminUpdateAfter", "actionAdminSaveAfter", "actionAdminDeleteBefore", "actionAdminDuplicateAfter",
-		"actionAdminControllerSetMedia", "displayAdminEmployeesForm", "displayAdminProductsExtra",
+		"actionAdminControllerSetMedia", "displayAdminEmployeesForm", "displayAdminProductsExtra"
 	],
 
 	"configurations" : {
-		"GH_ACCESS" : "",
+		"GH_ACCESS" : ""
 	},
 
 	"sql" : {

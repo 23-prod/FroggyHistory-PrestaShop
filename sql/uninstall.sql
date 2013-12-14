@@ -1,2 +1,2 @@
-DROP TABLE `@PREFIX@ghy_action`;
-DROP TABLE `@PREFIX@ghy_log`;
+DROP TABLE `@PREFIX@fhy_action`;
+DROP TABLE `@PREFIX@fhy_log`;

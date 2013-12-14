@@ -1,0 +1,25 @@
+/**
+* 2013-2014 Froggy Commerce
+*
+* NOTICE OF LICENSE
+*
+* You should have received a licence with this module.
+* If you didn't buy this module on Froggy-Commerce.com, ThemeForest.net
+* or Addons.PrestaShop.com, please contact us immediately : contact@froggy-commerce.com
+*
+* DISCLAIMER
+*
+* Do not edit or add to this file if you wish to benefit the updates
+* for newer PrestaShop versions in the future. If you wish to customize PrestaShop for your
+* needs please refer to http://www.prestashop.com for more information.
+*
+*  @author Froggy Commerce <contact@froggy-commerce.com>
+*  @copyright  2013-2014 Froggy Commerce
+*/
+
+#froggyhistory_list a {font-style:italic;color:#000}
+#employee_form .margin-form {width:30%}
+#employee_form fieldset {width:48%;float:left}
+#employee_form #froggyhistory_list {font-size:0.9em}
+#employee_form #froggyhistory_fieldset {width:48%;float:right}
+.froggyhistory_pagination {text-decoration:underline}
