@@ -194,7 +194,7 @@ class FroggyHistory extends FroggyModule
 			$token_admin = Tools::getAdminToken($controller_name.(int)Tab::getIdFromClassName($controller_name).(int)$this->ajax_id_employee);
 
 			// Check if we build link for this type of object			
-			if (!in_array($log['object'], $match_object_nolink))
+			if (!in_array($log['object'], $match_object_nolink) && class_exists($log['object']))
 				$object_translation = '<a href="index.php?controller='.strtolower($controller_name).'&'.($log['object']::$definition['primary']).'='.(int)$log['id_object'].'&update'.strtolower($log['object']::$definition['table']).'&token='.$token_admin.'" target="_blank">'.$object_translation;
 
 			// Try to load object to retrieve the name
@@ -204,7 +204,8 @@ class FroggyHistory extends FroggyModule
 			else if (in_array($log['object'], $match_multilang_object))
 				$object_load = new $log['object']((int)$log['id_object'], true, Tools::getValue('id_lang'));
 			else
-				$object_load = new $log['object']((int)$log['id_object']);
+				if (class_exists($log['object']))
+					$object_load = new $log['object']((int)$log['id_object']);
 			
 			if (isset($object_load->name) && !empty($object_load->name) && !is_array($object_load->name))
 				$object_translation .= ' "'.$object_load->name.'"';
