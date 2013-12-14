@@ -293,7 +293,7 @@ class FroggyDefinitionsModuleParser
 	public function __construct($filepath)
 	{
 		if (!file_exists($filepath)) {
-			throw new Exception('File given to definitions parser does not exists');
+			throw new Exception('File given to definitions parser does not exists : '.$this->filepath);
 		}
 		$this->filepath = $filepath;
 	}
@@ -306,7 +306,7 @@ class FroggyDefinitionsModuleParser
 	{
 		$definitions = json_decode(file_get_contents($this->filepath), true);
 		if (is_null($definitions)) {
-			throw new Exception('Definition parser cannot decode file');
+			throw new Exception('Definition parser cannot decode file : '.$this->filepath);
 		}
 
 		return $definitions;
