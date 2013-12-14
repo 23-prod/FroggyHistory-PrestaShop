@@ -244,7 +244,7 @@ class FroggyModule extends Module
 					throw new Exception('This SQL file not exists');
 				}
 
-				$content = file_get_contents($file);
+				$content = file_get_contents(_PS_MODULE_DIR_.$this->name.'/sql/'.$file);
 				$content = str_replace('@PREFIX@', _DB_PREFIX_, $content);
 				$content = str_replace('@ENGINE@', _MYSQL_ENGINE_, $content);
 				$queries = preg_split("/;\s*[\r\n]+/", $content);
