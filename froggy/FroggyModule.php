@@ -44,6 +44,10 @@ class FroggyModule extends Module
 
 		$this->author = 'Froggy Commerce';
 
+		// If PS 1.6 or greater, we enable bootstrap
+		if (version_compare(_PS_VERSION_, '1.6.0') >= 0)
+			$this->bootstrap = true;
+
 		parent::__construct();
 
 		foreach ($this->definitions_elements as $key) {
@@ -277,6 +281,27 @@ class FroggyModule extends Module
 		return Configuration::getMultiple($this->getModuleConfigurationsKeys());
 	}
 
+	/**
+	 * Display bootstrap template if PrestaShop is 1.6 or greater
+	 * @param $file
+	 * @param $template
+	 * @param null $cacheId
+	 * @param null $compileId
+	 * @return mixed
+	 */
+	public function display($file, $template, $cacheId = null, $compileId = null)
+	{
+		// If PS 1.6 or greater, we choose bootstrap template
+		if (version_compare(_PS_VERSION_, '1.6.0') >= 0)
+		{
+			$template_bootstrap = str_replace('.tpl', '.bootstrap.tpl', $template);
+			if ($this->getTemplatePath($template_bootstrap) !== NULL)
+				$template = $template_bootstrap;
+		}
+
+		// Call parent display method
+		return parent::display($file, $template, $cacheId, $compileId);
+	}
 }
 
 class FroggyDefinitionsModuleParser
