@@ -3,11 +3,11 @@
 	"version": "1.0.0",
 	"need_instance": 0,
 
-	"hooks": [
-		"actionObjectAddAfter", "actionObjectUpdateAfter", "actionObjectDeleteAfter",
+    "hooks": { "all" : [
+        "actionObjectAddAfter", "actionObjectUpdateAfter", "actionObjectDeleteAfter",
 		"actionAdminEditAfter", "actionAdminUpdateAfter", "actionAdminSaveAfter", "actionAdminDeleteBefore", "actionAdminDuplicateAfter",
 		"actionAdminControllerSetMedia", "displayAdminEmployeesForm", "displayAdminProductsExtra"
-	],
+    ] },
 
 	"sql" : {
 		"install" : [ "install.sql" ],

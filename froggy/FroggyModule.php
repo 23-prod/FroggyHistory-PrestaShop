@@ -55,6 +55,66 @@ class FroggyModule extends Module
 				$this->$key = $definitions[$key];
 			}
 		}
+
+		// If PS version is lower than 1.5, call backward script
+		if (version_compare(_PS_VERSION_, '1.5') < 0)
+			require(dirname(__FILE__).'/FroggyBackward.php');
+
+		// Define local path if not exists (1.4 compatibility)
+		if (!isset($this->local_path))
+			$this->local_path = substr(dirname(__FILE__), 0, strrpos(dirname(__FILE__), '/')).'/';
+
+		// 1.4 retrocompatibility
+		if (!isset($this->context->smarty_methods['FroggyGetAdminLink']))
+		{
+			smartyRegisterFunction($this->context->smarty, 'function', 'FroggyGetAdminLink', 'FroggyGetAdminLink');
+			$this->context->smarty_methods['FroggyGetAdminLink'] = true;
+		}
+	}
+
+	/**
+	 * @param $method
+	 * @param $args
+	 * @return null
+	 */
+	public function __call($method, $args)
+	{
+		// Check alternative hook method name for both method in main class and hook processor
+		$hook_methods = array($method, str_replace('hook', 'hookDisplay', $method));
+		foreach ($hook_methods as $method)
+		{
+			// Build name of class
+			$processor_classname = get_class($this).ucfirst($method).'Processor';
+			$processor_class_path = $this->local_path.'/hooks/'.$processor_classname.'.php';
+
+			// Check if processor class exists
+			if (file_exists($processor_class_path)) {
+				require $processor_class_path;
+				if (class_exists($processor_classname)) {
+					$args = array(
+						'module' => $this,
+						'context' => $this->context,
+						'smarty' => $this->smarty,
+						'path' => $this->_path,
+						'params' => array_pop($args),
+					);
+					$processor = new $processor_classname($args);
+					if ($processor instanceof FroggyHookProcessor)
+						return $processor->run();
+					else
+						throw new Exception('Hook processor must extends "FroggyHookProcessor" class!');
+				} else {
+					// If processor class not implement interface
+					throw new Exception('Hook processor cannot be used !');
+				}
+			}
+
+			// Search for new hook name match
+			if (method_exists($this, $method))
+				return $this->{$hook_method}(array_pop($args));
+		}
+
+		return null;
 	}
 
 	/**
@@ -82,6 +142,7 @@ class FroggyModule extends Module
 			}
 			return true;
 		}
+
 		return false;
 	}
 
@@ -96,6 +157,7 @@ class FroggyModule extends Module
 			if (!$this->deleteConfigurations()) return false;
 			if (!$this->deleteModuleControllers()) return false;
 			if (!$this->runDefinitionsSql('uninstall')) return false;
+			return true;
 		}
 		return false;
 	}
@@ -132,8 +194,18 @@ class FroggyModule extends Module
 	protected function registerDefinitionsHooks()
 	{
 		if (isset($this->hooks) && is_array($this->hooks)) {
-			foreach ($this->hooks as $hook) {
-				if (!$this->registerHook($hook)) return false;
+			$versions = array_keys($this->hooks);
+			$key = 0;
+			foreach ($this->hooks as $version => $hooks) {
+				if (
+					$version == 'all' ||
+					(version_compare(_PS_VERSION_, $version) >= 0 && (!isset($versions[$key+1]) || (isset($versions[$key+1]) && version_compare(_PS_VERSION_, $versions[$key+1]) < 0)))
+				) {
+					foreach ($hooks as $hook) {
+						if (!$this->registerHook($hook)) return false;
+					}
+				}
+				$key++;
 			}
 		}
 		return true;
@@ -278,7 +350,20 @@ class FroggyModule extends Module
 	 */
 	public function getModuleConfigurations()
 	{
-		return Configuration::getMultiple($this->getModuleConfigurationsKeys());
+		$configurations = array();
+		$languages = Language::getLanguages(false);
+
+		foreach ($this->getModuleConfigurationsKeys() as $key) {
+			if ($this->isConfigurationLangKey($key)) {
+				foreach ($languages as $lang) {
+					$configurations[$key][$lang['id_lang']] = Configuration::get($key, $lang['id_lang']);
+				}
+			} else {
+				$configurations[$key] = Configuration::get($key);
+			}
+		}
+
+		return $configurations;
 	}
 
 	/**
@@ -289,8 +374,16 @@ class FroggyModule extends Module
 	 * @param null $compileId
 	 * @return mixed
 	 */
-	public function display($file, $template, $cacheId = null, $compileId = null)
+	public function fcdisplay($file, $template, $cacheId = null, $compileId = null)
 	{
+		// Make fcdisplay compliant with hook processor
+		if (substr(dirname($file), - strlen('/hooks')) === '/hooks')
+		{
+			$file = dirname($file);
+			$file = substr($file, 0, strlen($file) - strlen('/hooks'));
+			$file = $file.'/'.basename($file).'.php';
+		}
+
 		// If PS 1.6 or greater, we choose bootstrap template
 		if (version_compare(_PS_VERSION_, '1.6.0') >= 0)
 		{
@@ -299,8 +392,46 @@ class FroggyModule extends Module
 				$template = $template_bootstrap;
 		}
 
-		// Call parent display method
-		return parent::display($file, $template, $cacheId, $compileId);
+		// On PS 1.4, we have to show him the path
+		if (version_compare(_PS_VERSION_, '1.5') < 0)
+			return parent::display($file, 'views/templates/hook/'.$template, $cacheId, $compileId);
+		else
+			return parent::display($file, $template, $cacheId, $compileId);
+	}
+
+	/**
+	 * Backwrd method in order to replace Configuration::isLangKey($key)
+	 *
+	 * @param $key
+	 * @return bool
+	 */
+	protected function isConfigurationLangKey($key) {
+		if (version_compare(_PS_VERSION_, '1.5') >= 0) {
+			return Configuration::isLangKey($key);
+		} else {
+			return (bool)Db::getInstance()->getValue('
+				SELECT COUNT(1)
+				FROM `'._DB_PREFIX_.'configuration_lang` cl
+				LEFT JOIN `'._DB_PREFIX_.'configuration` c ON (cl.`id_configuration` = c.`id_configuration`)
+				WHERE c.`name` = \''.pSQL($key).'\'');
+		}
+	}
+
+	/**
+	 * Backward method for module controller link
+	 *
+	 * @param $controller_name
+	 * @return string
+	 */
+	protected function getModuleLink($controller_name)
+	{
+		if (version_compare(_PS_VERSION_, '1.5') >= 0) {
+			$link = $this->context->link->getModuleLink($this->name, $controller_name);
+		} else {
+			// In 1.4 version, you need to create a PHP file in order to call the controller
+			$link = $this->_path.$controller_name.'.php?';
+		}
+		return $link;
 	}
 }
 
@@ -337,4 +468,55 @@ class FroggyDefinitionsModuleParser
 		return $definitions;
 	}
 
+}
+
+
+abstract class FroggyHookProcessor
+{
+	public $module;
+	public $context;
+	public $path;
+	public $smarty;
+	public $params;
+
+	/**
+	 * @param FroggyModule $module
+	 * @param array $args
+	 */
+	public function __construct($args)
+	{
+		foreach ($args as $key => $value)
+			if (property_exists($this, $key))
+				$this->{$key} = $value;
+	}
+}
+
+
+/***** Multi compliancy methods *****/
+
+function FroggyGetAdminLink($params, &$smarty)
+{
+	// In 1.5, we use getAdminLink method
+	if (version_compare(_PS_VERSION_, '1.5.0') >= 0)
+		return Context::getContext()->link->getAdminLink($params['a']);
+
+	// Match compatibility between 1.4 and 1.5
+	$match = array(
+		'AdminProducts' => 'AdminCatalog',
+		'AdminCategories' => 'AdminCatalog',
+		'AdminCmsContent' => 'AdminCMSContent',
+	);
+	if (isset($match[$params['a']]))
+		$params['a'] = $match[$params['a']];
+
+	// In 1.4, we build it with cookie for back office or with argument for front office (see froggytoolbar)
+	global $cookie;
+	$tab = $params['a'];
+	$id_employee = $cookie->id_employee;
+	if (isset($params['e']))
+		$id_employee = $params['e'];
+	$token = Tools::getAdminToken($tab.(int)Tab::getIdFromClassName($tab).(int)$id_employee);
+
+	// Return link
+	return 'index.php?tab='.$tab.'&token='.$token;
 }
