@@ -21,9 +21,6 @@ $_MODULE['<{froggyhistory}prestashop>froggyhistory_8fc42c6ddf9966db3b09e84365034
 $_MODULE['<{froggyhistory}prestashop>froggyhistory_70fcbe19b8da579a745ca423466cefd3'] = '%3$s/%2$s/%1$s %4$s';
 $_MODULE['<{froggyhistory}prestashop>froggyhistory_4045048e0799d2776bc9dc912b71643f'] = 'L\'employé %1$s %2$s %3$s';
 $_MODULE['<{froggyhistory}prestashop>ajax_57b83918dd17b2987bd67313ae01f245'] = 'Aucun historique enregistré pour le moment';
-$_MODULE['<{froggyhistory}prestashop>getcontent_a103dc4b519db2b2ab6d2ddcb38be1be'] = 'Gold History';
 $_MODULE['<{froggyhistory}prestashop>getcontent_eedd2484341e0eb998fdd532d8779346'] = 'Historique général';
-$_MODULE['<{froggyhistory}prestashop>hookdisplayadminemployeesform_a103dc4b519db2b2ab6d2ddcb38be1be'] = 'Gold History';
 $_MODULE['<{froggyhistory}prestashop>hookdisplayadminemployeesform_5873564b87c2f6a3b03d587cea141a95'] = 'Historique de l\'employé';
-$_MODULE['<{froggyhistory}prestashop>hookdisplayadminproductsextra_a103dc4b519db2b2ab6d2ddcb38be1be'] = 'Gold History';
 $_MODULE['<{froggyhistory}prestashop>hookdisplayadminproductsextra_c6214ffeac1562fd7f06e176527b7b86'] = 'Historique du produit';
