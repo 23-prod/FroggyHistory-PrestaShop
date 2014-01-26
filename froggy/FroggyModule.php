@@ -79,8 +79,17 @@ class FroggyModule extends Module
 	 */
 	public function __call($method, $args)
 	{
+		// Fix for some server configuration (methods are in lowercase and server is case sensitive file for hook Processor)
+		$prefix_call = array(
+			'hookdisplay' => 'hookDisplay', 'hookdisplaybackoffice' => 'hookDisplayBackOffice', 'hookaction' => 'hookAction',
+			'hookbackoffice' => 'hookBackOffice', 'hook' => 'hook',
+		);
+		foreach ($prefix_call as $prefix_search => $prefix_replace)
+			if (strpos($method, $prefix_search) !== false)
+				$method = $prefix_replace.ucfirst(str_replace($prefix_search, '', $method));
+
 		// Check alternative hook method name for both method in main class and hook processor
-		$hook_methods = array($method, str_replace('hook', 'hookDisplay', $method));
+		$hook_methods = array($method, str_replace('hook', 'hookDisplay', $method), str_replace('hook', 'hookAction', $method));
 		foreach ($hook_methods as $method)
 		{
 			// Build name of class
