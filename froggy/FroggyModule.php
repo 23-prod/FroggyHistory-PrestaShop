@@ -120,7 +120,7 @@ class FroggyModule extends Module
 
 			// Search for new hook name match
 			if (method_exists($this, $method))
-				return $this->{$hook_method}(array_pop($args));
+				return $this->{$method}(array_pop($args));
 		}
 
 		return null;
