@@ -98,7 +98,7 @@ class FroggyModule extends Module
 
 			// Check if processor class exists
 			if (file_exists($processor_class_path)) {
-				require $processor_class_path;
+				require_once $processor_class_path;
 				if (class_exists($processor_classname)) {
 					$args = array(
 						'module' => $this,
