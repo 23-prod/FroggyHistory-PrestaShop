@@ -46,6 +46,9 @@ class FroggyHistoryLog extends ObjectModel
 	/** @var string Module */
 	public $module;
 
+	/** @var string Diff */
+	public $diff;
+
 	/** @var string IP */
 	public $ip;
 
@@ -72,6 +75,7 @@ class FroggyHistoryLog extends ObjectModel
 			'object' =>		 		array('type' => self::TYPE_STRING),
 			'id_object' => 			array('type' => self::TYPE_INT),
 			'module' => 			array('type' => self::TYPE_STRING),
+			'diff' => 				array('type' => self::TYPE_STRING),
 			'ip' => 				array('type' => self::TYPE_STRING),
 			'date_add' => 			array('type' => self::TYPE_DATE),
 		),

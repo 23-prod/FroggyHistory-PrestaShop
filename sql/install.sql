@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS `@PREFIX@fhy_log` (
   `object` varchar(64) NOT NULL,
   `id_object` int(10) unsigned NOT NULL,
   `module` varchar(64) NOT NULL,
+  `diff` text NOT NULL,
   `ip` varchar(32) NOT NULL,
   `date_add` datetime DEFAULT NULL,
   PRIMARY KEY (`id_fhy_log`),
@@ -25,4 +26,13 @@ CREATE TABLE IF NOT EXISTS `@PREFIX@fhy_log` (
   KEY `admin_object` (`admin_object`),
   KEY `id_object` (`id_object`),
   KEY `module` (`module`)
+) ENGINE=@ENGINE@ DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+
+CREATE TABLE IF NOT EXISTS `@PREFIX@fhy_object_log` (
+  `id_fhy_object_log` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_object` int(10) unsigned NOT NULL,
+  `object` varchar(64) NOT NULL,
+  `data` text NOT NULL,
+  PRIMARY KEY (`id_fhy_object_log`)
 ) ENGINE=@ENGINE@ DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;

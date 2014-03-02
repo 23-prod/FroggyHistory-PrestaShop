@@ -26,6 +26,7 @@ if (!class_exists('FroggyModule', false)) require_once __DIR__.'/froggy/FroggyMo
 
 // Require
 require_once(dirname(__FILE__).'/classes/FroggyHistoryLog.php');
+require_once(dirname(__FILE__).'/classes/FroggyHistoryObjectLog.php');
 
 class FroggyHistory extends FroggyModule
 {
@@ -132,21 +133,12 @@ class FroggyHistory extends FroggyModule
 	}
 
 	/**
-	 * Write log sentence
-	 * Uses in order to display understable sentence describing employees log
-	 *
-	 * @param string $log
+	 * Get Object WhiteList
+	 * @return array
 	 */
-	public function writeLogSentence($log)
+	public function getObjectsWhiteList()
 	{
-		// Matching array
-		$match_action = array(
-			'ADD' => $this->l('created'),
-			'UPDATE' => $this->l('updated'),
-			'DELETE' => $this->l('deleted'),
-			'DUPLICATE' => $this->l('duplicated'),
-		);
-		$match_object_translation = array(
+		return array(
 			'Address' => $this->l('the address'),
 			'Attribute' => $this->l('the attribute'),
 			'AttributeGroup' => $this->l('the attribute group'),
@@ -185,7 +177,25 @@ class FroggyHistory extends FroggyModule
 			'AdminManufacturersController' => $this->l('the manufacturer'),
 			'AdminPreferencesController' => $this->l('the preference'),
 		);
-		$match_object_nolink = array('Configuration', 'ProductSupplier');
+	}
+
+	/**
+	 * Write log sentence
+	 * Uses in order to display understable sentence describing employees log
+	 *
+	 * @param string $log
+	 */
+	public function writeLogSentence($log)
+	{
+		// Matching array
+		$match_action = array(
+			'ADD' => $this->l('created'),
+			'UPDATE' => $this->l('updated'),
+			'DELETE' => $this->l('deleted'),
+			'DUPLICATE' => $this->l('duplicated'),
+		);
+		$match_object_translation = $this->getObjectsWhiteList();
+		$match_object_nolink = array('Configuration');
 		$match_multilang_object = array('Product', 'Category', 'Supplier', 'Manufacturer');
 
 		// Splitting the date
@@ -216,7 +226,7 @@ class FroggyHistory extends FroggyModule
 			$controller_name = str_replace('Controller', '', $log['admin_object']);
 			$token_admin = Tools::getAdminToken($controller_name.(int)Tab::getIdFromClassName($controller_name).(int)$this->ajax_id_employee);
 
-			// Check if we build link for this type of object			
+			// Check if we build link for this type of object
 			if (!in_array($log['object'], $match_object_nolink) && in_array($log['object'], $match_multilang_object))
 				$object_translation = '<a href="index.php?controller='.strtolower($controller_name).'&'.($log['object']::$definition['primary']).'='.(int)$log['id_object'].'&update'.strtolower($log['object']::$definition['table']).'&token='.$token_admin.'" target="_blank">'.$object_translation;
 
@@ -246,6 +256,8 @@ class FroggyHistory extends FroggyModule
 		// Hour and description translations
 		$sentence['hour'] = sprintf($sentence['hour'], $year, $month, $day, $hour);
 		$sentence['description'] = sprintf($sentence['description'], $employee, $match_action[$log['employee_action']], $object_translation);
+		if ($log['diff'] != '')
+			$sentence['diff'] = json_decode(stripslashes($log['diff']), true);
 
 		return $sentence;
 	}
@@ -328,7 +340,8 @@ class FroggyHistory extends FroggyModule
 		}
 
 		// Check if object exists and different from FroggyHistoryLog class to avoid infinite loop
-		if ($object !== null && get_class($object) == 'FroggyHistoryLog')
+		$objects_white_list = $this->getObjectsWhiteList();
+		if ($object !== null && !isset($objects_white_list[get_class($object)]))
 			return true;
 
 		// Check status ADD / UPDATE
@@ -354,6 +367,26 @@ class FroggyHistory extends FroggyModule
 			$id_object = (int)$object->id;
 		}
 
+		// Retrieve the object history and compare it
+		$diff = '';
+		if ($class_name != '')
+		{
+			$new_object = new $class_name((int)$id_object);
+			$id_fhy_object_log = FroggyHistoryObjectLog::getHistoryObjectLogId($class_name, $id_object);
+			if ($id_fhy_object_log > 0)
+			{
+				$history_object = new FroggyHistoryObjectLog((int)$id_fhy_object_log);
+				$diff = $history_object->getDiff($new_object);
+				$history_object->delete();
+			}
+
+			$history_object = new FroggyHistoryObjectLog();
+			$history_object->id_object = $id_object;
+			$history_object->object = $class_name;
+			$history_object->data = json_encode($new_object);
+			$history_object->add();
+		}
+
 		// Check if a log has already been saved on this object during this page call
 		$id_history_log = FroggyHistoryLog::getActionRegister($class_name, $id_object);
 
@@ -372,6 +405,7 @@ class FroggyHistory extends FroggyModule
 		$history_log->object = pSQL($class_name);
 		$history_log->id_object = ((int)$id_object > 0 ? (int)$id_object : (int)$history_log->id_object);
 		$history_log->module = pSQL(Tools::getValue('module'));
+		$history_log->diff = pSQL($diff);
 		$history_log->ip = pSQL(Tools::getRemoteAddr());
 
 		// If log already exists, we update it
@@ -390,9 +424,11 @@ class FroggyHistory extends FroggyModule
 	public function hookActionObjectAddAfter($object) { return $this->hookLog('ADD', $object); }
 	public function hookActionObjectUpdateAfter($object) { return $this->hookLog('UPDATE', $object); }
 	public function hookActionObjectDeleteAfter($object) { return $this->hookLog('DELETE', $object); }
+	/*
 	public function hookActionAdminEditAfter($controller) { return $this->hookLog('UPDATE', null, $controller); }
 	public function hookActionAdminUpdateAfter($controller) { return $this->hookLog('UPDATE', null, $controller); }
 	public function hookActionAdminSaveAfter($controller) { return $this->hookLog('ADD/UPDATE', null, $controller); }
 	public function hookActionAdminDeleteBefore($controller) { return $this->hookLog('DELETE', null, $controller); }
+	*/
 	public function hookActionAdminDuplicateAfter($controller) { return $this->hookLog('DUPLICATE', null, $controller); }
 }
