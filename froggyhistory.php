@@ -148,14 +148,37 @@ class FroggyHistory extends FroggyModule
 		);
 		$match_object_translation = array(
 			'Address' => $this->l('the address'),
-			'Employee' => $this->l('the employee'),
-			'Configuration' => $this->l('the configuration'),
-			'Product' => $this->l('the product'),
-			'ProductSupplier' => $this->l('the product supplier'),
+			'Attribute' => $this->l('the attribute'),
+			'AttributeGroup' => $this->l('the attribute group'),
+			'Carrier' => $this->l('the carrier'),
+			'Cart' => $this->l('the cart'),
+			'CartRule' => $this->l('the cart rule'),
 			'Category' => $this->l('the category'),
-			'Supplier' => $this->l('the supplier'),
-			'Manufacturer' => $this->l('the manufacturer'),
+			'CMS' => $this->l('the CMS page'),
+			'CMSCategory' => $this->l('the CMS category'),
+			'Configuration' => $this->l('the configuration'),
+			'Contact' => $this->l('the contact'),
+			'Country' => $this->l('the country'),
+			'County' => $this->l('the county'),
+			'Currency' => $this->l('the currency'),
+			'Customer' => $this->l('the customer'),
+			'CustomerMessage' => $this->l('the customer message'),
+			'CustomerThread' => $this->l('the customer thread'),
+			'Discount' => $this->l('the discount'),
+			'Employee' => $this->l('the employee'),
+			'Feature' => $this->l('the feature'),
+			'FeatureValue' => $this->l('the feature value'),
+			'Group' => $this->l('the customer group'),
+			'GroupReduction' => $this->l('the customer group reduction'),
+			'Guest' => $this->l('the guest'),
 			'Language' => $this->l('the language'),
+			'Manufacturer' => $this->l('the manufacturer'),
+			'Order' => $this->l('the order'),
+			'Product' => $this->l('the product'),
+			'State' => $this->l('the state'),
+			'Store' => $this->l('the store'),
+			'Supplier' => $this->l('the supplier'),
+			'Zone' => $this->l('the geographical zone'),
 			'AdminProductsController' => $this->l('the product'),
 			'AdminCategoriesController' => $this->l('the category'),
 			'AdminSuppliersController' => $this->l('the supplier'),
@@ -194,7 +217,7 @@ class FroggyHistory extends FroggyModule
 			$token_admin = Tools::getAdminToken($controller_name.(int)Tab::getIdFromClassName($controller_name).(int)$this->ajax_id_employee);
 
 			// Check if we build link for this type of object			
-			if (!in_array($log['object'], $match_object_nolink) && class_exists($log['object']))
+			if (!in_array($log['object'], $match_object_nolink) && in_array($log['object'], $match_multilang_object))
 				$object_translation = '<a href="index.php?controller='.strtolower($controller_name).'&'.($log['object']::$definition['primary']).'='.(int)$log['id_object'].'&update'.strtolower($log['object']::$definition['table']).'&token='.$token_admin.'" target="_blank">'.$object_translation;
 
 			// Try to load object to retrieve the name
