@@ -76,7 +76,7 @@ class FroggyHistory extends FroggyModule
 		$url .= '&ajax_id_employee='.(int)$this->ajax_id_employee.'&id_lang='.(int)$this->context->cookie->id_lang;
 		$assign = array('module_dir' => $this->_path, 'url' => $url);
 		$this->smarty->assign($this->name, $assign);
-		return $this->display(__FILE__, 'getcontent.tpl');
+		return $this->display(__FILE__, 'getContent.tpl');
 	}
 
 
