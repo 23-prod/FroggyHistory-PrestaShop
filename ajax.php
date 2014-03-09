@@ -25,9 +25,9 @@ if (file_exists($configPath))
 	$controller = new FrontController();
 	$controller->init();
 
-	if (file_exists(dirname(__FILE__).'/FroggyHistory.php'))
+	if (file_exists(dirname(__FILE__).'/froggyhistory.php'))
 	{
-		include(dirname(__FILE__).'/FroggyHistory.php');
+		include(dirname(__FILE__).'/froggyhistory.php');
 		$fh = new FroggyHistory();
 		if ($fh->ajax_secure_key != Tools::getValue('ajax_secure_key'))
 			die('Invalid Secure Key');
