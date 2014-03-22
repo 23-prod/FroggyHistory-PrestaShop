@@ -1,22 +1,22 @@
 <?php
-/*
-* 2013-2014 Froggy Commerce
-*
-* NOTICE OF LICENSE
-*
-* You should have received a licence with this module.
-* If you didn't buy this module on Froggy-Commerce.com, ThemeForest.net
-* or Addons.PrestaShop.com, please contact us immediately : contact@froggy-commerce.com
-*
-* DISCLAIMER
-*
-* Do not edit or add to this file if you wish to benefit the updates
-* for newer PrestaShop versions in the future. If you wish to customize PrestaShop for your
-* needs please refer to http://www.prestashop.com for more information.
-*
-*  @author Froggy Commerce <contact@froggy-commerce.com>
-*  @copyright  2013-2014 Froggy Commerce
-*/
+/**
+ * 2013-2014 Froggy Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * You should have received a licence with this module.
+ * If you didn't buy this module on Froggy-Commerce.com, ThemeForest.net
+ * or Addons.PrestaShop.com, please contact us immediately : contact@froggy-commerce.com
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to benefit the updates
+ * for newer PrestaShop versions in the future. If you wish to customize PrestaShop for your
+ * needs please refer to http://www.prestashop.com for more information.
+ *
+ * @author Froggy Commerce <contact@froggy-commerce.com>
+ * @copyright  2013-2014 Froggy Commerce
+ */
 
 class FroggyModule extends Module
 {
@@ -32,7 +32,7 @@ class FroggyModule extends Module
 	public function __construct()
 	{
 		// Set name with ClassName of module
-		$this->name = strtolower(get_class($this));
+		$this->name = Tools::strtolower(get_class($this));
 
 		// Get definition file content
 		$parser = new FroggyDefinitionsModuleParser(_PS_MODULE_DIR_.$this->name.'/definitions.json');
@@ -50,11 +50,9 @@ class FroggyModule extends Module
 
 		parent::__construct();
 
-		foreach ($this->definitions_elements as $key) {
-			if (isset($definitions[$key])) {
+		foreach ($this->definitions_elements as $key)
+			if (isset($definitions[$key]))
 				$this->$key = $definitions[$key];
-			}
-		}
 
 		// If PS version is lower than 1.5, call backward script
 		if (version_compare(_PS_VERSION_, '1.5') < 0)
@@ -62,7 +60,7 @@ class FroggyModule extends Module
 
 		// Define local path if not exists (1.4 compatibility)
 		if (!isset($this->local_path))
-			$this->local_path = substr(dirname(__FILE__), 0, strrpos(dirname(__FILE__), '/')).'/';
+			$this->local_path = Tools::substr(dirname(__FILE__), 0, strrpos(dirname(__FILE__), '/')).'/';
 
 		// 1.4 retrocompatibility
 		if (!isset($this->context->smarty_methods['FroggyGetAdminLink']))
@@ -86,20 +84,22 @@ class FroggyModule extends Module
 		);
 		foreach ($prefix_call as $prefix_search => $prefix_replace)
 			if (strpos($method, $prefix_search) !== false)
-				$method = $prefix_replace.ucfirst(str_replace($prefix_search, '', $method));
+				$method = $prefix_replace.Tools::ucfirst(str_replace($prefix_search, '', $method));
 
 		// Check alternative hook method name for both method in main class and hook processor
 		$hook_methods = array($method, str_replace('hook', 'hookDisplay', $method), str_replace('hook', 'hookAction', $method));
 		foreach ($hook_methods as $method)
 		{
 			// Build name of class
-			$processor_classname = get_class($this).ucfirst($method).'Processor';
+			$processor_classname = get_class($this).Tools::ucfirst($method).'Processor';
 			$processor_class_path = $this->local_path.'/hooks/'.$processor_classname.'.php';
 
 			// Check if processor class exists
-			if (file_exists($processor_class_path)) {
+			if (file_exists($processor_class_path))
+			{
 				require_once $processor_class_path;
-				if (class_exists($processor_classname)) {
+				if (class_exists($processor_classname))
+				{
 					$args = array(
 						'module' => $this,
 						'context' => $this->context,
@@ -112,7 +112,9 @@ class FroggyModule extends Module
 						return $processor->run();
 					else
 						throw new Exception('Hook processor must extends "FroggyHookProcessor" class!');
-				} else {
+				}
+				else
+				{
 					// If processor class not implement interface
 					throw new Exception('Hook processor cannot be used !');
 				}
@@ -133,22 +135,19 @@ class FroggyModule extends Module
 	 */
 	public function install()
 	{
-		if (parent::install()) {
-			if (!$this->registerDefinitionsHooks()) {
+		if (parent::install())
+		{
+			if (!$this->registerDefinitionsHooks())
 				return false;
-			}
 
-			if (!$this->registerDefinitionsConfigurations()) {
+			if (!$this->registerDefinitionsConfigurations())
 				return false;
-			}
 
-			if (!$this->registerDefinitionsControllers()) {
+			if (!$this->registerDefinitionsControllers())
 				return false;
-			}
 
-			if (!$this->runDefinitionsSql()) {
+			if (!$this->runDefinitionsSql())
 				return false;
-			}
 			return true;
 		}
 
@@ -162,10 +161,14 @@ class FroggyModule extends Module
 	 */
 	public function uninstall()
 	{
-		if (parent::uninstall()) {
-			if (!$this->deleteConfigurations()) return false;
-			if (!$this->deleteModuleControllers()) return false;
-			if (!$this->runDefinitionsSql('uninstall')) return false;
+		if (parent::uninstall())
+		{
+			if (!$this->deleteConfigurations())
+				return false;
+			if (!$this->deleteModuleControllers())
+				return false;
+			if (!$this->runDefinitionsSql('uninstall'))
+				return false;
 			return true;
 		}
 		return false;
@@ -202,18 +205,16 @@ class FroggyModule extends Module
 	 */
 	protected function registerDefinitionsHooks()
 	{
-		if (isset($this->hooks) && is_array($this->hooks)) {
+		if (isset($this->hooks) && is_array($this->hooks))
+		{
 			$versions = array_keys($this->hooks);
 			$key = 0;
-			foreach ($this->hooks as $version => $hooks) {
-				if (
-					$version == 'all' ||
-					(version_compare(_PS_VERSION_, $version) >= 0 && (!isset($versions[$key+1]) || (isset($versions[$key+1]) && version_compare(_PS_VERSION_, $versions[$key+1]) < 0)))
-				) {
-					foreach ($hooks as $hook) {
-						if (!$this->registerHook($hook)) return false;
-					}
-				}
+			foreach ($this->hooks as $version => $hooks)
+			{
+				if ($version == 'all' || (version_compare(_PS_VERSION_, $version) >= 0 && (!isset($versions[$key + 1]) || (isset($versions[$key + 1]) && version_compare(_PS_VERSION_, $versions[$key + 1]) < 0))))
+					foreach ($hooks as $hook)
+						if (!$this->registerHook($hook))
+							return false;
 				$key++;
 			}
 		}
@@ -227,25 +228,24 @@ class FroggyModule extends Module
 	 */
 	protected function registerDefinitionsConfigurations()
 	{
-		if (isset($this->configurations) && is_array($this->configurations)) {
-			foreach ($this->configurations as $name => $value) {
+		if (isset($this->configurations) && is_array($this->configurations))
+			foreach ($this->configurations as $name => $value)
+			{
 				// In multilanguage case
-				if (is_array($value)) {
+				if (is_array($value))
+				{
 					$values = array();
-					foreach (Language::getLanguages(false) as $language) {
-						if (isset($value[$language['iso_code']])) {
+					foreach (Language::getLanguages(false) as $language)
+						if (isset($value[$language['iso_code']]))
 							$values[$language['id_lang']] = $value[$language['iso_code']];
-						}
-						else {
+						else
 							$values[$language['id_lang']] = $value['default'];
-						}
-					}
 					$value = $values;
 				}
 
-				if (!Configuration::updateValue($name, $value)) return false;
+				if (!Configuration::updateValue($name, $value))
+					return false;
 			}
-		}
 		return true;
 	}
 
@@ -256,11 +256,10 @@ class FroggyModule extends Module
 	 */
 	protected function deleteConfigurations()
 	{
-		if (isset($this->configurations) && is_array($this->configurations)) {
-			foreach ($this->configurations as $name => $value) {
+		if (isset($this->configurations) && is_array($this->configurations))
+			foreach ($this->configurations as $name => $value)
 				if (!Configuration::deleteByName($name)) return false;
-			}
-		}
+
 		return true;
 	}
 
@@ -271,25 +270,24 @@ class FroggyModule extends Module
 	 */
 	protected function registerDefinitionsControllers()
 	{
-		if (isset($this->controllers) && is_array($this->controllers)) {
-			foreach ($this->controllers as $controller) {
+		if (isset($this->controllers) && is_array($this->controllers))
+			foreach ($this->controllers as $controller)
+			{
 				$tab = new Tab();
 				$tab->class_name = $controller['classname'];
 				$tab->module = $this->name;
 				$tab->id_parent = Tab::getIdFromClassName($controller['parent']);
 
-				foreach (Language::getLanguages(false) as $language) {
-					if (isset($data['name'][$language['iso_code']])) {
-						$tab->name[$language['id_lang']] = $controller['name'][$language['iso_code']];
-					}
-					else {
-						$tab->name[$language['id_lang']] = $controller['name']['default'];
-					}
-				}
+				foreach (Language::getLanguages(false) as $language)
+					if (isset($controller[$language['iso_code']]))
+						$tab->name[$language['id_lang']] = $controller[$language['iso_code']];
+					else
+						$tab->name[$language['id_lang']] = $controller['default'];
 
-				if (!$tab->add()) return false;
+				if (!$tab->add())
+					return false;
 			}
-		}
+
 		return true;
 	}
 
@@ -300,13 +298,15 @@ class FroggyModule extends Module
 	 */
 	protected function deleteModuleControllers()
 	{
-		if (isset($this->controllers) && is_array($this->controllers)) {
-			foreach ($this->controllers as $controller) {
+		if (isset($this->controllers) && is_array($this->controllers))
+			foreach ($this->controllers as $controller)
+			{
 				$id_tab = Tab::getIdFromClassName($controller['classname']);
 				$tab = new Tab($id_tab);
-				if (!$tab->delete()) return false;
+				if (!$tab->delete())
+					return false;
 			}
-		}
+
 		return true;
 	}
 
@@ -319,26 +319,25 @@ class FroggyModule extends Module
 	 */
 	protected function runDefinitionsSql($type = 'install')
 	{
-		if (isset($this->sql) && is_array($this->sql)) {
-			if (!isset($this->sql[$type])) {
+		if (isset($this->sql) && is_array($this->sql))
+		{
+			if (!isset($this->sql[$type]))
 				throw new Exception('SQL file type not exists');
-			}
 
-			foreach ($this->sql[$type] as $file) {
-				if (!file_exists(_PS_MODULE_DIR_.$this->name.'/sql/'.$file)) {
+			foreach ($this->sql[$type] as $file)
+			{
+				if (!file_exists(_PS_MODULE_DIR_.$this->name.'/sql/'.$file))
 					throw new Exception('This SQL file not exists');
-				}
 
-				$content = file_get_contents(_PS_MODULE_DIR_.$this->name.'/sql/'.$file);
+				$content = Tools::file_get_contents(_PS_MODULE_DIR_.$this->name.'/sql/'.$file);
 				$content = str_replace('@PREFIX@', _DB_PREFIX_, $content);
 				$content = str_replace('@ENGINE@', _MYSQL_ENGINE_, $content);
 				$queries = preg_split("/;\s*[\r\n]+/", $content);
 
-				foreach($queries as $query) {
-					if (!empty($query)) {
-						if (!Db::getInstance()->execute(trim($query))) return false;
-					}
-				}
+				foreach ($queries as $query)
+					if (!empty($query))
+						if (!Db::getInstance()->execute(trim($query)))
+							return false;
 			}
 		}
 		return true;
@@ -362,14 +361,13 @@ class FroggyModule extends Module
 		$configurations = array();
 		$languages = Language::getLanguages(false);
 
-		foreach ($this->getModuleConfigurationsKeys() as $key) {
-			if ($this->isConfigurationLangKey($key)) {
-				foreach ($languages as $lang) {
+		foreach ($this->getModuleConfigurationsKeys() as $key)
+		{
+			if ($this->isConfigurationLangKey($key))
+				foreach ($languages as $lang)
 					$configurations[$key][$lang['id_lang']] = Configuration::get($key, $lang['id_lang']);
-				}
-			} else {
+			else
 				$configurations[$key] = Configuration::get($key);
-			}
 		}
 
 		return $configurations;
@@ -386,10 +384,10 @@ class FroggyModule extends Module
 	public function fcdisplay($file, $template, $cacheId = null, $compileId = null)
 	{
 		// Make fcdisplay compliant with hook processor
-		if (substr(dirname($file), - strlen('/hooks')) === '/hooks')
+		if (Tools::substr(dirname($file), -Tools::strlen('/hooks')) === '/hooks')
 		{
 			$file = dirname($file);
-			$file = substr($file, 0, strlen($file) - strlen('/hooks'));
+			$file = Tools::substr($file, 0, Tools::strlen($file) - Tools::strlen('/hooks'));
 			$file = $file.'/'.basename($file).'.php';
 		}
 
@@ -397,7 +395,7 @@ class FroggyModule extends Module
 		if (version_compare(_PS_VERSION_, '1.6.0') >= 0)
 		{
 			$template_bootstrap = str_replace('.tpl', '.bootstrap.tpl', $template);
-			if ($this->getTemplatePath($template_bootstrap) !== NULL)
+			if ($this->getTemplatePath($template_bootstrap) !== null)
 				$template = $template_bootstrap;
 		}
 
@@ -414,16 +412,16 @@ class FroggyModule extends Module
 	 * @param $key
 	 * @return bool
 	 */
-	protected function isConfigurationLangKey($key) {
-		if (version_compare(_PS_VERSION_, '1.5') >= 0) {
+	protected function isConfigurationLangKey($key)
+	{
+		if (version_compare(_PS_VERSION_, '1.5') >= 0)
 			return Configuration::isLangKey($key);
-		} else {
+		else
 			return (bool)Db::getInstance()->getValue('
 				SELECT COUNT(1)
 				FROM `'._DB_PREFIX_.'configuration_lang` cl
 				LEFT JOIN `'._DB_PREFIX_.'configuration` c ON (cl.`id_configuration` = c.`id_configuration`)
 				WHERE c.`name` = \''.pSQL($key).'\'');
-		}
 	}
 
 	/**
@@ -434,12 +432,11 @@ class FroggyModule extends Module
 	 */
 	protected function getModuleLink($controller_name)
 	{
-		if (version_compare(_PS_VERSION_, '1.5') >= 0) {
+		if (version_compare(_PS_VERSION_, '1.5') >= 0)
 			$link = $this->context->link->getModuleLink($this->name, $controller_name);
-		} else {
+		else
 			// In 1.4 version, you need to create a PHP file in order to call the controller
 			$link = $this->_path.$controller_name.'.php?';
-		}
 		return $link;
 	}
 }
@@ -457,9 +454,8 @@ class FroggyDefinitionsModuleParser
 	 */
 	public function __construct($filepath)
 	{
-		if (!file_exists($filepath)) {
+		if (!file_exists($filepath))
 			throw new Exception('File given to definitions parser does not exists : '.$this->filepath);
-		}
 		$this->filepath = $filepath;
 	}
 
@@ -469,10 +465,9 @@ class FroggyDefinitionsModuleParser
 	 */
 	public function parse()
 	{
-		$definitions = json_decode(file_get_contents($this->filepath), true);
-		if (is_null($definitions)) {
+		$definitions = json_decode(Tools::file_get_contents($this->filepath), true);
+		if (is_null($definitions))
 			throw new Exception('Definition parser cannot decode file : '.$this->filepath);
-		}
 
 		return $definitions;
 	}
