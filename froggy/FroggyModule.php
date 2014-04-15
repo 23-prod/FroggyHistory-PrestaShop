@@ -465,7 +465,7 @@ class FroggyDefinitionsModuleParser
 	 */
 	public function parse()
 	{
-		$definitions = json_decode(Tools::file_get_contents($this->filepath), true);
+		$definitions = Tools::jsonDecode(Tools::file_get_contents($this->filepath), true);
 		if (is_null($definitions))
 			throw new Exception('Definition parser cannot decode file : '.$this->filepath);
 
