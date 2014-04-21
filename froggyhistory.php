@@ -22,7 +22,7 @@
 defined('_PS_VERSION_') || require dirname(__FILE__).'/index.php';
 
 // Include Froggy Library
-if (!class_exists('FroggyModule', false)) require_once __DIR__.'/froggy/FroggyModule.php';
+if (!class_exists('FroggyModule', false)) require_once dirname(__FILE__).'/froggy/FroggyModule.php';
 
 // Require
 require_once(dirname(__FILE__).'/classes/FroggyHistoryLog.php');
