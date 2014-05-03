@@ -34,6 +34,7 @@ class FroggyHistoryLibrary
 	public function __construct($module)
 	{
 		$this->module = $module;
+		$this->context = Context::getContext();
 		$this->ajax_id_employee = $this->module->ajax_id_employee;
 	}
 
