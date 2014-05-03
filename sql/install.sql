@@ -36,3 +36,16 @@ CREATE TABLE IF NOT EXISTS `@PREFIX@fhy_object_log` (
   `data` text NOT NULL,
   PRIMARY KEY (`id_fhy_object_log`)
 ) ENGINE=@ENGINE@ DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+
+CREATE TABLE IF NOT EXISTS `@PREFIX@fhy_connection_log` (
+  `id_fhy_connection_log` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_shop` int(10) unsigned NOT NULL,
+  `id_employee` int(10) unsigned NOT NULL,
+  `browser` varchar(255) NOT NULL,
+  `ip` varchar(32) NOT NULL,
+  `date_add` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_fhy_connection_log`),
+  KEY `id_shop` (`id_shop`),
+  KEY `id_employee` (`id_employee`)
+) ENGINE=@ENGINE@ DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;

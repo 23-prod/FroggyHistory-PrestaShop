@@ -28,6 +28,8 @@ if (!class_exists('FroggyModule', false)) require_once dirname(__FILE__).'/frogg
 require_once(dirname(__FILE__).'/classes/FroggyHistoryLibrary.php');
 require_once(dirname(__FILE__).'/classes/FroggyHistoryLog.php');
 require_once(dirname(__FILE__).'/classes/FroggyHistoryObjectLog.php');
+require_once(dirname(__FILE__).'/classes/FroggyHistoryConnectionLog.php');
+
 
 class FroggyHistory extends FroggyModule
 {
@@ -134,6 +136,20 @@ class FroggyHistory extends FroggyModule
 	}
 
 
+	public function saveConnectionLog()
+	{
+		if ($this->context->cookie->fhy_connection_log_md5 != md5($this->context->cookie->fhy_connection_log_id.$this->context->cookie->date_add))
+		{
+			$connection_log = new FroggyHistoryConnectionLog();
+			$connection_log->id_employee = (int)$this->context->employee->id;
+			$connection_log->id_shop = (int)$this->context->shop->id;
+			$connection_log->browser = pSQL($_SERVER['HTTP_USER_AGENT']);
+			$connection_log->ip = Tools::getRemoteAddr();
+			$connection_log->add();
+			$this->context->cookie->fhy_connection_log_id = $connection_log->id;
+			$this->context->cookie->fhy_connection_log_md5 = md5($connection_log->id.$this->context->cookie->date_add);
+		}
+	}
 
 
 	/**
@@ -144,6 +160,8 @@ class FroggyHistory extends FroggyModule
 	 */
 	public function hookActionAdminControllerSetMedia($params)
 	{
+		$this->saveConnectionLog();
+
 		$controller = strtolower(Tools::getValue('controller'));
 		if (($controller == 'adminmodules' && Tools::getValue('configure') == $this->name)
 			|| $controller == 'adminemployees' || $controller == 'adminproducts')
