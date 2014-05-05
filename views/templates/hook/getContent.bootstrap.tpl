@@ -33,5 +33,5 @@
 		<p align="center"><img src="../modules/froggyhistory/views/img/loader.gif" /></p>
 	</div>
 
-	<script>$(document).ready(function() { loadFroggyHistoryLog('{$froggyhistory.url}'); });</script>
+    <script>$(document).ready(function() { loadFroggyHistoryLog('{$froggyhistory.url}'); });</script>
 </fieldset>

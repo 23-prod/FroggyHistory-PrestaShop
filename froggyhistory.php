@@ -79,7 +79,7 @@ class FroggyHistory extends FroggyModule
 		$url .= '&ajax_id_employee='.(int)$this->ajax_id_employee.'&id_lang='.(int)$this->context->cookie->id_lang;
 		$assign = array('module_dir' => $this->_path, 'url' => $url);
 		$this->smarty->assign($this->name, $assign);
-		return $this->display(__FILE__, 'getContent.tpl');
+		return $this->fcdisplay(__FILE__, 'getContent.tpl');
 	}
 
 
@@ -132,7 +132,7 @@ class FroggyHistory extends FroggyModule
 		$this->smarty->assign($this->name, $assign);
 
 		// Display template
-		echo $this->display(__FILE__, 'ajax.tpl');
+		echo $this->fcdisplay(__FILE__, 'ajax.tpl');
 	}
 
 
@@ -148,6 +148,7 @@ class FroggyHistory extends FroggyModule
 			$connection_log->add();
 			$this->context->cookie->fhy_connection_log_id = $connection_log->id;
 			$this->context->cookie->fhy_connection_log_md5 = md5($connection_log->id.$this->context->cookie->date_add);
+			Hook::exec('ActionFroggyHistoryEmployeeConnection');
 		}
 	}
 
@@ -166,7 +167,7 @@ class FroggyHistory extends FroggyModule
 		if (($controller == 'adminmodules' && Tools::getValue('configure') == $this->name)
 			|| $controller == 'adminemployees' || $controller == 'adminproducts')
 		{
-			$this->context->controller->addCSS($this->_path.'views/css/froggyhistory.css');
+			$this->context->controller->addCSS($this->_path.'views/css/froggyhistory'.($this->bootstrap ? '.bootstrap' : '').'.css');
 			$this->context->controller->addJS($this->_path.'views/js/froggyhistory.js');
 		}
 	}
@@ -184,7 +185,7 @@ class FroggyHistory extends FroggyModule
 		$url .= '&ajax_id_employee='.(int)$this->ajax_id_employee.'&id_lang='.(int)$this->context->cookie->id_lang;
 		$assign = array('module_dir' => $this->_path, 'url' => $url);
 		$this->smarty->assign($this->name, $assign);
-		return $this->display(__FILE__, 'hookDisplayAdminEmployeesForm.tpl');
+		return $this->fcdisplay(__FILE__, 'hookDisplayAdminEmployeesForm.tpl');
 	}
 
 	/**
@@ -200,7 +201,7 @@ class FroggyHistory extends FroggyModule
 		$url .= '&ajax_id_employee='.(int)$this->ajax_id_employee.'&id_lang='.(int)$this->context->cookie->id_lang;
 		$assign = array('module_dir' => $this->_path, 'url' => $url);
 		$this->smarty->assign($this->name, $assign);
-		return $this->display(__FILE__, 'hookDisplayAdminProductsExtra.tpl');
+		return $this->fcdisplay(__FILE__, 'hookDisplayAdminProductsExtra.tpl');
 	}
 
 
