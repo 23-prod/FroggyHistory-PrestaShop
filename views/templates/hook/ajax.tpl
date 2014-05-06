@@ -19,30 +19,29 @@
 
 {if $froggyhistory.history_log_list|@count gt 0}
 	{foreach from=$froggyhistory.history_log_list item=log}
-		<strong>{$log.sentence.hour} :</strong> {$log.sentence.description}
-        {if isset($log.sentence.diff)}<a href="#{$log.id_fhy_log}" class="froggy-history-details">({l s='See details' mod='froggyhistory'})</a>{/if}
-        <br />
+		<li>
+			<p><strong>{$log.sentence.hour} :</strong> {$log.sentence.description}{if isset($log.sentence.diff)}<a href="#{$log.id_fhy_log}" class="froggy-history-details">{l s='See details' mod='froggyhistory'}</a>{/if}</p>
 
-        {if isset($log.sentence.diff)}
-            <div id="froggy-history-details-div-{$log.id_fhy_log}" class="froggy-history-details-div">
-                <br>
-                {foreach from=$log.sentence.diff key=field item=values}
-                    {if isset($values.before)}
-                        <strong>- {l s='Field' mod='froggyhistory'} "{$field}":</strong><br>
-                        <u>{l s='Before modification:' mod='froggyhistory'}</u> {$values.before}<br>
-                        <u>{l s='After modification:' mod='froggyhistory'}</u> {$values.after}<br>
-                    {else}
-                        {foreach from=$values key=iso_lang item=values_lang}
-                            <strong>- {l s='Field' mod='froggyhistory'} "{$field}" {l s='in' mod='froggyhistory'} "{$iso_lang}":</strong><br>
-                            <u>{l s='Before modification:' mod='froggyhistory'}</u> {$values_lang.before}<br>
-                            <u>{l s='After modification:' mod='froggyhistory'}</u> {$values_lang.after}<br>
-                        {/foreach}
-                    {/if}
-                    <br>
-                {/foreach}
-                <br>
-            </div>
-        {/if}
+			{if isset($log.sentence.diff)}
+				<div id="froggy-history-details-div-{$log.id_fhy_log}" class="froggy-history-details-div">
+					{foreach from=$log.sentence.diff key=field item=values}
+						{if isset($values.before)}
+							<dl>
+								<dt><strong>- {l s='Field' mod='froggyhistory'} "{$field}":</strong></dt>
+								<dd><u>{l s='Before modification:' mod='froggyhistory'}</u> {$values.before}</dd>
+							<dd><u>{l s='After modification:' mod='froggyhistory'}</u> {$values.after}</dd>
+							</dl>
+						{else}
+							{foreach from=$values key=iso_lang item=values_lang}
+								<strong>- {l s='Field' mod='froggyhistory'} "{$field}" {l s='in' mod='froggyhistory'} "{$iso_lang}":</strong><br>
+								<u>{l s='Before modification:' mod='froggyhistory'}</u> {$values_lang.before}<br>
+								<u>{l s='After modification:' mod='froggyhistory'}</u> {$values_lang.after}<br>
+							{/foreach}
+						{/if}
+					{/foreach}
+				</div>
+			{/if}
+		</li>
 	{/foreach}
 	{if $froggyhistory.nb_pages gt 2}
 		<br />

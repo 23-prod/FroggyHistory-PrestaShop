@@ -21,10 +21,10 @@
 <fieldset id="froggyhistory-fieldset">
 	<legend><img src="{$froggyhistory.module_dir}logo.png" alt="" width="16" />{l s='Froggy History' mod='froggyhistory'}</legend>
 	<h3>{l s='Employee History' mod='froggyhistory'}</h3>
-	<div id="froggyhistory-list">
-		<p align="center"><img src="../modules/froggyhistory/views/img/loader.gif" /></p>
-	</div>
+	<ul id="froggyhistory-list">
+		<li class="loader-gif"><img src="../modules/froggyhistory/views/img/loader.gif" /></li>
+	</ul>
 	<script>$(document).ready(function() { loadFroggyHistoryLog('{$froggyhistory.url}'); });</script>
 </fieldset>
 </form>
-<div class="clear" />
+<div class="clear"></div>
