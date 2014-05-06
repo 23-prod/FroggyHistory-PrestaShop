@@ -167,7 +167,7 @@ class FroggyHistory extends FroggyModule
 		if (($controller == 'adminmodules' && Tools::getValue('configure') == $this->name)
 			|| $controller == 'adminemployees' || $controller == 'adminproducts')
 		{
-			$this->context->controller->addCSS($this->_path.'views/css/froggyhistory'.($this->bootstrap ? '.bootstrap' : '').'.css');
+			$this->context->controller->addCSS($this->_path.'views/css/froggyhistory'.(isset($this->bootstrap) && $this->bootstrap ? '.bootstrap' : '').'.css');
 			$this->context->controller->addJS($this->_path.'views/js/froggyhistory.js');
 		}
 	}

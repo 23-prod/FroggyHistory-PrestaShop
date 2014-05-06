@@ -17,9 +17,12 @@
 *  @copyright  2013-2014 Froggy Commerce
 */
 
-#froggyhistory_list a {font-style:italic;color:#000}
+#froggyhistory-list a {font-style:italic;color:#000}
 #employee_form .margin-form {width:30%}
 #employee_form fieldset {width:48%;float:left}
-#employee_form #froggyhistory_list {font-size:0.9em}
-#employee_form #froggyhistory_fieldset {width:40%;float:right}
-.froggyhistory_pagination {text-decoration:underline}
+#employee_form #froggyhistory-list {font-size:0.9em}
+#employee_form #froggyhistory-fieldset {width:40%;float:right}
+.froggyhistory-pagination {text-decoration:underline}
+#froggyhistory-general {display:none}
+#froggyhistory-introduction {float:left;width:40%}
+#froggyhistory-configuration {float:right;width:40%}

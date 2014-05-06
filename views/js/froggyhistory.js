@@ -22,16 +22,25 @@ function loadFroggyHistoryLog(link)
 	$.ajax({
 		url: '../modules/froggyhistory/ajax.php' + link,
 		success: function(data) {
-			$('#froggyhistory_list').html(data);
+			$('#froggyhistory-list').html(data);
 		}
 	});
 }
 
 function initFroggyHistoryPagination()
 {
-	$(".froggyhistory_pagination").click(function() {
-		$('#froggyhistory_list').html('<p align="center"><img src="../modules/froggyhistory/views/img/loader.gif" /></p>');
+	$(".froggyhistory-pagination").click(function() {
+		$('#froggyhistory-list').append('<p align="center"><img src="../modules/froggyhistory/views/img/loader.gif" /></p>');
 		loadFroggyHistoryLog($(this).attr('href'));
 		return false;
 	});
 }
+
+
+$(document).ready(function() {
+    $('#froggyhistory-see-general-history').click(function() {
+        $('#froggyhistory-introduction').hide();
+        $('#froggyhistory-configuration').hide();
+        $('#froggyhistory-general').fadeIn();
+    });
+});

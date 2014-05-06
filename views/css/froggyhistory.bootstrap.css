@@ -16,3 +16,7 @@
 *  @author Froggy Commerce <contact@froggy-commerce.com>
 *  @copyright  2013-2014 Froggy Commerce
 */
+
+#froggyhistory_list a {font-style:italic;color:#000}
+.froggyhistory_pagination {text-decoration:underline}
+#froggyhistory-general {display:none}

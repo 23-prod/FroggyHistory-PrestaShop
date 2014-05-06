@@ -17,10 +17,10 @@
 *  @copyright  2013-2014 Froggy Commerce
 *}
 
-<fieldset id="froggyhistory_fieldset">
+<fieldset id="froggyhistory-fieldset">
 	<legend><img src="{$froggyhistory.module_dir}logo.png" alt="" width="16" />{l s='Froggy History' mod='froggyhistory'}</legend>
 	<h3>{l s='Product History' mod='froggyhistory'}</h3>
-	<div id="froggyhistory_list">
+	<div id="froggyhistory-list">
 		<p align="center"><img src="../modules/froggyhistory/views/img/loader.gif" /></p>
 	</div>
 	<script>$(document).ready(function() { loadFroggyHistoryLog('{$froggyhistory.url}'); });</script>

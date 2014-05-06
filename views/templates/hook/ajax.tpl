@@ -29,13 +29,13 @@
                 {foreach from=$log.sentence.diff key=field item=values}
                     {if isset($values.before)}
                         <strong>- {l s='Field' mod='froggyhistory'} "{$field}":</strong><br>
-                        <u>{l s='Before:' mod='froggyhistory'}</u> {$values.before}<br>
-                        <u>{l s='After:' mod='froggyhistory'}</u> {$values.after}<br>
+                        <u>{l s='Before modification:' mod='froggyhistory'}</u> {$values.before}<br>
+                        <u>{l s='After modification:' mod='froggyhistory'}</u> {$values.after}<br>
                     {else}
                         {foreach from=$values key=iso_lang item=values_lang}
                             <strong>- {l s='Field' mod='froggyhistory'} "{$field}" {l s='in' mod='froggyhistory'} "{$iso_lang}":</strong><br>
-                            <u>{l s='Before:' mod='froggyhistory'}</u> {$values_lang.before}<br>
-                            <u>{l s='After:' mod='froggyhistory'}</u> {$values_lang.after}<br>
+                            <u>{l s='Before modification:' mod='froggyhistory'}</u> {$values_lang.before}<br>
+                            <u>{l s='After modification:' mod='froggyhistory'}</u> {$values_lang.after}<br>
                         {/foreach}
                     {/if}
                     <br>
@@ -47,7 +47,7 @@
 	{if $froggyhistory.nb_pages gt 2}
 		<br />
 		{section name=pagination start=1 loop=$froggyhistory.nb_pages step=1}
-			{if $smarty.section.pagination.index eq $froggyhistory.page}<b>{else}<a href="{$froggyhistory.url}&page={$smarty.section.pagination.index}" class="froggyhistory_pagination">{/if}{$smarty.section.pagination.index}{if $smarty.section.pagination.index eq $froggyhistory.page}</b>{else}</a>{/if}
+			{if $smarty.section.pagination.index eq $froggyhistory.page}<b>{else}<a href="{$froggyhistory.url}&page={$smarty.section.pagination.index}" class="froggyhistory-pagination">{/if}{$smarty.section.pagination.index}{if $smarty.section.pagination.index eq $froggyhistory.page}</b>{else}</a>{/if}
 		{/section}
 		<script>$(document).ready(function() { initFroggyHistoryPagination(); });</script>
 	{/if}
