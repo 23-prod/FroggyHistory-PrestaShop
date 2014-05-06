@@ -53,9 +53,9 @@
 
     <div id="froggyhistory-general">
     <h3>{l s='General History' mod='froggyhistory'}</h3>
-    <div id="froggyhistory-list">
-		<p align="center"><img src="../modules/froggyhistory/views/img/loader.gif" /></p>
-	</div>
+    <ul id="froggyhistory-list">
+		<li class="loader-gif"><img src="../modules/froggyhistory/views/img/loader.gif" /></li>
+	</ul>
     </div>
 
 	<script>$(document).ready(function() { loadFroggyHistoryLog('{$froggyhistory.url}'); });</script>
