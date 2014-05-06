@@ -63,9 +63,15 @@
     $('.froggy-history-details').unbind('click').bind('click', function() {
         var froggy_history_id = $(this).attr('href').replace('#', '');
         if ($('#froggy-history-details-div-'+froggy_history_id).is(':visible'))
+        {
             $('#froggy-history-details-div-'+froggy_history_id).slideUp();
+            $(this).parent().parent().removeClass('active');
+        }
         else
+        {
             $('#froggy-history-details-div-'+froggy_history_id).slideDown();
+            $(this).parent().parent().addClass('active');
+        }
         return false;
     });
 </script>
