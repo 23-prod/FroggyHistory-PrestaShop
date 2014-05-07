@@ -55,9 +55,6 @@
 {/if}
 
 {literal}
-<style>
-    .froggy-history-details-div{display:none}
-</style>
 <script>
     $('.froggy-history-details').unbind('click').bind('click', function() {
         var froggy_history_id = $(this).attr('href').replace('#', '');

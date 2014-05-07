@@ -17,6 +17,20 @@
 *  @copyright  2013-2014 Froggy Commerce
 */
 
+#froggyhistory-list .froggy-history-details{font-weight:bold;margin:0.5em 0 0 0.5em}
+#froggyhistory-list .froggy-history-details-div{margin-top:0.5em}
+#froggyhistory-list .froggy-history-details-div dl dd{margin:0.25em 1em}
+#froggyhistory-list a {font-style:italic;color:#000}
+#froggyhistory-list p{margin-top:0;padding:0}
+#froggyhistory-list li{padding:4px;border:1px solid #EBEDF4}
+#froggyhistory-list li.active{background:#fff;border:1px solid #CCCED7}
+#froggyhistory-list li.active+li.active{border-top:none}
+#froggyhistory-list li.loader-gif{text-align:center}
 #froggyhistory_list a {font-style:italic;color:#000}
-.froggyhistory_pagination {text-decoration:underline}
+
+.froggy-history-details-div{display:none}
+
+.froggyhistory-pagination {text-decoration:underline}
 #froggyhistory-general {display:none}
+#froggyhistory-introduction {float:left;width:40%}
+#froggyhistory-configuration {float:right;width:40%}
