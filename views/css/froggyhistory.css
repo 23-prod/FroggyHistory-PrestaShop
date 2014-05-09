@@ -29,9 +29,10 @@
 .froggy-history-details-div{display:none}
 
 #employee_form .margin-form {width:30%}
-#employee_form fieldset {width:48%;float:left}
+#employee_form .margin-form p.preference_description {width:330px}
+#employee_form fieldset {width:47%;float:left}
 #employee_form #froggyhistory-list {font-size:0.9em}
-#employee_form #froggyhistory-fieldset {width:48%;float:right}
+#employee_form #froggyhistory-fieldset {width:47%;float:right}
 #employee_form #froggyhistory-fieldset h3{padding-left:5px}
 
 .froggyhistory-pagination {text-decoration:underline}
