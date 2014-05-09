@@ -290,7 +290,12 @@ class FroggyHistoryLibrary
 
 		// If log already exists, we update it
 		if ((int)$id_history_log > 0)
-			return $history_log->update();
+		{
+			// If update in the same page call, we register it only if there is a diff
+			if (!empty($diff))
+				return $history_log->update();
+			return false;
+		}
 
 		// If not we create it and save it in the page call register
 		if ($history_log->add())
