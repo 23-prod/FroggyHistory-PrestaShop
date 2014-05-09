@@ -36,14 +36,26 @@
     </div>
 
     <div id="froggyhistory-configuration">
-        <form>
+        {if $froggyhistory.confirm eq 'ok'}
+            <div class="conf">{l s='The configuration has been successfully updated.' mod='froggyhistory'}</div>
+        {/if}
+        <form action="" method="POST">
             <h3>{l s='Configuration' mod='froggyhistory'}</h3>
             <label>{l s='Delete history older than:' mod='froggyhistory'}</label>
-            <input type="text" name="FROGGY_HISTORY_DELETE" value="30" /> {l s='days:' mod='froggyhistory'}
-            <br><br>
+            <input type="text" name="FH_DELETE_AFTER" value="{$froggyhistory.FH_DELETE_AFTER}" /> {l s='days' mod='froggyhistory'}
+            <p>
+                {l s='This option permits you to delete automatically history older than X days.' mod='froggyhistory'}<br>
+                {l s='You can set it to "0" if you want to keep history and never delete it.' mod='froggyhistory'}<br>
+                {l s='However, keeping history indefinitely can slow your shop.' mod='froggyhistory'}<br>
+            </p>
             <label>{l s='Archive deleted history in log files:' mod='froggyhistory'}</label>
-            <input type="checkbox" name="FROGGY_HISTORY_ARCHIVE" />
-            <br><br>
+            <input type="checkbox" name="FH_LOG_DELETED"{if $froggyhistory.FH_LOG_DELETED} checked="checked"{/if} />
+            <p>
+            {l s='This option permits you to archive your history in log file on your hard drive server.' mod='froggyhistory'}<br>
+            {l s='When history is deleted (after X days), this option will backup the history in a log file on your server.' mod='froggyhistory'}<br>
+            {l s='If you enable it, be sure to check regularly the free space on your hard drive server.' mod='froggyhistory'}<br>
+            {if !$froggyhistory.archives_directory_is_writable}<span style="color:red">{l s='Beware, the directory "%s" of your module is not writable, your history won\'t be archived.' sprintf=$froggyhistory.archives_directory mod='froggyhistory'}</span><br>{/if}
+            </p>
             <p align="center"><input type="submit" class="button" name="froggyhistory-submit" id="froggyhistory-submit" value="{l s='Validate' mod='froggyhistory'}" /></p>
         </form>
 

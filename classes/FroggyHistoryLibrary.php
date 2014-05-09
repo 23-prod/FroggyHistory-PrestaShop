@@ -203,6 +203,9 @@ class FroggyHistoryLibrary
 		if (!isset($this->context->employee->id))
 			return true;
 
+		// Delete / archive old history
+		$this->deleteArchiveOldHistory();
+
 		// Init
 		$id_object = 0;
 		$class_name = '';
@@ -296,5 +299,54 @@ class FroggyHistoryLibrary
 			return true;
 		}
 		return false;
+	}
+
+	public function deleteArchiveOldHistory()
+	{
+		$days = (int)Configuration::get('FH_DELETE_AFTER');
+		if ($days > 0)
+		{
+			$date_limit = date('Y-m-d H:i:s',strtotime('-'.$days.' days'));
+			if (Configuration::get('FH_LOG_DELETED') == 1)
+				$this->archiveOldHistory($date_limit);
+			Db::getInstance()->delete('fhy_log', '`date_add` < \''.$date_limit.'\'');
+		}
+	}
+
+	public function archiveOldHistory($date_limit)
+	{
+		// Retrieve content
+		$archive_content = '';
+		$archives = Db::getInstance()->executeS('
+			SELECT gl.*, ga.`name` as employee_action, e.`firstname`, e.`lastname`, s.`name` as shop_name
+			FROM `'._DB_PREFIX_.'fhy_log` gl
+			LEFT JOIN `'._DB_PREFIX_.'employee` e ON (e.`id_employee` = gl.`id_employee`)
+			LEFT JOIN `'._DB_PREFIX_.'shop` s ON (s.`id_shop` = gl.`id_shop`)
+			LEFT JOIN `'._DB_PREFIX_.'fhy_action` ga ON (ga.`id_fhy_action` = gl.`id_fhy_action`)
+			WHERE `date_add` < \''.$date_limit.'\'
+			ORDER BY `date_add` DESC
+		');
+
+		// Build archive content
+		foreach ($archives as $archive)
+		{
+			$sentence = $this->writeLogSentence($archive);
+			$archive_content .= '<tr><td>'.$sentence['hour'].'</td><td>'.strip_tags($sentence['description']).'</td><td>'.json_encode($archive).'</td></tr>'."\n";
+		}
+
+		// If nothing to archive we continue
+		if (empty($archive_content))
+			return true;
+
+		// Build the name of the archive file content
+		$month = date('Y-m');
+		$archive_file = dirname(__FILE__).'/../archives/'.$month.'-'.md5(_COOKIE_KEY_.$month).'.xls';
+
+		// Create archive file if does not exist
+		if (!file_exists($archive_file))
+			file_put_contents($archive_file, '<table>'."\n");
+
+		// Archive new data
+		file_put_contents($archive_file, $archive_content, FILE_APPEND);
 	}
 }

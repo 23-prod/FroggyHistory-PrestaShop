@@ -75,9 +75,25 @@ class FroggyHistory extends FroggyModule
 	 */
 	public function getContent()
 	{
+		if (Tools::getValue('froggyhistory-submit') != '')
+		{
+			Configuration::updateValue('FH_DELETE_AFTER', (int)Tools::getValue('FH_DELETE_AFTER'));
+			Configuration::updateValue('FH_LOG_DELETED', (Tools::getValue('FH_LOG_DELETED') != '' ? 1 : 0));
+			$confirm = 'ok';
+		}
+
 		$url = '?ajax_secure_key='.htmlentities($this->ajax_secure_key);
 		$url .= '&ajax_id_employee='.(int)$this->ajax_id_employee.'&id_lang='.(int)$this->context->cookie->id_lang;
-		$assign = array('module_dir' => $this->_path, 'url' => $url);
+		$assign = array(
+			'module_dir' => $this->_path,
+			'url' => $url,
+			'FH_DELETE_AFTER' => Configuration::get('FH_DELETE_AFTER'),
+			'FH_LOG_DELETED' => Configuration::get('FH_LOG_DELETED'),
+			'archives_directory' => dirname(__FILE__).'/archives/',
+			'archives_directory_is_writable' => is_writable(dirname(__FILE__).'/archives/'),
+			'confirm' => (isset($confirm) ? $confirm : ''),
+		);
+
 		$this->smarty->assign($this->name, $assign);
 		return $this->fcdisplay(__FILE__, 'getContent.tpl');
 	}

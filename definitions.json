@@ -12,5 +12,10 @@
 	"sql" : {
 		"install" : [ "install.sql" ],
 		"uninstall" : [ "uninstall.sql" ]
-	}
+	},
+
+    "configurations" : {
+        "FH_DELETE_AFTER" : "30",
+        "FH_LOG_DELETED" : "0"
+    }
 }
