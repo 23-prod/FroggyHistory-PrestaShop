@@ -21,7 +21,7 @@
 $configPath = '../../config/config.inc.php';
 if (file_exists($configPath))
 {
-	include('../../config/config.inc.php');
+	include($configPath);
 	$controller = new FrontController();
 	$controller->init();
 
