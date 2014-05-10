@@ -38,9 +38,5 @@ function initFroggyHistoryPagination()
 
 
 $(document).ready(function() {
-    $('#froggyhistory-see-general-history').click(function() {
-        $('#froggyhistory-introduction').hide();
-        $('#froggyhistory-configuration').hide();
-        $('#froggyhistory-general').fadeIn();
-    });
+    $("#froggyhistory-introduction-configuration a").fancybox();
 });

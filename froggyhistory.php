@@ -86,6 +86,7 @@ class FroggyHistory extends FroggyModule
 		$url .= '&ajax_id_employee='.(int)$this->ajax_id_employee.'&id_lang='.(int)$this->context->cookie->id_lang;
 		$assign = array(
 			'module_dir' => $this->_path,
+			'ps_version' => substr(_PS_VERSION_, 0, 3),
 			'url' => $url,
 			'FH_DELETE_AFTER' => Configuration::get('FH_DELETE_AFTER'),
 			'FH_LOG_DELETED' => Configuration::get('FH_LOG_DELETED'),
