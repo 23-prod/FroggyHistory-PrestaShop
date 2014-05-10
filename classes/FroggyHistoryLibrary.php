@@ -133,7 +133,9 @@ class FroggyHistoryLibrary
 
 		// Init var
 		$token_admin_employees = Tools::getAdminToken('AdminEmployees'.(int)Tab::getIdFromClassName('AdminEmployees').(int)$this->ajax_id_employee);
-		$employee = '<a href="index.php?controller=adminemployees&id_employee='.(int)$log['id_employee'].'&updateemployee&token='.$token_admin_employees.'" target="_blank">'.$log['firstname'].' '.$log['lastname'].' (ID #'.$log['id_employee'].')</a>';
+		$employee = '';
+		if (Tools::getValue('section') != 'employee')
+			$employee = '<a href="index.php?controller=adminemployees&id_employee='.(int)$log['id_employee'].'&updateemployee&token='.$token_admin_employees.'" target="_blank">'.$log['firstname'].' '.$log['lastname'].' (ID #'.$log['id_employee'].')</a>';
 
 		// Get object translation
 		if (isset($match_object_translation[$log['object']]))
