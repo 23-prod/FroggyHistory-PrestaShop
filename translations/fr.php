@@ -98,5 +98,5 @@ $_MODULE['<{froggyhistory}prestashop>hookdisplayadminemployeesform.bootstrap_28a
 $_MODULE['<{froggyhistory}prestashop>hookdisplayadminemployeesform_28a7043410fc74d2784b41db2ebbff0c'] = 'Froggy History';
 $_MODULE['<{froggyhistory}prestashop>hookdisplayadminemployeesform_5873564b87c2f6a3b03d587cea141a95'] = 'Historique de l\'employé';
 $_MODULE['<{froggyhistory}prestashop>hookdisplayadminproductsextra.bootstrap_28a7043410fc74d2784b41db2ebbff0c'] = 'Historique Froggy';
-$_MODULE['<{froggyhistory}prestashop>hookdisplayadminproductsextra_28a7043410fc74d2784b41db2ebbff0c'] = 'Froggy History';
+$_MODULE['<{froggyhistory}prestashop>hookdisplayadminproductsextra_28a7043410fc74d2784b41db2ebbff0c'] = 'Historique Froggy';
 $_MODULE['<{froggyhistory}prestashop>hookdisplayadminproductsextra_c6214ffeac1562fd7f06e176527b7b86'] = 'Historique du produit';

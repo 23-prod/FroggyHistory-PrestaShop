@@ -48,7 +48,7 @@
 
 
         <h3>{l s='Presentation' mod='froggyhistory'}</h3>
-        <p>{l s='On the right of this screen, you will be able to see the actions history of all your employees since this module has been installed.'}</p>
+        <p>{l s='On the right of this screen, you will be able to see the actions history of all your employees since this module has been installed.' mod='froggyhistory'}</p>
 
         <p>{l s='You can also access to product history on the product administration forms.' mod='froggyhistory'}</p>
         <p>
