@@ -18,19 +18,25 @@
 *}
 
 <div id="froggyhistory-employee-section">
-<fieldset id="froggyhistory-fieldset">
-    <legend><img src="{$froggyhistory.module_dir}logo.png" alt="" width="16" />{l s='Froggy History' mod='froggyhistory'}</legend>
-    <h3>{l s='Employee History' mod='froggyhistory'}</h3>
-    <ul id="froggyhistory-list">
-        <li class="loader-gif"><img src="../modules/froggyhistory/views/img/loader.gif" /></li>
-    </ul>
-    <script>
-        $(document).ready(function() {
-            var froggyhistory_html = $("#froggyhistory-employee-section").html();
-            $("#froggyhistory-employee-section").html('');
-            $('#employee_form').after(froggyhistory_html);
-            loadFroggyHistoryLog('{$froggyhistory.url}&section=employee');
-        });</script>
-</fieldset>
+
+<div class="panel">
+    <fieldset id="froggyhistory-fieldset">
+        <div class="panel-heading">
+        <legend><img src="{$froggyhistory.module_dir}logo.png" alt="" width="16" />{l s='Froggy History' mod='froggyhistory'}</legend>
+        </div>
+        <ul id="froggyhistory-list">
+            <li class="loader-gif"><img src="../modules/froggyhistory/views/img/loader.gif" /></li>
+        </ul>
+        <script>
+            $(document).ready(function() {
+                var froggyhistory_html = $("#froggyhistory-employee-section").html();
+                $("#froggyhistory-employee-section").html('');
+                $('#employee_form').after(froggyhistory_html);
+                loadFroggyHistoryLog('{$froggyhistory.url}&section=employee');
+            });</script>
+    </fieldset>
+</div>
 </form>
+
+
 </div>
