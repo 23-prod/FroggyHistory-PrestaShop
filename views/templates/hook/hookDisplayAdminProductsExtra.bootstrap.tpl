@@ -21,7 +21,6 @@
     <div class="panel">
         <div class="panel-heading">
         <legend><img src="{$froggyhistory.module_dir}logo.png" alt="" width="16" />{l s='Froggy History' mod='froggyhistory'}</legend>
-        {l s='Product History' mod='froggyhistory'}
         </div>
         <ul id="froggyhistory-list">
             <li class="loader-gif"><img src="../modules/froggyhistory/views/img/loader.gif" /></li>
