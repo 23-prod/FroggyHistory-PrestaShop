@@ -17,14 +17,20 @@
 *  @copyright  2013-2014 Froggy Commerce
 *}
 
-</fieldset>
+<div id="froggyhistory-employee-section">
 <fieldset id="froggyhistory-fieldset">
     <legend><img src="{$froggyhistory.module_dir}logo.png" alt="" width="16" />{l s='Froggy History' mod='froggyhistory'}</legend>
     <h3>{l s='Employee History' mod='froggyhistory'}</h3>
     <ul id="froggyhistory-list">
         <li class="loader-gif"><img src="../modules/froggyhistory/views/img/loader.gif" /></li>
     </ul>
-    <script>$(document).ready(function() { loadFroggyHistoryLog('{$froggyhistory.url}&section=employee'); });</script>
+    <script>
+        $(document).ready(function() {
+            var froggyhistory_html = $("#froggyhistory-employee-section").html();
+            $("#froggyhistory-employee-section").html('');
+            $('#employee_form').after(froggyhistory_html);
+            loadFroggyHistoryLog('{$froggyhistory.url}&section=employee');
+        });</script>
 </fieldset>
 </form>
-<div class="clear"></div>
+</div>
