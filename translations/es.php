@@ -2,7 +2,7 @@
 
 global $_MODULE;
 $_MODULE = array();
-$_MODULE['<{froggyhistory}prestashop>froggyhistory_28a7043410fc74d2784b41db2ebbff0c'] = 'Historial Froggy';
+$_MODULE['<{froggyhistory}prestashop>froggyhistory_28a7043410fc74d2784b41db2ebbff0c'] = 'Froggy Historial';
 $_MODULE['<{froggyhistory}prestashop>froggyhistory_c0436278aef3c39246add9ccd5e1676e'] = 'Le permite conocer las diferentes acciones hechas por los empleados en el back oficio';
 $_MODULE['<{froggyhistory}prestashop>froggyhistorylibrary_381c55e2e9011e235885e83f102c8880'] = 'la dirección';
 $_MODULE['<{froggyhistory}prestashop>froggyhistorylibrary_76c9b8a681afa79d80e71884e077b31d'] = 'el atributo';
@@ -56,7 +56,7 @@ $_MODULE['<{froggyhistory}prestashop>ajax_efad0670c3f0b227bfbbc7782958442a'] = '
 $_MODULE['<{froggyhistory}prestashop>ajax_ff0086ac100820feaa9c17d08fb5a42e'] = 'Después de modificación:';
 $_MODULE['<{froggyhistory}prestashop>ajax_13b5bfe96f3e2fe411c9f66f4a582adf'] = 'en';
 $_MODULE['<{froggyhistory}prestashop>ajax_57b83918dd17b2987bd67313ae01f245'] = 'Ningún historial registro por el momento';
-$_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_28a7043410fc74d2784b41db2ebbff0c'] = 'Historial Froggy';
+$_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_28a7043410fc74d2784b41db2ebbff0c'] = 'Froggy Historial';
 $_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_567730a3a8bbfc6f995856951984c486'] = 'La configuración ha sido actualizada con éxito.';
 $_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_254f642527b45bc260048e30704edb39'] = 'Configuración';
 $_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_ede644355fa1c89ad15c1de5a9418660'] = 'Borrar el historial viejo de:';
@@ -75,7 +75,7 @@ $_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_2badbae912abfb0ed1a94d
 $_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_3026b18f7308129f9e747b8324415075'] = 'Usted también puede acceder al historial de un producto a partir del formulario de administración de este producto.';
 $_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_828c23744c2afe66214c46f8c45e6919'] = 'Por fin, sobre cada perfil empleado, usted tendrá la posibilidad de ver su historial de acciones.';
 $_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_eedd2484341e0eb998fdd532d8779346'] = 'Historial general';
-$_MODULE['<{froggyhistory}prestashop>getcontent_28a7043410fc74d2784b41db2ebbff0c'] = 'Historial Froggy';
+$_MODULE['<{froggyhistory}prestashop>getcontent_28a7043410fc74d2784b41db2ebbff0c'] = 'Froggy Historial';
 $_MODULE['<{froggyhistory}prestashop>getcontent_567730a3a8bbfc6f995856951984c486'] = 'La configuración ha sido actualizada con éxito.';
 $_MODULE['<{froggyhistory}prestashop>getcontent_254f642527b45bc260048e30704edb39'] = 'Configuración';
 $_MODULE['<{froggyhistory}prestashop>getcontent_ede644355fa1c89ad15c1de5a9418660'] = 'Borrar el historial viejo de:';
@@ -94,9 +94,9 @@ $_MODULE['<{froggyhistory}prestashop>getcontent_2badbae912abfb0ed1a94dc068fb0ebe
 $_MODULE['<{froggyhistory}prestashop>getcontent_3026b18f7308129f9e747b8324415075'] = 'Usted también puede acceder al historial de un producto a partir del formulario de administración de este producto.';
 $_MODULE['<{froggyhistory}prestashop>getcontent_828c23744c2afe66214c46f8c45e6919'] = 'Por fin, sobre cada perfil empleado, usted tendrá la posibilidad de ver su historial de acciones.';
 $_MODULE['<{froggyhistory}prestashop>getcontent_eedd2484341e0eb998fdd532d8779346'] = 'Historial general';
-$_MODULE['<{froggyhistory}prestashop>hookdisplayadminemployeesform.bootstrap_28a7043410fc74d2784b41db2ebbff0c'] = 'Historial Froggy';
-$_MODULE['<{froggyhistory}prestashop>hookdisplayadminemployeesform_28a7043410fc74d2784b41db2ebbff0c'] = 'Historial Froggy';
+$_MODULE['<{froggyhistory}prestashop>hookdisplayadminemployeesform.bootstrap_28a7043410fc74d2784b41db2ebbff0c'] = 'Froggy Historial';
+$_MODULE['<{froggyhistory}prestashop>hookdisplayadminemployeesform_28a7043410fc74d2784b41db2ebbff0c'] = 'Froggy Historial';
 $_MODULE['<{froggyhistory}prestashop>hookdisplayadminemployeesform_5873564b87c2f6a3b03d587cea141a95'] = 'Historial del empleado';
-$_MODULE['<{froggyhistory}prestashop>hookdisplayadminproductsextra.bootstrap_28a7043410fc74d2784b41db2ebbff0c'] = 'Historial Froggy';
-$_MODULE['<{froggyhistory}prestashop>hookdisplayadminproductsextra_28a7043410fc74d2784b41db2ebbff0c'] = 'Historial Froggy';
+$_MODULE['<{froggyhistory}prestashop>hookdisplayadminproductsextra.bootstrap_28a7043410fc74d2784b41db2ebbff0c'] = 'Froggy Historial';
+$_MODULE['<{froggyhistory}prestashop>hookdisplayadminproductsextra_28a7043410fc74d2784b41db2ebbff0c'] = 'Froggy Historial';
 $_MODULE['<{froggyhistory}prestashop>hookdisplayadminproductsextra_c6214ffeac1562fd7f06e176527b7b86'] = 'Historial del producto';

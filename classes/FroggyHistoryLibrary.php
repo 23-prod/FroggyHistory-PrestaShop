@@ -56,7 +56,7 @@ class FroggyHistoryLibrary
 	 */
 	public function l($string)
 	{
-		return $this->module->l($string);
+		return $this->module->l($string, 'froggyhistorylibrary');
 	}
 
 	/**
