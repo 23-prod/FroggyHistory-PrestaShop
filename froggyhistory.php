@@ -67,6 +67,7 @@ class FroggyHistory extends FroggyModule
 
 		// Generate ajax security token
 		$this->ajax_secure_key = md5(date('Y-m-d')._COOKIE_KEY_.$this->name.$this->ajax_id_employee);
+		$this->module_key = '95a3eaf63abacc67f34e784a42040cd6';
 	}
 
 
