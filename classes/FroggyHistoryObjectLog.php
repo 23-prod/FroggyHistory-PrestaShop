@@ -56,7 +56,7 @@ class FroggyHistoryObjectLog extends ObjectModel
 	public function getDiff($new_object)
 	{
 		$diff_list = array();
-		$old_object = json_decode($this->data, true);
+		$old_object = Tools::jsonDecode($this->data, true);
 		foreach ($new_object as $field => $value)
 		{
 			if (is_array($value))
@@ -64,20 +64,20 @@ class FroggyHistoryObjectLog extends ObjectModel
 				foreach ($value as $id_lang => $value_lang)
 				{
 					$lang = new Language((int)$id_lang);
-					$iso_lang = strtoupper($lang->iso_code);
+					$iso_lang = Tools::strtoupper($lang->iso_code);
 					if (isset($old_object[$field][$id_lang]) && strip_tags($old_object[$field][$id_lang]) != strip_tags($value_lang))
-						$diff_list[ucfirst($field)][$iso_lang] = array('before' => strip_tags($old_object[$field][$id_lang]), 'after' => strip_tags($value_lang));
+						$diff_list[Tools::ucfirst($field)][$iso_lang] = array('before' => strip_tags($old_object[$field][$id_lang]), 'after' => strip_tags($value_lang));
 				}
 			}
 			else
 			{
 				if (isset($old_object[$field]) && $field != 'date_upd' && $old_object[$field] != $value)
- 					$diff_list[ucfirst($field)] = array('before' => $old_object[$field], 'after' => $value);
+ 					$diff_list[Tools::ucfirst($field)] = array('before' => $old_object[$field], 'after' => $value);
 			}
 		}
 
 		if (count($diff_list))
-			return json_encode($diff_list);
+			return Tools::jsonEncode($diff_list);
 		return '';
 	}
 

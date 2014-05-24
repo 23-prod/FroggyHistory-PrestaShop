@@ -126,10 +126,10 @@ class FroggyHistoryLibrary
 		$match_multilang_object = array('Product', 'Category', 'Supplier', 'Manufacturer');
 
 		// Splitting the date
-		$year = substr($log['date_add'], 0, 4);
-		$month = substr($log['date_add'], 5, 2);
-		$day = substr($log['date_add'], 8, 2);
-		$hour = substr($log['date_add'], 11, 8);
+		$year = Tools::substr($log['date_add'], 0, 4);
+		$month = Tools::substr($log['date_add'], 5, 2);
+		$day = Tools::substr($log['date_add'], 8, 2);
+		$hour = Tools::substr($log['date_add'], 11, 8);
 
 		// Init var
 		$token_admin_employees = Tools::getAdminToken('AdminEmployees'.(int)Tab::getIdFromClassName('AdminEmployees').(int)$this->ajax_id_employee);
@@ -143,7 +143,7 @@ class FroggyHistoryLibrary
 		if (isset($match_object_translation[$log['admin_object']]) && !isset($object_translation))
 			$object_translation = $match_object_translation[$log['admin_object']];
 		if (!isset($object_translation))
-			$object_translation = $this->l('the').' '.strtolower($log['object']);
+			$object_translation = $this->l('the').' '.Tools::strtolower($log['object']);
 
 		// Building the sentence
 		$sentence = array();
@@ -157,7 +157,7 @@ class FroggyHistoryLibrary
 
 			// Check if we build link for this type of object
 			if (!in_array($log['object'], $match_object_nolink) && in_array($log['object'], $match_multilang_object))
-				$object_translation = '<a href="index.php?controller='.strtolower($controller_name).'&'.($log['object']::$definition['primary']).'='.(int)$log['id_object'].'&update'.strtolower($log['object']::$definition['table']).'&token='.$token_admin.'" target="_blank">'.$object_translation;
+				$object_translation = '<a href="index.php?controller='.Tools::strtolower($controller_name).'&'.($log['object']::$definition['primary']).'='.(int)$log['id_object'].'&update'.Tools::strtolower($log['object']::$definition['table']).'&token='.$token_admin.'" target="_blank">'.$object_translation;
 
 			// Try to load object to retrieve the name
 			// Specific case for Product Object where Id Lang is the third param, sigh :'(
@@ -186,7 +186,7 @@ class FroggyHistoryLibrary
 		$sentence['hour'] = sprintf($sentence['hour'], $year, $month, $day, $hour);
 		$sentence['description'] = sprintf($sentence['description'], $employee, $match_action[$log['employee_action']], $object_translation);
 		if ($log['diff'] != '')
-			$sentence['diff'] = json_decode(stripslashes($log['diff']), true);
+			$sentence['diff'] = Tools::jsonDecode(Tools::stripslashes($log['diff']), true);
 
 		return $sentence;
 	}
@@ -217,8 +217,8 @@ class FroggyHistoryLibrary
 		if (empty($controller_name))
 		{
 			$controllers = Dispatcher::getControllers(array(_PS_ADMIN_DIR_.'/tabs/', _PS_ADMIN_CONTROLLER_DIR_));
-			if (isset($controllers[strtolower(Tools::getValue('controller'))]))
-				$controller_name = $controllers[strtolower(Tools::getValue('controller'))];
+			if (isset($controllers[Tools::strtolower(Tools::getValue('controller'))]))
+				$controller_name = $controllers[Tools::strtolower(Tools::getValue('controller'))];
 		}
 
 		// Check if object exists and different from FroggyHistoryLog class to avoid infinite loop
@@ -231,7 +231,7 @@ class FroggyHistoryLibrary
 		{
 			$action = 'UPDATE';
 			foreach ($_GET as $k => $v)
-				if (substr($k, 0, 9) == 'submitAdd')
+				if (Tools::substr($k, 0, 9) == 'submitAdd')
 					$action = 'ADD';
 		}
 
@@ -265,7 +265,7 @@ class FroggyHistoryLibrary
 			$history_object = new FroggyHistoryObjectLog();
 			$history_object->id_object = $id_object;
 			$history_object->object = $class_name;
-			$history_object->data = json_encode($new_object);
+			$history_object->data = Tools::jsonEncode($new_object);
 			$history_object->add();
 		}
 
@@ -338,7 +338,7 @@ class FroggyHistoryLibrary
 		foreach ($archives as $archive)
 		{
 			$sentence = $this->writeLogSentence($archive);
-			$archive_content .= '<tr><td>'.$sentence['hour'].'</td><td>'.strip_tags($sentence['description']).'</td><td>'.json_encode($archive).'</td></tr>'."\n";
+			$archive_content .= '<tr><td>'.$sentence['hour'].'</td><td>'.strip_tags($sentence['description']).'</td><td>'.Tools::jsonEncode($archive).'</td></tr>'."\n";
 		}
 
 		// If nothing to archive we continue
