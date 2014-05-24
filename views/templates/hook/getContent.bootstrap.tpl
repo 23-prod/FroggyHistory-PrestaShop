@@ -24,7 +24,7 @@
                 <div id="froggyhistory-introduction-configuration">
 
                 {if $froggyhistory.confirm eq 'ok'}
-                    <div class="conf">{l s='The configuration has been successfully updated.' mod='froggyhistory'}</div>
+                    <div class="module_confirmation conf confirm alert alert-success">{l s='The configuration has been successfully updated.' mod='froggyhistory'}</div>
                 {/if}
                     <form action="" method="POST" class="defaultForm form-horizontal">
                         <div class="panel-heading">
