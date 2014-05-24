@@ -186,7 +186,7 @@ class FroggyHistoryLibrary
 		$sentence['hour'] = sprintf($sentence['hour'], $year, $month, $day, $hour);
 		$sentence['description'] = sprintf($sentence['description'], $employee, $match_action[$log['employee_action']], $object_translation);
 		if ($log['diff'] != '')
-			$sentence['diff'] = Tools::jsonDecode(Tools::stripslashes($log['diff']), true);
+			$sentence['diff'] = Tools::jsonDecode($log['diff'], true);
 
 		return $sentence;
 	}
@@ -283,12 +283,12 @@ class FroggyHistoryLibrary
 		$history_log->id_employee = (isset($this->context->employee->id) ? (int)$this->context->employee->id : (int)$history_log->id_employee);
 		$history_log->id_fhy_action = ((int)$history_log->id_fhy_action < 1 ? (int)FroggyHistoryLog::getActionId($action) : (int)$history_log->id_fhy_action);
 		$history_log->id_shop = (int)$this->context->shop->id;
-		$history_log->admin_object = pSQL($controller_name);
-		$history_log->object = pSQL($class_name);
+		$history_log->admin_object = $controller_name;
+		$history_log->object = $class_name;
 		$history_log->id_object = ((int)$id_object > 0 ? (int)$id_object : (int)$history_log->id_object);
-		$history_log->module = pSQL(Tools::getValue('module'));
-		$history_log->diff = pSQL($diff);
-		$history_log->ip = pSQL(Tools::getRemoteAddr());
+		$history_log->module = Tools::getValue('module');
+		$history_log->diff = $diff;
+		$history_log->ip = Tools::getRemoteAddr();
 
 		// If log already exists, we update it
 		if ((int)$id_history_log > 0)
