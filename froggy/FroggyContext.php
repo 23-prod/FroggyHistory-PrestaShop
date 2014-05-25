@@ -14,8 +14,9 @@
  * for newer PrestaShop versions in the future. If you wish to customize PrestaShop for your
  * needs please refer to http://www.prestashop.com for more information.
  *
- * @author Froggy Commerce <contact@froggy-commerce.com>
- * @copyright  2013-2014 Froggy Commerce
+ * @author    Froggy Commerce <contact@froggy-commerce.com>
+ * @copyright 2013-2014 Froggy Commerce
+ * @license   Unauthorized copying of this file, via any medium is strictly prohibited
  */
 
 
@@ -119,6 +120,8 @@ class FroggyContext
 			$this->customer = null;
 			$this->employee = null;
 		}
+		if (!Validate::isLoadedObject($this->currency))
+			$this->currency = new Currency((int)Configuration::get('PS_CURRENCY_DEFAULT'));
 
 		$this->shop = new FroggyShopBackwardModule();
 	}
