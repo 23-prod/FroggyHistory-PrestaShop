@@ -1,6 +1,7 @@
 <?php
 
 global $_MODULE;
+
 $_MODULE = array();
 $_MODULE['<{froggyhistory}prestashop>froggyhistory_28a7043410fc74d2784b41db2ebbff0c'] = 'Froggy Historique';
 $_MODULE['<{froggyhistory}prestashop>froggyhistory_c0436278aef3c39246add9ccd5e1676e'] = 'Vous permet de connaître les différentes actions faites par les employés dans le back office';
@@ -62,13 +63,13 @@ $_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_254f642527b45bc260048e
 $_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_ede644355fa1c89ad15c1de5a9418660'] = 'Effacer l\'historique vieux de';
 $_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_44fdec47036f482b68b748f9d786801b'] = 'jours ou plus';
 $_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_bc3cbb8e13b6333e0c3aa3593ab793cc'] = 'Cette option vous permet d\'effacer automatiquement l\'historique vieux de X jours ou plus.';
-$_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_87c985a20f600d107560af237e4cdbac'] = 'Vous pouvez le configurer à \"0\" si vous souhaitez garder l\'historique et ne jamais l\'effacer.';
+$_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_87c985a20f600d107560af237e4cdbac'] = 'Vous pouvez le configurer à "0" si vous souhaitez garder l\'historique et ne jamais l\'effacer.';
 $_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_f3d68e6507cc23d64aded625f59ad880'] = 'Cependant, garder l\'historique indéfiniment peut ralentir votre boutique.';
 $_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_1c83326943afc281de4eff08d2840d42'] = 'Archiver l\'historique à effacer dans des fichiers de logs :';
 $_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_29d60a4bbba33b6db1e8c2318ce7d3e0'] = 'Cette option vous permet d\'archiver votre historique dans des fichiers de log sur le disque dur de votre serveur.';
 $_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_06c3b47937148db0f8e8b6a8c0131fa6'] = 'Quand l\'historique est effacé (après X jours), cette option va sauvegarder l\'historique dans un fichier log sur votre serveur.';
 $_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_13a5d3e9a0aefe9d930e5b6d0eaf07fd'] = 'Si vous activez cette option, vérifiez régulièrement l\'espace libre sur le disque dur de votre serveur.';
-$_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_898863edffa781354de583b909c34800'] = 'Attention, le répertoire \"%s\" de votre module ne possède pas les droits en écriture, votre historique ne sera pas archivé.';
+$_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_898863edffa781354de583b909c34800'] = 'Attention, le répertoire "%s" de votre module ne possède pas les droits en écriture, votre historique ne sera pas archivé.';
 $_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_ad3d06d03d94223fa652babc913de686'] = 'Valider';
 $_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_c7bc3fddddb62d5b656adc30cea77a55'] = 'Présentation';
 $_MODULE['<{froggyhistory}prestashop>getcontent.bootstrap_2badbae912abfb0ed1a94dc068fb0ebe'] = 'A la droite de votre écran, vous pourrez voir l\'historique des actions de tous vos employés depuis que ce module a été installé.';
@@ -81,13 +82,13 @@ $_MODULE['<{froggyhistory}prestashop>getcontent_254f642527b45bc260048e30704edb39
 $_MODULE['<{froggyhistory}prestashop>getcontent_ede644355fa1c89ad15c1de5a9418660'] = 'Effacer l\'historique vieux de';
 $_MODULE['<{froggyhistory}prestashop>getcontent_44fdec47036f482b68b748f9d786801b'] = 'jours ou plus';
 $_MODULE['<{froggyhistory}prestashop>getcontent_bc3cbb8e13b6333e0c3aa3593ab793cc'] = 'Cette option vous permet d\'effacer automatiquement l\'historique vieux de X jours ou plus.';
-$_MODULE['<{froggyhistory}prestashop>getcontent_87c985a20f600d107560af237e4cdbac'] = 'Vous pouvez le configurer à \"0\" si vous souhaitez garder l\'historique et ne jamais l\'effacer.';
+$_MODULE['<{froggyhistory}prestashop>getcontent_87c985a20f600d107560af237e4cdbac'] = 'Vous pouvez le configurer à "0" si vous souhaitez garder l\'historique et ne jamais l\'effacer.';
 $_MODULE['<{froggyhistory}prestashop>getcontent_f3d68e6507cc23d64aded625f59ad880'] = 'Cependant, garder l\'historique indéfiniment peut ralentir votre boutique.';
 $_MODULE['<{froggyhistory}prestashop>getcontent_1c83326943afc281de4eff08d2840d42'] = 'Archiver l\'historique à effacer dans des fichiers de logs :';
 $_MODULE['<{froggyhistory}prestashop>getcontent_29d60a4bbba33b6db1e8c2318ce7d3e0'] = 'Cette option vous permet d\'archiver votre historique dans des fichiers de log sur le disque dur de votre serveur.';
 $_MODULE['<{froggyhistory}prestashop>getcontent_06c3b47937148db0f8e8b6a8c0131fa6'] = 'Quand l\'historique est effacé (après X jours), cette option va sauvegarder l\'historique dans un fichier log sur votre serveur.';
 $_MODULE['<{froggyhistory}prestashop>getcontent_13a5d3e9a0aefe9d930e5b6d0eaf07fd'] = 'Si vous activez cette option, vérifiez régulièrement l\'espace libre sur le disque dur de votre serveur.';
-$_MODULE['<{froggyhistory}prestashop>getcontent_898863edffa781354de583b909c34800'] = 'Attention, le répertoire \"%s\" de votre module ne possède pas les droits en écriture, votre historique ne sera pas archivé.';
+$_MODULE['<{froggyhistory}prestashop>getcontent_898863edffa781354de583b909c34800'] = 'Attention, le répertoire "%s" de votre module ne possède pas les droits en écriture, votre historique ne sera pas archivé.';
 $_MODULE['<{froggyhistory}prestashop>getcontent_ad3d06d03d94223fa652babc913de686'] = 'Valider';
 $_MODULE['<{froggyhistory}prestashop>getcontent_c7bc3fddddb62d5b656adc30cea77a55'] = 'Présentation';
 $_MODULE['<{froggyhistory}prestashop>getcontent_2badbae912abfb0ed1a94dc068fb0ebe'] = 'A la droite de votre écran, vous pourrez voir l\'historique des actions de tous vos employés depuis que ce module a été installé.';
