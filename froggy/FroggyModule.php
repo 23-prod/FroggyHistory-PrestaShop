@@ -60,9 +60,8 @@ class FroggyModule extends Module
 			require(dirname(__FILE__).'/FroggyBackward.php');
 
 		// Define local path if not exists (1.4 compatibility)
-		// We add the "../$this->name" because sometimes, the FroggyModule class is included from another froggy module :)
 		if (!isset($this->local_path))
-			$this->local_path = Tools::substr(dirname(__FILE__), 0, strrpos(dirname(__FILE__), '/')).'/../'.$this->name.'/';
+			$this->local_path = _PS_MODULE_DIR_.'/'.$this->name.'/';
 
 		// 1.4 retrocompatibility
 		if (!isset($this->context->smarty_methods['FroggyGetAdminLink']))
