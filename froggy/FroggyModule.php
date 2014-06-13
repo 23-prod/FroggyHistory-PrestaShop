@@ -60,8 +60,9 @@ class FroggyModule extends Module
 			require(dirname(__FILE__).'/FroggyBackward.php');
 
 		// Define local path if not exists (1.4 compatibility)
+		// We add the "../$this->name" because sometimes, the FroggyModule class is included from another froggy module :)
 		if (!isset($this->local_path))
-			$this->local_path = Tools::substr(dirname(__FILE__), 0, strrpos(dirname(__FILE__), '/')).'/';
+			$this->local_path = Tools::substr(dirname(__FILE__), 0, strrpos(dirname(__FILE__), '/')).'/../'.$this->name.'/';
 
 		// 1.4 retrocompatibility
 		if (!isset($this->context->smarty_methods['FroggyGetAdminLink']))
@@ -467,6 +468,11 @@ class FroggyDefinitionsModuleParser
 	public function parse()
 	{
 		$definitions = Tools::jsonDecode(Tools::file_get_contents($this->filepath), true);
+
+		// On old PS 1.4 version, jsonDecode return an object instead of array
+		if (is_object($definitions))
+			$definitions = (array)$definitions;
+
 		if (is_null($definitions))
 			throw new Exception('Definition parser cannot decode file : '.$this->filepath);
 
