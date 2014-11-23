@@ -61,6 +61,7 @@ class FroggyModule extends Module
 			require(dirname(__FILE__).'/FroggyBackward.php');
 			require_once(dirname(__FILE__).'/FroggyOverride.php');
 		}
+		require_once(dirname(__FILE__).'/FroggyHelperFormList.php');
 		require_once(dirname(__FILE__).'/FroggyHelperTreeCategories.php');
 
 		// Define local path if not exists (1.4 compatibility)
@@ -74,9 +75,16 @@ class FroggyModule extends Module
 			$this->context->smarty_methods['FroggyGetAdminLink'] = true;
 		}
 
+		// Security function
+		if (!isset($this->context->smarty_methods['FroggyDisplaySafeHtml']))
+		{
+			smartyRegisterFunction($this->context->smarty, 'function', 'FroggyDisplaySafeHtml', 'FroggyDisplaySafeHtml');
+			$this->context->smarty_methods['FroggyDisplaySafeHtml'] = true;
+		}
+
 		// Define module configuration url
 		if (isset($this->context->employee->id))
-			$this->configuration_url = 'index.php?controller=AdminModules&token='.Tools::getAdminTokenLite('AdminModules').'&configure='.$this->name.'&module_name='.$this->name;
+			$this->configuration_url = 'index.php?tab=AdminModules&controller=AdminModules&token='.Tools::getAdminTokenLite('AdminModules').'&configure='.$this->name.'&module_name='.$this->name;
 	}
 
 	/**
@@ -462,7 +470,7 @@ class FroggyModule extends Module
 		$categories = array();
 		$categories_selected = Configuration::get($config_name);
 		if (!empty($categories_selected))
-			foreach (json_decode($categories_selected, true) as $key => $category)
+			foreach (Tools::jsonDecode($categories_selected, true) as $key => $category)
 				$categories[] = $category;
 
 		$tree = new FroggyHelperTreeCategories();
@@ -588,13 +596,17 @@ function FroggyGetAdminLink($params, &$smarty)
 		$params['a'] = $match[$params['a']];
 
 	// In 1.4, we build it with cookie for back office or with argument for front office (see froggytoolbar)
-	global $cookie;
 	$tab = $params['a'];
-	$id_employee = $cookie->id_employee;
+	$id_employee = FroggyContext::getContext()->employee->id;
 	if (isset($params['e']))
 		$id_employee = $params['e'];
 	$token = Tools::getAdminToken($tab.(int)Tab::getIdFromClassName($tab).(int)$id_employee);
 
 	// Return link
 	return 'index.php?tab='.$tab.'&token='.$token;
+}
+
+function FroggyDisplaySafeHtml($params, &$smarty)
+{
+	return $params['s'];
 }

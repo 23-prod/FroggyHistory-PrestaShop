@@ -33,12 +33,12 @@ if (!in_array('FroggyContext', get_declared_classes()))
 /**
  * If not under an object we don't have to set the context
  */
-if (!isset($this))
+$var = 'this';
+if (!isset($$var))
 	return;
 
 /**
  * Set variables
  */
-global $currentIndex;
-$this->context = FroggyContext::getContext();
-$this->smarty = $this->context->smarty;
+$$var->context = FroggyContext::getContext();
+$$var->smarty = $$var->context->smarty;

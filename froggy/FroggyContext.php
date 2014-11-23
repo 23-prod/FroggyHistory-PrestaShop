@@ -19,7 +19,6 @@
  * @license   Unauthorized copying of this file, via any medium is strictly prohibited
  */
 
-
 class FroggyContext
 {
 	/**
@@ -94,23 +93,21 @@ class FroggyContext
 
 	public function __construct()
 	{
-		global $cookie, $cart, $smarty, $link;
-
 		$this->tab = null;
 
-		$this->cookie = $cookie;
-		$this->cart = $cart;
-		$this->smarty = $smarty;
-		$this->link = $link;
+		$this->cookie = $GLOBALS['cookie'];
+		$this->cart = $GLOBALS['cart'];
+		$this->smarty = $GLOBALS['smarty'];
+		$this->link = $GLOBALS['link'];
 
 		$this->controller = new FroggyControllerBackwardModule();
-		if (is_object($cookie))
+		if (is_object($this->cookie))
 		{
-			$this->currency = new Currency((int)$cookie->id_currency);
-			$this->language = new Language((int)$cookie->id_lang);
-			$this->country = new Country((int)$cookie->id_country);
-			$this->customer = new FroggyCustomerBackwardModule((int)$cookie->id_customer);
-			$this->employee = new Employee((int)$cookie->id_employee);
+			$this->currency = new Currency((int)$this->cookie->id_currency);
+			$this->language = new Language((int)$this->cookie->id_lang);
+			$this->country = new Country((int)$this->cookie->id_country);
+			$this->customer = new FroggyCustomerBackwardModule((int)$this->cookie->id_customer);
+			$this->employee = new Employee((int)$this->cookie->id_employee);
 		}
 		else
 		{

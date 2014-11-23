@@ -1,6 +1,6 @@
 {
-	"tab" : "front_office_features",
-	"version": "1.0.3",
+	"tab" : "administration",
+	"version": "1.0.4",
 	"need_instance": 0,
 
     "hooks": { "all" : [
