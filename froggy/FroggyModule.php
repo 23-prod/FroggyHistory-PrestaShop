@@ -584,7 +584,11 @@ function FroggyGetAdminLink($params, &$smarty)
 {
 	// In 1.5, we use getAdminLink method
 	if (version_compare(_PS_VERSION_, '1.5.0') >= 0)
+	{
+		if (version_compare(_PS_VERSION_, '1.6.0') >= 0 && $params['a'] == 'AdminHome')
+			$params['a'] = 'AdminDashboard';
 		return Context::getContext()->link->getAdminLink($params['a']);
+	}
 
 	// Match compatibility between 1.4 and 1.5
 	$match = array(

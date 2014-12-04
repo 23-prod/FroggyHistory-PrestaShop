@@ -95,10 +95,10 @@ class FroggyContext
 	{
 		$this->tab = null;
 
-		$this->cookie = $GLOBALS['cookie'];
-		$this->cart = $GLOBALS['cart'];
-		$this->smarty = $GLOBALS['smarty'];
-		$this->link = $GLOBALS['link'];
+		$this->cookie = (isset($GLOBALS['cookie']) ? $GLOBALS['cookie'] : null);
+		$this->cart = (isset($GLOBALS['cart']) ? $GLOBALS['cart'] : null);
+		$this->smarty = (isset($GLOBALS['smarty']) ? $GLOBALS['smarty'] : null);
+		$this->link = (isset($GLOBALS['link']) ? $GLOBALS['link'] : null);
 
 		$this->controller = new FroggyControllerBackwardModule();
 		if (is_object($this->cookie))
