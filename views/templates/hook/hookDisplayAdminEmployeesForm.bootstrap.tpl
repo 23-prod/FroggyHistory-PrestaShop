@@ -22,7 +22,7 @@
 <div class="panel">
     <fieldset id="froggyhistory-fieldset">
         <div class="panel-heading">
-        <legend><img src="{$froggyhistory.module_dir}logo.png" alt="" width="16" />{l s='Froggy History' mod='froggyhistory'}</legend>
+        <legend><img src="{$froggyhistory.module_dir|escape:'html':'UTF-8'}logo.png" alt="" width="16" />{l s='Froggy History' mod='froggyhistory'}</legend>
         </div>
         <ul id="froggyhistory-list">
             <li class="loader-gif"><img src="../modules/froggyhistory/img/loader.gif" /></li>
@@ -32,7 +32,7 @@
                 var froggyhistory_html = $("#froggyhistory-employee-section").html();
                 $("#froggyhistory-employee-section").html('');
                 $('#employee_form').after(froggyhistory_html);
-                loadFroggyHistoryLog('{$froggyhistory.url}&section=employee');
+                loadFroggyHistoryLog('{$froggyhistory.url|escape:'html':'UTF-8'}&section=employee');
             });</script>
     </fieldset>
 </div>

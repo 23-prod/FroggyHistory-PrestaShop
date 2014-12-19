@@ -19,7 +19,7 @@
 <h2 align="center">Froggy History</h2>
 <div class="bootstrap">
     <fieldset id="froggyhistory-fieldset">
-            <legend><img src="{$froggyhistory.module_dir}logo.png" alt="" width="16" />{l s='Froggy History' mod='froggyhistory'}</legend>
+            <legend><img src="{$froggyhistory.module_dir|escape:'html':'UTF-8'}logo.png" alt="" width="16" />{l s='Froggy History' mod='froggyhistory'}</legend>
             <div class="panel col-lg-5">
                 <div id="froggyhistory-introduction-configuration">
 
@@ -36,7 +36,7 @@
                                 <p class="help-block">({l s='days' mod='froggyhistory'})</p>
                             </label>
                             <div class="col-lg-9">
-                                <input type="text" name="FH_DELETE_AFTER" value="{$froggyhistory.FH_DELETE_AFTER}" />
+                                <input type="text" name="FH_DELETE_AFTER" value="{$froggyhistory.FH_DELETE_AFTER|intval}" />
                                 <p class="help-block">
                                 {l s='This option permits you to delete automatically history older than X days.' mod='froggyhistory'}<br>
                                 {l s='You can set it to "0" if you want to keep history and never delete it.' mod='froggyhistory'}<br>
@@ -65,21 +65,21 @@
 
                     <p>{l s='You can also access to product history on the product administration forms.' mod='froggyhistory'}</p>
                     <p>
-                        <a href="{$froggyhistory.module_dir}img/screen-catalog-{$froggyhistory.ps_version}.png">
-                            <img src="{$froggyhistory.module_dir}img/screen-catalog-{$froggyhistory.ps_version}.png" />
+                        <a href="{$froggyhistory.module_dir|escape:'html':'UTF-8'}img/screen-catalog-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png">
+                            <img src="{$froggyhistory.module_dir|escape:'html':'UTF-8'}img/screen-catalog-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png" />
                         </a>
-                        <a href="{$froggyhistory.module_dir}img/screen-product-{$froggyhistory.ps_version}.png">
-                            <img src="{$froggyhistory.module_dir}img/screen-product-{$froggyhistory.ps_version}.png" height="250" />
+                        <a href="{$froggyhistory.module_dir|escape:'html':'UTF-8'}img/screen-product-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png">
+                            <img src="{$froggyhistory.module_dir|escape:'html':'UTF-8'}img/screen-product-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png" height="250" />
                         </a>
                     </p>
 
                     <p>{l s='At last, on every employee profile, you will be able to see his actions history.' mod='froggyhistory'}</p>
                     <p>
-                        <a href="{$froggyhistory.module_dir}img/screen-administration-{$froggyhistory.ps_version}.png">
-                            <img src="{$froggyhistory.module_dir}img/screen-administration-{$froggyhistory.ps_version}.png" />
+                        <a href="{$froggyhistory.module_dir|escape:'html':'UTF-8'}img/screen-administration-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png">
+                            <img src="{$froggyhistory.module_dir|escape:'html':'UTF-8'}img/screen-administration-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png" />
                         </a>
-                        <a href="{$froggyhistory.module_dir}img/screen-employee-{$froggyhistory.ps_version}.png">
-                            <img src="{$froggyhistory.module_dir}img/screen-employee-{$froggyhistory.ps_version}.png" width="250" />
+                        <a href="{$froggyhistory.module_dir|escape:'html':'UTF-8'}img/screen-employee-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png">
+                            <img src="{$froggyhistory.module_dir|escape:'html':'UTF-8'}img/screen-employee-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png" width="250" />
                         </a>
                     </p>
 
@@ -95,6 +95,6 @@
                     </p>
                 </div>
             </div>
-        <script>$(document).ready(function() { loadFroggyHistoryLog('{$froggyhistory.url}'); });</script>
+        <script>$(document).ready(function() { loadFroggyHistoryLog('{$froggyhistory.url|escape:'html':'UTF-8'}'); });</script>
     </fieldset>
 </div>

@@ -20,11 +20,11 @@
 <fieldset id="froggyhistory-fieldset">
     <div class="panel">
         <div class="panel-heading">
-        <legend><img src="{$froggyhistory.module_dir}logo.png" alt="" width="16" />{l s='Froggy History' mod='froggyhistory'}</legend>
+        <legend><img src="{$froggyhistory.module_dir|escape:'html':'UTF-8'}logo.png" alt="" width="16" />{l s='Froggy History' mod='froggyhistory'}</legend>
         </div>
         <ul id="froggyhistory-list">
             <li class="loader-gif"><img src="../modules/froggyhistory/views/img/loader.gif" /></li>
         </ul>
-        <script>$(document).ready(function() { loadFroggyHistoryLog('{$froggyhistory.url}'); });</script>
+        <script>$(document).ready(function() { loadFroggyHistoryLog('{$froggyhistory.url|escape:'html':'UTF-8'}'); });</script>
     </div>
 </fieldset>
