@@ -65,21 +65,21 @@
 
                     <p>{l s='You can also access to product history on the product administration forms.' mod='froggyhistory'}</p>
                     <p>
-                        <a href="{$froggyhistory.module_dir}views/img/screen-catalog-{$froggyhistory.ps_version}.png">
-                            <img src="{$froggyhistory.module_dir}views/img/screen-catalog-{$froggyhistory.ps_version}.png" />
+                        <a href="{$froggyhistory.module_dir}img/screen-catalog-{$froggyhistory.ps_version}.png">
+                            <img src="{$froggyhistory.module_dir}img/screen-catalog-{$froggyhistory.ps_version}.png" />
                         </a>
-                        <a href="{$froggyhistory.module_dir}views/img/screen-product-{$froggyhistory.ps_version}.png">
-                            <img src="{$froggyhistory.module_dir}views/img/screen-product-{$froggyhistory.ps_version}.png" height="250" />
+                        <a href="{$froggyhistory.module_dir}img/screen-product-{$froggyhistory.ps_version}.png">
+                            <img src="{$froggyhistory.module_dir}img/screen-product-{$froggyhistory.ps_version}.png" height="250" />
                         </a>
                     </p>
 
                     <p>{l s='At last, on every employee profile, you will be able to see his actions history.' mod='froggyhistory'}</p>
                     <p>
-                        <a href="{$froggyhistory.module_dir}views/img/screen-administration-{$froggyhistory.ps_version}.png">
-                            <img src="{$froggyhistory.module_dir}views/img/screen-administration-{$froggyhistory.ps_version}.png" />
+                        <a href="{$froggyhistory.module_dir}img/screen-administration-{$froggyhistory.ps_version}.png">
+                            <img src="{$froggyhistory.module_dir}img/screen-administration-{$froggyhistory.ps_version}.png" />
                         </a>
-                        <a href="{$froggyhistory.module_dir}views/img/screen-employee-{$froggyhistory.ps_version}.png">
-                            <img src="{$froggyhistory.module_dir}views/img/screen-employee-{$froggyhistory.ps_version}.png" width="250" />
+                        <a href="{$froggyhistory.module_dir}img/screen-employee-{$froggyhistory.ps_version}.png">
+                            <img src="{$froggyhistory.module_dir}img/screen-employee-{$froggyhistory.ps_version}.png" width="250" />
                         </a>
                     </p>
 
@@ -90,7 +90,7 @@
                     <p>
                     <h3>{l s='General History' mod='froggyhistory'}</h3>
                     <ul id="froggyhistory-list">
-                        <li class="loader-gif"><img src="../modules/froggyhistory/views/img/loader.gif" /></li>
+                        <li class="loader-gif"><img src="../modules/froggyhistory/img/loader.gif" /></li>
                     </ul>
                     </p>
                 </div>
