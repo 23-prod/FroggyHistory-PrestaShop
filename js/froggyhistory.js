@@ -38,5 +38,6 @@ function initFroggyHistoryPagination()
 
 
 $(document).ready(function() {
-    $("#froggyhistory-introduction-configuration a").fancybox();
+	if ($("#froggyhistory-introduction-configuration a").length)
+    	$("#froggyhistory-introduction-configuration a").fancybox();
 });
