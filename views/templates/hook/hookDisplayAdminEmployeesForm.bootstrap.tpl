@@ -32,7 +32,7 @@
                 var froggyhistory_html = $("#froggyhistory-employee-section").html();
                 $("#froggyhistory-employee-section").html('');
                 $('#employee_form').after(froggyhistory_html);
-                loadFroggyHistoryLog('{$froggyhistory.url|escape:'html':'UTF-8'}&section=employee');
+                loadFroggyHistoryLog('{FroggyDisplaySafeHtml s=$froggyhistory.url}&section=employee');
             });</script>
     </fieldset>
 </div>

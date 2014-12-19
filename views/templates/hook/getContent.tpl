@@ -81,5 +81,5 @@
         </p>
     </div>
 
-	<script>$(document).ready(function() { loadFroggyHistoryLog('{$froggyhistory.url|escape:'html':'UTF-8'}'); });</script>
+	<script>$(document).ready(function() { loadFroggyHistoryLog('{FroggyDisplaySafeHtml s=$froggyhistory.url}'); });</script>
 </fieldset>

@@ -24,7 +24,7 @@
 	<ul id="froggyhistory-list">
 		<li class="loader-gif"><img src="../modules/froggyhistory/img/loader.gif" /></li>
 	</ul>
-	<script>$(document).ready(function() { loadFroggyHistoryLog('{$froggyhistory.url|escape:'html':'UTF-8'}&section=employee'); });</script>
+	<script>$(document).ready(function() { loadFroggyHistoryLog('{FroggyDisplaySafeHtml s=$froggyhistory.url}&section=employee'); });</script>
 </fieldset>
 </form>
 <div class="clear"></div>

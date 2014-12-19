@@ -23,5 +23,5 @@
 	<ul id="froggyhistory-list">
 		<li class="loader-gif"><img src="../modules/froggyhistory/views/img/loader.gif" /></li>
 	</ul>
-	<script>$(document).ready(function() { loadFroggyHistoryLog('{$froggyhistory.url|escape:'html':'UTF-8'}'); });</script>
+	<script>$(document).ready(function() { loadFroggyHistoryLog('{FroggyDisplaySafeHtml s=$froggyhistory.url}'); });</script>
 </fieldset>
