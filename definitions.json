@@ -1,6 +1,6 @@
 {
 	"tab" : "administration",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"need_instance": 0,
 
     "hooks": { "all" : [
