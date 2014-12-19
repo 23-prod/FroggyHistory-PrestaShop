@@ -27,11 +27,13 @@ $_MODULE['<{froggyhistory}prestashop>froggyhistory_469a41a226444e3dbdd6eac937845
 $_MODULE['<{froggyhistory}prestashop>froggyhistory_7a89913193bf0ff0185a35e2f3787d80'] = 'La característica';
 $_MODULE['<{froggyhistory}prestashop>froggyhistory_dbcd322a0b628601221f7ca81f53d42e'] = 'El valor de la característica';
 $_MODULE['<{froggyhistory}prestashop>froggyhistory_1ff392eb081b5b5eaf3f9ad5322fa267'] = 'El grupo cliente';
+$_MODULE['<{froggyhistory}prestashop>froggyhistory_b40ea07f9c95bc0b3b6c756a90e1eded'] = 'El descuento del grupo cliente';
 $_MODULE['<{froggyhistory}prestashop>froggyhistory_70c72294acb80c57c44f49761bb15aa5'] = 'El invitado';
 $_MODULE['<{froggyhistory}prestashop>froggyhistory_e1ee394748edfa97cb2a1f6b34c836be'] = 'El idioma';
 $_MODULE['<{froggyhistory}prestashop>froggyhistory_d1d57d2f6b9c1fc8559a016951eae139'] = 'El fabricante';
 $_MODULE['<{froggyhistory}prestashop>froggyhistory_d41238b9d718381a54b20107c935f81f'] = 'El mando';
 $_MODULE['<{froggyhistory}prestashop>froggyhistory_c2de962ea24e87d2fd9d8991af99674c'] = 'El producto';
+$_MODULE['<{froggyhistory}prestashop>froggyhistory_7a4786ee52ffdd7c5b62a94fad2d3b7b'] = 'El estado';
 $_MODULE['<{froggyhistory}prestashop>froggyhistory_1a6caeba110627c9961b7a7649aa0033'] = 'la tienda';
 $_MODULE['<{froggyhistory}prestashop>froggyhistory_c3340e4a07c6fd088a2014233a4bea15'] = 'El proveedor';
 $_MODULE['<{froggyhistory}prestashop>froggyhistory_d50ba7d2994afb2db1dfcb6fadce1162'] = 'La zona geográfica';
