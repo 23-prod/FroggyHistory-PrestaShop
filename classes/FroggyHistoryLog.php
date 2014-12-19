@@ -1,24 +1,27 @@
 <?php
-/*
-* 2013-2014 Froggy Commerce
-*
-* NOTICE OF LICENSE
-*
-* You should have received a licence with this module.
-* If you didn't buy this module on Froggy-Commerce.com, ThemeForest.net
-* or Addons.PrestaShop.com, please contact us immediately : contact@froggy-commerce.com
-*
-* DISCLAIMER
-*
-* Do not edit or add to this file if you wish to benefit the updates
-* for newer PrestaShop versions in the future. If you wish to customize PrestaShop for your
-* needs please refer to http://www.prestashop.com for more information.
-*
-*  @author Froggy Commerce <contact@froggy-commerce.com>
-*  @copyright  2013-2014 Froggy Commerce
-*/
+/**
+ * 2013-2014 Froggy Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * You should have received a licence with this module.
+ * If you didn't buy this module on Froggy-Commerce.com, ThemeForest.net
+ * or Addons.PrestaShop.com, please contact us immediately : contact@froggy-commerce.com
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to benefit the updates
+ * for newer PrestaShop versions in the future. If you wish to customize PrestaShop for your
+ * needs please refer to http://www.prestashop.com for more information.
+ *
+ * @author    Froggy Commerce <contact@froggy-commerce.com>
+ * @copyright 2013-2014 Froggy Commerce
+ * @license   Unauthorized copying of this file, via any medium is strictly prohibited
+ */
 
-// Security
+/*
+ * Security
+ */
 defined('_PS_VERSION_') || require dirname(__FILE__).'/index.php';
 
 class FroggyHistoryLog extends ObjectModel
@@ -85,7 +88,7 @@ class FroggyHistoryLog extends ObjectModel
 	/**
 	 * Return list of History Logs
 	 */
-	static public function getList($page = 1, $nb_per_page = 25, $admin_object = NULL, $object = NULL, $id_object = NULL, $id_employee = NULL, $id_shop = NULL)
+	public static function getList($page = 1, $nb_per_page = 25, $admin_object = null, $object = null, $id_object = null, $id_employee = null, $id_shop = null)
 	{
 		$page = $page - 1;
 		return Db::getInstance()->executeS('
@@ -95,11 +98,11 @@ class FroggyHistoryLog extends ObjectModel
 			LEFT JOIN `'._DB_PREFIX_.'shop` s ON (s.`id_shop` = gl.`id_shop`)
 			LEFT JOIN `'._DB_PREFIX_.'fhy_action` ga ON (ga.`id_fhy_action` = gl.`id_fhy_action`)
 			WHERE 1
-			'.($admin_object !== NULL ? 'AND gl.`admin_object` = \''.pSQL($admin_object).'\'' : '').'
-			'.($object !== NULL ? 'AND gl.`object` = \''.pSQL($object).'\'' : '').'
-			'.($id_object !== NULL ? 'AND gl.`id_object` = '.(int)$id_object : '').'
-			'.($id_employee !== NULL ? 'AND gl.`id_employee` = '.(int)$id_employee : '').'
-			'.($id_shop !== NULL ? 'AND gl.`id_shop` = '.(int)$id_shop : '').'
+			'.($admin_object !== null ? 'AND gl.`admin_object` = \''.pSQL($admin_object).'\'' : '').'
+			'.($object !== null ? 'AND gl.`object` = \''.pSQL($object).'\'' : '').'
+			'.($id_object !== null ? 'AND gl.`id_object` = '.(int)$id_object : '').'
+			'.($id_employee !== null ? 'AND gl.`id_employee` = '.(int)$id_employee : '').'
+			'.($id_shop !== null ? 'AND gl.`id_shop` = '.(int)$id_shop : '').'
 			ORDER BY `date_add` DESC
 			LIMIT '.((int)$page * (int)$nb_per_page).','.(int)$nb_per_page.'
 		');
@@ -108,24 +111,24 @@ class FroggyHistoryLog extends ObjectModel
 	/**
 	 * Return total of History Logs
 	 */
-	static public function getTotal($admin_object = NULL, $object = NULL, $id_object = NULL, $id_employee = NULL, $id_shop = NULL)
+	public static function getTotal($admin_object = null, $object = null, $id_object = null, $id_employee = null, $id_shop = null)
 	{
 		return Db::getInstance()->getValue('
 			SELECT COUNT(gl.`id_fhy_log`)
 			FROM `'._DB_PREFIX_.'fhy_log` gl
 			WHERE 1
-			'.($admin_object !== NULL ? 'AND gl.`admin_object` = \''.pSQL($admin_object).'\'' : '').'
-			'.($object !== NULL ? 'AND gl.`object` = \''.pSQL($object).'\'' : '').'
-			'.($id_object !== NULL ? 'AND gl.`id_object` = '.(int)$id_object : '').'
-			'.($id_employee !== NULL ? 'AND gl.`id_employee` = '.(int)$id_employee : '').'
-			'.($id_shop !== NULL ? 'AND gl.`id_shop` = '.(int)$id_shop : '').'
+			'.($admin_object !== null ? 'AND gl.`admin_object` = \''.pSQL($admin_object).'\'' : '').'
+			'.($object !== null ? 'AND gl.`object` = \''.pSQL($object).'\'' : '').'
+			'.($id_object !== null ? 'AND gl.`id_object` = '.(int)$id_object : '').'
+			'.($id_employee !== null ? 'AND gl.`id_employee` = '.(int)$id_employee : '').'
+			'.($id_shop !== null ? 'AND gl.`id_shop` = '.(int)$id_shop : '').'
 		');
 	}
 
 	/**
 	 * Return Action Type ID
 	 */
-	static public function getActionId($action)
+	public static function getActionId($action)
 	{
 		if (count(self::$action_type_list) < 1)
 		{
@@ -143,14 +146,14 @@ class FroggyHistoryLog extends ObjectModel
 	 * Check if action has already been registered / logged during this page call
 	 */
 
-	static public function addActionRegister($object, $id_object, $id_history_log)
+	public static function addActionRegister($object, $id_object, $id_history_log)
 	{
 		self::$action_register[(string)$object.'-'.(int)$id_object] = (int)$id_history_log;
 		self::$action_register[(string)$object.'-0'] = (int)$id_history_log;
 		return true;
 	}
 
-	static public function getActionRegister($object, $id_object)
+	public static function getActionRegister($object, $id_object)
 	{
 		if (isset(self::$action_register[(string)$object.'-'.(int)$id_object]))
 			return (int)self::$action_register[(string)$object.'-'.(int)$id_object];

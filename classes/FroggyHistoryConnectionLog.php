@@ -1,24 +1,27 @@
 <?php
-/*
-* 2013-2014 Froggy Commerce
-*
-* NOTICE OF LICENSE
-*
-* You should have received a licence with this module.
-* If you didn't buy this module on Froggy-Commerce.com, ThemeForest.net
-* or Addons.PrestaShop.com, please contact us immediately : contact@froggy-commerce.com
-*
-* DISCLAIMER
-*
-* Do not edit or add to this file if you wish to benefit the updates
-* for newer PrestaShop versions in the future. If you wish to customize PrestaShop for your
-* needs please refer to http://www.prestashop.com for more information.
-*
-*  @author Froggy Commerce <contact@froggy-commerce.com>
-*  @copyright  2013-2014 Froggy Commerce
-*/
+/**
+ * 2013-2014 Froggy Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * You should have received a licence with this module.
+ * If you didn't buy this module on Froggy-Commerce.com, ThemeForest.net
+ * or Addons.PrestaShop.com, please contact us immediately : contact@froggy-commerce.com
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to benefit the updates
+ * for newer PrestaShop versions in the future. If you wish to customize PrestaShop for your
+ * needs please refer to http://www.prestashop.com for more information.
+ *
+ * @author    Froggy Commerce <contact@froggy-commerce.com>
+ * @copyright 2013-2014 Froggy Commerce
+ * @license   Unauthorized copying of this file, via any medium is strictly prohibited
+ */
 
-// Security
+/*
+ * Security
+ */
 defined('_PS_VERSION_') || require dirname(__FILE__).'/index.php';
 
 
@@ -59,7 +62,7 @@ class FroggyHistoryConnectionLog extends ObjectModel
 	/**
 	 * Return list of History Logs
 	 */
-	static public function getList($page = 1, $nb_per_page = 25, $ip = NULL, $id_employee = NULL, $id_shop = NULL)
+	public static function getList($page = 1, $nb_per_page = 25, $ip = null, $id_employee = null, $id_shop = null)
 	{
 		$page = $page - 1;
 		return Db::getInstance()->executeS('
@@ -68,9 +71,9 @@ class FroggyHistoryConnectionLog extends ObjectModel
 			LEFT JOIN `'._DB_PREFIX_.'employee` e ON (e.`id_employee` = gcl.`id_employee`)
 			LEFT JOIN `'._DB_PREFIX_.'shop` s ON (s.`id_shop` = gcl.`id_shop`)
 			WHERE 1
-			'.($ip !== NULL ? 'AND gcl.`ip` = \''.pSQL($ip).'\'' : '').'
-			'.($id_employee !== NULL ? 'AND gcl.`id_employee` = '.(int)$id_employee : '').'
-			'.($id_shop !== NULL ? 'AND gcl.`id_shop` = '.(int)$id_shop : '').'
+			'.($ip !== null ? 'AND gcl.`ip` = \''.pSQL($ip).'\'' : '').'
+			'.($id_employee !== null ? 'AND gcl.`id_employee` = '.(int)$id_employee : '').'
+			'.($id_shop !== null ? 'AND gcl.`id_shop` = '.(int)$id_shop : '').'
 			ORDER BY gcl.`date_add` DESC
 			LIMIT '.((int)$page * (int)$nb_per_page).','.(int)$nb_per_page.'
 		');

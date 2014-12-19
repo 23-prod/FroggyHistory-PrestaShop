@@ -1,30 +1,37 @@
 <?php
-/*
-* 2013-2014 Froggy Commerce
-*
-* NOTICE OF LICENSE
-*
-* You should have received a licence with this module.
-* If you didn't buy this module on Froggy-Commerce.com, ThemeForest.net
-* or Addons.PrestaShop.com, please contact us immediately : contact@froggy-commerce.com
-*
-* DISCLAIMER
-*
-* Do not edit or add to this file if you wish to benefit the updates
-* for newer PrestaShop versions in the future. If you wish to customize PrestaShop for your
-* needs please refer to http://www.prestashop.com for more information.
-*
-*  @author Froggy Commerce <contact@froggy-commerce.com>
-*  @copyright  2013-2014 Froggy Commerce
-*/
+/**
+ * 2013-2014 Froggy Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * You should have received a licence with this module.
+ * If you didn't buy this module on Froggy-Commerce.com, ThemeForest.net
+ * or Addons.PrestaShop.com, please contact us immediately : contact@froggy-commerce.com
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to benefit the updates
+ * for newer PrestaShop versions in the future. If you wish to customize PrestaShop for your
+ * needs please refer to http://www.prestashop.com for more information.
+ *
+ * @author    Froggy Commerce <contact@froggy-commerce.com>
+ * @copyright 2013-2014 Froggy Commerce
+ * @license   Unauthorized copying of this file, via any medium is strictly prohibited
+ */
 
-// Security
+/*
+ * Security
+ */
 defined('_PS_VERSION_') || require dirname(__FILE__).'/index.php';
 
-// Include Froggy Library
+/*
+ * Include Froggy Library
+ */
 if (!class_exists('FroggyModule', false)) require_once dirname(__FILE__).'/froggy/FroggyModule.php';
 
-// Require
+/*
+ * Requires
+ */
 require_once(dirname(__FILE__).'/classes/FroggyHistoryLibrary.php');
 require_once(dirname(__FILE__).'/classes/FroggyHistoryLog.php');
 require_once(dirname(__FILE__).'/classes/FroggyHistoryObjectLog.php');
@@ -55,7 +62,7 @@ class FroggyHistory extends FroggyModule
 	{
 		$this->name = 'froggyhistory';
 		$this->author = 'Froggy Commerce';
-		$this->version = '1.0.4';
+		$this->version = '1.0.5';
 		$this->tab = 'administration';
 
 		parent::__construct();
@@ -124,16 +131,19 @@ class FroggyHistory extends FroggyModule
 	 *
 	 */
 	public function ajaxRequest()
-	{	
+	{
+		// Init only for PrestaShop Validator :p
+		$page = $admin_object = $object = $id_object = $id_employee = $id_shop = null;
+
 		$url = '?ajax_secure_key='.htmlentities($this->ajax_secure_key);
 		$url .= '&ajax_id_employee='.(int)$this->ajax_id_employee;
 		$var_list = array('page', 'admin_object', 'object', 'id_object', 'id_employee', 'id_shop');
 		foreach ($var_list as $var)
 		{
-			$$var = NULL;
+			$$var = null;
 			if (Tools::getValue($var) != '')
 				$$var = pSQL(Tools::getValue($var));
-			if ($var != 'page' && $var !== NULL)
+			if ($var != 'page' && $var !== null)
 				$url .= '&'.$var.'='.$$var;
 		}
 		if ((int)$page < 1)
@@ -228,9 +238,20 @@ class FroggyHistory extends FroggyModule
 	}
 
 
-	public function hookActionObjectAddAfter($object) { return FroggyHistoryLibrary::getLib($this)->hookLog('ADD', $object); }
-	public function hookActionObjectUpdateAfter($object) { return FroggyHistoryLibrary::getLib($this)->hookLog('UPDATE', $object); }
-	public function hookActionObjectDeleteAfter($object) { return FroggyHistoryLibrary::getLib($this)->hookLog('DELETE', $object); }
-
-	public function hookActionAdminDuplicateAfter($controller) { return FroggyHistoryLibrary::getLib($this)->hookLog('DUPLICATE', null, $controller); }
+	public function hookActionObjectAddAfter($object)
+	{
+		return FroggyHistoryLibrary::getLib($this)->hookLog('ADD', $object);
+	}
+	public function hookActionObjectUpdateAfter($object)
+	{
+		return FroggyHistoryLibrary::getLib($this)->hookLog('UPDATE', $object);
+	}
+	public function hookActionObjectDeleteAfter($object)
+	{
+		return FroggyHistoryLibrary::getLib($this)->hookLog('DELETE', $object);
+	}
+	public function hookActionAdminDuplicateAfter($controller)
+	{
+		return FroggyHistoryLibrary::getLib($this)->hookLog('DUPLICATE', null, $controller);
+	}
 }

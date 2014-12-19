@@ -1,24 +1,27 @@
 <?php
-/*
-* 2013-2014 Froggy Commerce
-*
-* NOTICE OF LICENSE
-*
-* You should have received a licence with this module.
-* If you didn't buy this module on Froggy-Commerce.com, ThemeForest.net
-* or Addons.PrestaShop.com, please contact us immediately : contact@froggy-commerce.com
-*
-* DISCLAIMER
-*
-* Do not edit or add to this file if you wish to benefit the updates
-* for newer PrestaShop versions in the future. If you wish to customize PrestaShop for your
-* needs please refer to http://www.prestashop.com for more information.
-*
-*  @author Froggy Commerce <contact@froggy-commerce.com>
-*  @copyright  2013-2014 Froggy Commerce
-*/
+/**
+ * 2013-2014 Froggy Commerce
+ *
+ * NOTICE OF LICENSE
+ *
+ * You should have received a licence with this module.
+ * If you didn't buy this module on Froggy-Commerce.com, ThemeForest.net
+ * or Addons.PrestaShop.com, please contact us immediately : contact@froggy-commerce.com
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to benefit the updates
+ * for newer PrestaShop versions in the future. If you wish to customize PrestaShop for your
+ * needs please refer to http://www.prestashop.com for more information.
+ *
+ * @author    Froggy Commerce <contact@froggy-commerce.com>
+ * @copyright 2013-2014 Froggy Commerce
+ * @license   Unauthorized copying of this file, via any medium is strictly prohibited
+ */
 
-// Security
+/*
+ * Security
+ */
 defined('_PS_VERSION_') || require dirname(__FILE__).'/index.php';
 
 class FroggyHistoryLibrary
@@ -114,6 +117,9 @@ class FroggyHistoryLibrary
 	 */
 	public function writeLogSentence($log)
 	{
+		// Init only for PrestaShop Validator :p
+		$definition = array();
+
 		// Matching array
 		$match_action = array(
 			'ADD' => $this->l('created'),
@@ -207,6 +213,9 @@ class FroggyHistoryLibrary
 
 		// Delete / archive old history
 		$this->deleteArchiveOldHistory();
+
+		// Init only for PrestaShop Validator :p
+		$definition = array();
 
 		// Init
 		$id_object = 0;
@@ -313,7 +322,7 @@ class FroggyHistoryLibrary
 		$days = (int)Configuration::get('FH_DELETE_AFTER');
 		if ($days > 0)
 		{
-			$date_limit = date('Y-m-d H:i:s',strtotime('-'.$days.' days'));
+			$date_limit = date('Y-m-d H:i:s', strtotime('-'.$days.' days'));
 			if (Configuration::get('FH_LOG_DELETED') == 1)
 				$this->archiveOldHistory($date_limit);
 			Db::getInstance()->delete('fhy_log', '`date_add` < \''.$date_limit.'\'');
