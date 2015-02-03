@@ -46,7 +46,7 @@
 	{if $froggyhistory.nb_pages gt 2}
 		<br />
 		{section name=pagination start=1 loop=$froggyhistory.nb_pages step=1}
-			{if $smarty.section.pagination.index eq $froggyhistory.page}<b>{else}<a href="{$froggyhistory.url}&page={$smarty.section.pagination.index}" class="froggyhistory-pagination">{/if}{$smarty.section.pagination.index}{if $smarty.section.pagination.index eq $froggyhistory.page}</b>{else}</a>{/if}
+			{if $smarty.section.pagination.index eq $froggyhistory.page}<b>{else}<a href="{FroggyDisplaySafeHtml s=$froggyhistory.url}&page={$smarty.section.pagination.index}" class="froggyhistory-pagination">{/if}{$smarty.section.pagination.index}{if $smarty.section.pagination.index eq $froggyhistory.page}</b>{else}</a>{/if}
 		{/section}
 		<script>$(document).ready(function() { initFroggyHistoryPagination(); });</script>
 	{/if}

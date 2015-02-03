@@ -2,7 +2,7 @@
 <module>
 	<name>froggyhistory</name>
 	<displayName><![CDATA[Froggy History]]></displayName>
-	<version><![CDATA[1.0.5]]></version>
+	<version><![CDATA[1.0.6]]></version>
 	<description><![CDATA[Allow you to know the different actions of each employee in the Back Office]]></description>
 	<author><![CDATA[Froggy Commerce]]></author>
 	<tab><![CDATA[administration]]></tab>
