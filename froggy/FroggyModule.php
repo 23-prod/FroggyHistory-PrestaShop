@@ -336,9 +336,9 @@ class FroggyModule extends Module
 
 				foreach (Language::getLanguages(false) as $language)
 					if (isset($controller[$language['iso_code']]))
-						$tab->name[$language['id_lang']] = $controller[$language['iso_code']];
+						$tab->name[$language['id_lang']] = $controller['name'][$language['iso_code']];
 					else
-						$tab->name[$language['id_lang']] = $controller['default'];
+						$tab->name[$language['id_lang']] = $controller['name']['default'];
 
 				if (!$tab->add())
 					return false;
