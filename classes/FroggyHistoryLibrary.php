@@ -163,7 +163,10 @@ class FroggyHistoryLibrary
 
 			// Check if we build link for this type of object
 			if (!in_array($log['object'], $match_object_nolink) && in_array($log['object'], $match_multilang_object))
-				$object_translation = '<a href="index.php?controller='.Tools::strtolower($controller_name).'&'.($log['object']::$definition['primary']).'='.(int)$log['id_object'].'&update'.Tools::strtolower($log['object']::$definition['table']).'&token='.$token_admin.'" target="_blank">'.$object_translation;
+			{
+				$object_vars = get_class_vars($log['object']);
+				$object_translation = '<a href="index.php?controller='.Tools::strtolower($controller_name).'&'.($object_vars['definition']['primary']).'='.(int)$log['id_object'].'&update'.Tools::strtolower($object_vars['definition']['table']).'&token='.$token_admin.'" target="_blank">'.$object_translation;
+			}
 
 			// Try to load object to retrieve the name
 			// Specific case for Product Object where Id Lang is the third param, sigh :'(
@@ -248,7 +251,8 @@ class FroggyHistoryLibrary
 		if ($controller !== null)
 		{
 			$class_name = $controller->className;
-			$id_object = Tools::getValue($class_name::$definition['primary']);
+			$object_vars = get_class_vars($class_name);
+			$id_object = Tools::getValue($object_vars['definition']['primary']);
 		}
 
 		// Retrieve class object model and id_object if object is not null
