@@ -238,7 +238,8 @@ class FroggyModule extends Module
 	 */
 	public function enable($force_all = false)
 	{
-		Tab::enablingForModule($this->name);
+		if (version_compare(_PS_VERSION_, '1.5') >= 0)
+			Tab::enablingForModule($this->name);
 		return parent::enable($force_all);
 	}
 
@@ -250,7 +251,8 @@ class FroggyModule extends Module
 	 */
 	public function disable($force_all = false)
 	{
-		Tab::disablingForModule($this->name);
+		if (version_compare(_PS_VERSION_, '1.5') >= 0)
+			Tab::disablingForModule($this->name);
 		return parent::disable($force_all);
 	}
 
