@@ -442,11 +442,11 @@ class FroggyModule extends Module
 	public function fcdisplay($file, $template, $cacheId = null, $compileId = null)
 	{
 		// Make fcdisplay compliant with hook processor
-		if (Tools::substr(dirname($file), -Tools::strlen('/hooks')) === '/hooks')
+		if (Tools::substr(dirname($file), -Tools::strlen(DIRECTORY_SEPARATOR.'hooks')) === DIRECTORY_SEPARATOR.'hooks')
 		{
 			$file = dirname($file);
-			$file = Tools::substr($file, 0, Tools::strlen($file) - Tools::strlen('/hooks'));
-			$file = $file.'/'.basename($file).'.php';
+			$file = Tools::substr($file, 0, Tools::strlen($file) - Tools::strlen(DIRECTORY_SEPARATOR.'hooks'));
+			$file = $file.DIRECTORY_SEPARATOR.basename($file).'.php';
 		}
 
 		// If PS 1.6 or greater, we choose bootstrap template
@@ -459,7 +459,7 @@ class FroggyModule extends Module
 
 		// On PS 1.4, we have to show him the path
 		if (version_compare(_PS_VERSION_, '1.5') < 0)
-			return parent::display($file, 'views/templates/hook/'.$template, $cacheId, $compileId);
+			return parent::display($file, 'views'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'hook'.DIRECTORY_SEPARATOR.$template, $cacheId, $compileId);
 		else
 			return parent::display($file, $template, $cacheId, $compileId);
 	}
