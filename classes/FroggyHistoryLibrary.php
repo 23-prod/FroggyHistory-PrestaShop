@@ -214,6 +214,9 @@ class FroggyHistoryLibrary
 		if (!isset($this->context->employee->id))
 			return true;
 
+        if (!defined('_PS_ADMIN_DIR_'))
+            return true;
+
 		// Delete / archive old history
 		$this->deleteArchiveOldHistory();
 
