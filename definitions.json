@@ -1,18 +1,18 @@
 {
-	"tab" : "administration",
-	"version": "1.0.7",
-	"need_instance": 0,
+    "tab" : "administration",
+    "version": "1.0.7",
+    "need_instance": 0,
 
     "hooks": { "all" : [
         "actionObjectAddAfter", "actionObjectUpdateAfter", "actionObjectDeleteAfter",
-		"actionAdminEditAfter", "actionAdminUpdateAfter", "actionAdminSaveAfter", "actionAdminDeleteBefore", "actionAdminDuplicateAfter",
-		"actionAdminControllerSetMedia", "displayAdminEmployeesForm", "displayAdminProductsExtra"
+        "actionAdminEditAfter", "actionAdminUpdateAfter", "actionAdminSaveAfter", "actionAdminDeleteBefore", "actionAdminDuplicateAfter",
+        "actionAdminControllerSetMedia", "displayAdminEmployeesForm", "displayAdminProductsExtra"
     ] },
 
-	"sql" : {
-		"install" : [ "install.sql" ],
-		"uninstall" : [ "uninstall.sql" ]
-	},
+    "sql" : {
+        "install" : [ "install.sql" ],
+        "uninstall" : [ "uninstall.sql" ]
+    },
 
     "configurations" : {
         "FH_DELETE_AFTER" : "30",
