@@ -319,7 +319,7 @@ class FroggyHistoryLibrary
         if ($history_log->add())
         {
             FroggyHistoryLog::addActionRegister($class_name, $id_object, (int)$history_log->id);
-            return true;
+            return $history_log->id;
         }
         return false;
     }

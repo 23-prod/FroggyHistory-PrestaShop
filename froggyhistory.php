@@ -185,6 +185,16 @@ class FroggyHistory extends FroggyModule
         }
     }
 
+    public $quantity_cache;
+    public function storePreviousQuantityOnUpdate()
+    {
+        if (Tools::getIsset('actionQty'))
+        {
+            $idp = (int)Tools::getValue('id_product');
+            $idpa = (int)Tools::getValue('id_product_attribute');
+            $this->quantity_cache[$idp][$idpa] = StockAvailable::getQuantityAvailableByProduct($idp, $idpa);
+        }
+    }
 
     /**
      * Hook Action Admin Controller SetMedia
@@ -195,6 +205,7 @@ class FroggyHistory extends FroggyModule
     public function hookActionAdminControllerSetMedia($params)
     {
         $this->saveConnectionLog();
+        $this->storePreviousQuantityOnUpdate();
 
         $controller = Tools::strtolower(Tools::getValue('controller'));
         if (($controller == 'adminmodules' && Tools::getValue('configure') == $this->name)
@@ -256,8 +267,37 @@ class FroggyHistory extends FroggyModule
     }
     public function hookActionUpdateQuantity($params)
     {
+        // Build params
         $product = new Product((int)Tools::getValue('id_product'));
         $object = array('object' => $product);
-        return FroggyHistoryLibrary::getLib($this)->hookLog('UPDATE', $object);
+
+        // Log action
+        $id_history_log = (int)FroggyHistoryLibrary::getLib($this)->hookLog('UPDATE', $object);
+
+        // Update log history
+        if ($id_history_log > 0) {
+
+            // Get quantity cached
+            $idp = (int)Tools::getValue('id_product');
+            $idpa = (int)Tools::getValue('id_product_attribute');
+            if (!isset($this->quantity_cache[$idp][$idpa])) {
+                $this->quantity_cache[$idp][$idpa] = '?';
+            }
+
+            // Build diff
+            $field = 'quantity';
+            if ($idpa > 0) {
+                $field = 'quantity ('.$this->l('combination').' #'.$idpa.')';
+            }
+            $diff[$field] = array('before' => $this->quantity_cache[$idp][$idpa], 'after' => Tools::getValue('value'));
+
+            // Update
+            $history_log = new FroggyHistoryLog((int)$id_history_log);
+            $history_log->diff = Tools::jsonEncode($diff);
+            $history_log->update();
+        }
+
+        // Return result (logged or not)
+        return $id_history_log;
     }
 }
