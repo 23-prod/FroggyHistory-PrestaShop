@@ -1,12 +1,13 @@
 {
     "tab" : "administration",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "need_instance": 0,
 
     "hooks": { "all" : [
         "actionObjectAddAfter", "actionObjectUpdateAfter", "actionObjectDeleteAfter",
         "actionAdminEditAfter", "actionAdminUpdateAfter", "actionAdminSaveAfter", "actionAdminDeleteBefore", "actionAdminDuplicateAfter",
-        "actionAdminControllerSetMedia", "displayAdminEmployeesForm", "displayAdminProductsExtra"
+        "actionAdminControllerSetMedia", "displayAdminEmployeesForm", "displayAdminProductsExtra",
+        "actionUpdateQuantity"
     ] },
 
     "sql" : {
