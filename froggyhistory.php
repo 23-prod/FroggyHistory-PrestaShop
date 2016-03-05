@@ -254,4 +254,10 @@ class FroggyHistory extends FroggyModule
     {
         return FroggyHistoryLibrary::getLib($this)->hookLog('DUPLICATE', null, $controller);
     }
+    public function hookActionUpdateQuantity($params)
+    {
+        $product = new Product((int)Tools::getValue('id_product'));
+        $object = array('object' => $product);
+        return FroggyHistoryLibrary::getLib($this)->hookLog('UPDATE', $object);
+    }
 }
