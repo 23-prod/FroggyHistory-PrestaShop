@@ -1,4 +1,4 @@
-{**
+|escape:'htmlall':'UTF-8'{**
 * 2013-2015 Froggy Commerce
 *
 * NOTICE OF LICENSE
@@ -20,7 +20,7 @@
 {if $froggyhistory.history_log_list|@count gt 0}
     {foreach from=$froggyhistory.history_log_list item=log}
     <li>
-        <p><strong>{$log.sentence.hour} :</strong> {$log.sentence.description}{if isset($log.sentence.diff)}<a href="#{$log.id_fhy_log}" class="froggy-history-details">{l s='See details' mod='froggyhistory'}</a>{/if}</p>
+        <p><strong>{$log.sentence.hour|escape:'htmlall':'UTF-8'} :</strong> {$log.sentence.description|escape:'htmlall':'UTF-8'}{if isset($log.sentence.diff)}<a href="#{$log.id_fhy_log|escape:'htmlall':'UTF-8'}" class="froggy-history-details">{l s='See details' mod='froggyhistory'}</a>{/if}</p>
 
         {if isset($log.sentence.diff)}
             <div id="froggy-history-details-div-{$log.id_fhy_log|intval}" class="froggy-history-details-div">
@@ -28,14 +28,14 @@
                     {if isset($values.before)}
                         <dl>
                             <dt><strong>- {l s='Field' mod='froggyhistory'} "{$field|escape:'html':'UTF-8'}":</strong></dt>
-                            <dd><u>{l s='Before modification:' mod='froggyhistory'}</u> {$values.before}</dd>
-                            <dd><u>{l s='After modification:' mod='froggyhistory'}</u> {$values.after}</dd>
+                            <dd><u>{l s='Before modification:' mod='froggyhistory'}</u> {$values.before|escape:'htmlall':'UTF-8'}</dd>
+                            <dd><u>{l s='After modification:' mod='froggyhistory'}</u> {$values.after|escape:'htmlall':'UTF-8'}</dd>
                         </dl>
                         {else}
                         {foreach from=$values key=iso_lang item=values_lang}
                             <strong>- {l s='Field' mod='froggyhistory'} "{$field|escape:'html':'UTF-8'}" {l s='in' mod='froggyhistory'} "{$iso_lang|escape:'html':'UTF-8'}":</strong><br>
-                            <u>{l s='Before modification:' mod='froggyhistory'}</u> {$values_lang.before}<br>
-                            <u>{l s='After modification:' mod='froggyhistory'}</u> {$values_lang.after}<br>
+                            <u>{l s='Before modification:' mod='froggyhistory'}</u> {$values_lang.before|escape:'htmlall':'UTF-8'}<br>
+                            <u>{l s='After modification:' mod='froggyhistory'}</u> {$values_lang.after|escape:'htmlall':'UTF-8'}<br>
                         {/foreach}
                     {/if}
                 {/foreach}

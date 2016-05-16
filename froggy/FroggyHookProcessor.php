@@ -19,23 +19,29 @@
  * @license   Unauthorized copying of this file, via any medium is strictly prohibited
  */
 
-$configPath = '../../config/config.inc.php';
-if (file_exists($configPath)) {
-    include($configPath);
-    $controller = new FrontController();
-    $controller->init();
+/*
+ * Security
+ */
+defined('_PS_VERSION_') || require dirname(__FILE__).'/index.php';
 
-    if (file_exists(dirname(__FILE__) . '/froggyhistory.php')) {
-        include(dirname(__FILE__) . '/froggyhistory.php');
-        $fh = new FroggyHistory();
-        if ($fh->ajax_secure_key != Tools::getValue('ajax_secure_key')) {
-            die('Invalid Secure Key');
+abstract class FroggyHookProcessor
+{
+    public $module;
+    public $context;
+    public $path;
+    public $smarty;
+    public $params;
+
+    /**
+     * @param FroggyModule $module
+     * @param array $args
+     */
+    public function __construct($args)
+    {
+        foreach ($args as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->{$key} = $value;
+            }
         }
-        $fh->ajaxRequest();
-        unset($fh);
-    } else {
-        die('Class module wasn\'t found');
     }
-} else {
-    die('Config file is missing');
 }

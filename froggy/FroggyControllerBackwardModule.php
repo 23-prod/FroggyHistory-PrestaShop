@@ -25,27 +25,37 @@
 defined('_PS_VERSION_') || require dirname(__FILE__).'/index.php';
 
 /**
- * Backward function compatibility
- * Need to be called for each module in 1.4
+ * Class Controller for a Backward compatibility
+ * Allow to use method declared in 1.5
  */
 
-/**
- * Get out if the context is already defined
- */
-if (!in_array('FroggyContext', get_declared_classes())) {
-    require_once(dirname(__FILE__).'/FroggyContext.php');
+class FroggyControllerBackwardModule
+{
+    /**
+     * @param $js_uri
+     * @return void
+     */
+    public function addJS($js_uri)
+    {
+        Tools::addJS($js_uri);
+    }
+
+    /**
+     * @param $css_uri
+     * @param string $css_media_type
+     * @return void
+     */
+    public function addCSS($css_uri, $css_media_type = 'all')
+    {
+        Tools::addCSS($css_uri, $css_media_type);
+    }
+
+    public function addJquery()
+    {
+        if (_PS_VERSION_ < '1.5') {
+            $this->addJS(_PS_JS_DIR_.'jquery/jquery-1.4.4.min.js');
+        } elseif (_PS_VERSION_ >= '1.5') {
+            $this->addJS(_PS_JS_DIR_.'jquery/jquery-1.7.2.min.js');
+        }
+    }
 }
-
-/**
- * If not under an object we don't have to set the context
- */
-$var = 'this';
-if (!isset($$var)) {
-    return;
-}
-
-/**
- * Set variables
- */
-$$var->context = FroggyContext::getContext();
-$$var->smarty = $$var->context->smarty;

@@ -22,7 +22,7 @@
 /*
  * Security
  */
-defined('_PS_VERSION_') || require dirname(__FILE__).'/index.php';
+defined('_PS_VERSION_') || require dirname(__FILE__) . '/index.php';
 
 class FroggyHistoryLibrary
 {
@@ -138,64 +138,72 @@ class FroggyHistoryLibrary
         $hour = Tools::substr($log['date_add'], 11, 8);
 
         // Init var
-        $token_admin_employees = Tools::getAdminToken('AdminEmployees'.(int)Tab::getIdFromClassName('AdminEmployees').(int)$this->ajax_id_employee);
+        $token_admin_employees = Tools::getAdminToken('AdminEmployees' . (int)Tab::getIdFromClassName('AdminEmployees') . (int)$this->ajax_id_employee);
         $employee = '';
-        if (Tools::getValue('section') != 'employee')
-            $employee = '<a href="index.php?controller=adminemployees&id_employee='.(int)$log['id_employee'].'&updateemployee&token='.$token_admin_employees.'" target="_blank">'.$log['firstname'].' '.$log['lastname'].' (ID #'.$log['id_employee'].')</a>';
+        if (Tools::getValue('section') != 'employee') {
+            $employee = '<a href="index.php?controller=adminemployees&id_employee=' . (int)$log['id_employee'] . '&updateemployee&token=' . $token_admin_employees . '" target="_blank">' . $log['firstname'] . ' ' . $log['lastname'] . ' (ID #' . $log['id_employee'] . ')</a>';
+        }
 
         // Get object translation
-        if (isset($match_object_translation[$log['object']]))
+        if (isset($match_object_translation[$log['object']])) {
             $object_translation = $match_object_translation[$log['object']];
-        if (isset($match_object_translation[$log['admin_object']]) && !isset($object_translation))
+        }
+        if (isset($match_object_translation[$log['admin_object']]) && !isset($object_translation)) {
             $object_translation = $match_object_translation[$log['admin_object']];
-        if (!isset($object_translation))
-            $object_translation = $this->l('the').' '.Tools::strtolower($log['object']);
+        }
+        if (!isset($object_translation)) {
+            $object_translation = $this->l('the') . ' ' . Tools::strtolower($log['object']);
+        }
 
         // Building the sentence
         $sentence = array();
         $sentence['hour'] = $this->l('%1$s-%2$s-%3$s %4$s');
         $sentence['description'] = $this->l('Employee %1$s %2$s %3$s');
-        if ((int)$log['id_object'] > 0)
-        {
+        if ((int)$log['id_object'] > 0) {
             // Get admin token to build link to dynamic sentence
             $controller_name = str_replace('Controller', '', $log['admin_object']);
-            $token_admin = Tools::getAdminToken($controller_name.(int)Tab::getIdFromClassName($controller_name).(int)$this->ajax_id_employee);
+            $token_admin = Tools::getAdminToken($controller_name . (int)Tab::getIdFromClassName($controller_name) . (int)$this->ajax_id_employee);
 
             // Check if we build link for this type of object
-            if (!in_array($log['object'], $match_object_nolink) && in_array($log['object'], $match_multilang_object))
-            {
+            if (!in_array($log['object'], $match_object_nolink) && in_array($log['object'], $match_multilang_object)) {
                 $object_vars = get_class_vars($log['object']);
-                $object_translation = '<a href="index.php?controller='.Tools::strtolower($controller_name).'&'.($object_vars['definition']['primary']).'='.(int)$log['id_object'].'&update'.Tools::strtolower($object_vars['definition']['table']).'&token='.$token_admin.'" target="_blank">'.$object_translation;
+                $object_translation = '<a href="index.php?controller=' . Tools::strtolower($controller_name) . '&' . ($object_vars['definition']['primary']) . '=' . (int)$log['id_object'] . '&update' . Tools::strtolower($object_vars['definition']['table']) . '&token=' . $token_admin . '" target="_blank">' . $object_translation;
             }
 
             // Try to load object to retrieve the name
             // Specific case for Product Object where Id Lang is the third param, sigh :'(
-            if ($log['object'] == 'Product')
+            if ($log['object'] == 'Product') {
                 $object_load = new $log['object']((int)$log['id_object'], true, Tools::getValue('id_lang'));
-            else if (in_array($log['object'], $match_multilang_object))
+            } else if (in_array($log['object'], $match_multilang_object)) {
                 $object_load = new $log['object']((int)$log['id_object'], true, Tools::getValue('id_lang'));
-            else
-                if (class_exists($log['object']))
+            } else {
+                if (class_exists($log['object'])) {
                     $object_load = new $log['object']((int)$log['id_object']);
+                }
+            }
 
-            if (isset($object_load->name) && !empty($object_load->name) && !is_array($object_load->name))
-                $object_translation .= ' "'.$object_load->name.'"';
-            if (isset($object_load->title) && !empty($object_load->title) && !is_array($object_load->title) && !isset($object_load->name))
-                $object_translation .= ' "'.$object_load->title.'"';
+            if (isset($object_load->name) && !empty($object_load->name) && !is_array($object_load->name)) {
+                $object_translation .= ' "' . $object_load->name . '"';
+            }
+            if (isset($object_load->title) && !empty($object_load->title) && !is_array($object_load->title) && !isset($object_load->name)) {
+                $object_translation .= ' "' . $object_load->title . '"';
+            }
 
             // Writing Object ID
-            $object_translation .= ' ID #'.(int)$log['id_object'];
+            $object_translation .= ' ID #' . (int)$log['id_object'];
 
             // Check if we build link for this type of object
-            if (!in_array($log['object'], $match_object_nolink))
+            if (!in_array($log['object'], $match_object_nolink)) {
                 $object_translation .= '</a>';
+            }
         }
 
         // Hour and description translations
         $sentence['hour'] = sprintf($sentence['hour'], $year, $month, $day, $hour);
         $sentence['description'] = sprintf($sentence['description'], $employee, $match_action[$log['employee_action']], $object_translation);
-        if ($log['diff'] != '')
+        if ($log['diff'] != '') {
             $sentence['diff'] = Tools::jsonDecode($log['diff'], true);
+        }
 
         return $sentence;
     }
@@ -205,17 +213,19 @@ class FroggyHistoryLibrary
      * Hook Log Action
      * Uses in order to log employee actions on the back office
      *
-     * @param $action, $object, $controller
+     * @param $action , $object, $controller
      * @return boolean log result
      */
     public function hookLog($action, $object = null, $controller = null)
     {
         // Check
-        if (!isset($this->context->employee->id))
+        if (!isset($this->context->employee->id)) {
             return true;
+        }
 
-        if (!defined('_PS_ADMIN_DIR_'))
+        if (!defined('_PS_ADMIN_DIR_')) {
             return true;
+        }
 
         // Delete / archive old history
         $this->deleteArchiveOldHistory();
@@ -229,50 +239,48 @@ class FroggyHistoryLibrary
         $object = (isset($object['object']) ? $object['object'] : null);
         $controller = (isset($controller['controller']) ? $controller['controller'] : null);
         $controller_name = ($controller !== null ? get_class($controller) : '');
-        if (empty($controller_name))
-        {
-            $controllers = Dispatcher::getControllers(array(_PS_ADMIN_DIR_.'/tabs/', _PS_ADMIN_CONTROLLER_DIR_));
-            if (isset($controllers[Tools::strtolower(Tools::getValue('controller'))]))
+        if (empty($controller_name)) {
+            $controllers = Dispatcher::getControllers(array(_PS_ADMIN_DIR_ . '/tabs/', _PS_ADMIN_CONTROLLER_DIR_));
+            if (isset($controllers[Tools::strtolower(Tools::getValue('controller'))])) {
                 $controller_name = $controllers[Tools::strtolower(Tools::getValue('controller'))];
+            }
         }
 
         // Check if object exists and different from FroggyHistoryLog class to avoid infinite loop
         $objects_white_list = $this->getObjectsWhiteList();
-        if ($object !== null && !isset($objects_white_list[get_class($object)]))
+        if ($object !== null && !isset($objects_white_list[get_class($object)])) {
             return true;
+        }
 
         // Check status ADD / UPDATE
-        if ($action == 'ADD/UPDATE')
-        {
+        if ($action == 'ADD/UPDATE') {
             $action = 'UPDATE';
-            foreach ($_GET as $k => $v)
-                if (Tools::substr($k, 0, 9) == 'submitAdd')
+            foreach ($_GET as $k => $v) {
+                if (Tools::substr($k, 0, 9) == 'submitAdd') {
                     $action = 'ADD';
+                }
+            }
         }
 
         // Retrieve class object model from controller class and id_object from GET var
-        if ($controller !== null)
-        {
+        if ($controller !== null) {
             $class_name = $controller->className;
             $object_vars = get_class_vars($class_name);
             $id_object = Tools::getValue($object_vars['definition']['primary']);
         }
 
         // Retrieve class object model and id_object if object is not null
-        if ($object !== null)
-        {
+        if ($object !== null) {
             $class_name = get_class($object);
             $id_object = (int)$object->id;
         }
 
         // Retrieve the object history and compare it
         $diff = '';
-        if ($class_name != '')
-        {
+        if ($class_name != '') {
             $new_object = new $class_name((int)$id_object);
             $id_fhy_object_log = FroggyHistoryObjectLog::getHistoryObjectLogId($class_name, $id_object);
-            if ($id_fhy_object_log > 0)
-            {
+            if ($id_fhy_object_log > 0) {
                 $history_object = new FroggyHistoryObjectLog((int)$id_fhy_object_log);
                 $diff = $history_object->getDiff($new_object);
                 $history_object->delete();
@@ -289,10 +297,11 @@ class FroggyHistoryLibrary
         $id_history_log = FroggyHistoryLog::getActionRegister($class_name, $id_object);
 
         // If yes, we load the log and complete it, if no we create a new log
-        if ((int)$id_history_log > 0)
+        if ((int)$id_history_log > 0) {
             $history_log = new FroggyHistoryLog((int)$id_history_log);
-        else
+        } else {
             $history_log = new FroggyHistoryLog();
+        }
 
         // We fill the history log object
         $history_log->id_shop = (int)$this->context->shop->id;
@@ -307,17 +316,16 @@ class FroggyHistoryLibrary
         $history_log->ip = Tools::getRemoteAddr();
 
         // If log already exists, we update it
-        if ((int)$id_history_log > 0)
-        {
+        if ((int)$id_history_log > 0) {
             // If update in the same page call, we register it only if there is a diff
-            if (!empty($diff))
+            if (!empty($diff)) {
                 return $history_log->update();
+            }
             return false;
         }
 
         // If not we create it and save it in the page call register
-        if ($history_log->add())
-        {
+        if ($history_log->add()) {
             FroggyHistoryLog::addActionRegister($class_name, $id_object, (int)$history_log->id);
             return $history_log->id;
         }
@@ -327,12 +335,12 @@ class FroggyHistoryLibrary
     public function deleteArchiveOldHistory()
     {
         $days = (int)Configuration::get('FH_DELETE_AFTER');
-        if ($days > 0)
-        {
-            $date_limit = date('Y-m-d H:i:s', strtotime('-'.$days.' days'));
-            if (Configuration::get('FH_LOG_DELETED') == 1)
+        if ($days > 0) {
+            $date_limit = date('Y-m-d H:i:s', strtotime('-' . $days . ' days'));
+            if (Configuration::get('FH_LOG_DELETED') == 1) {
                 $this->archiveOldHistory($date_limit);
-            Db::getInstance()->delete('fhy_log', '`date_add` < \''.$date_limit.'\'');
+            }
+            Db::getInstance()->delete('fhy_log', '`date_add` < \'' . $date_limit . '\'');
         }
     }
 
@@ -341,33 +349,34 @@ class FroggyHistoryLibrary
         // Retrieve content
         $archive_content = '';
         $archives = Db::getInstance()->executeS('
-            SELECT gl.*, ga.`name` as employee_action, e.`firstname`, e.`lastname`, s.`name` as shop_name
-            FROM `'._DB_PREFIX_.'fhy_log` gl
-            LEFT JOIN `'._DB_PREFIX_.'employee` e ON (e.`id_employee` = gl.`id_employee`)
-            LEFT JOIN `'._DB_PREFIX_.'shop` s ON (s.`id_shop` = gl.`id_shop`)
-            LEFT JOIN `'._DB_PREFIX_.'fhy_action` ga ON (ga.`id_fhy_action` = gl.`id_fhy_action`)
-            WHERE `date_add` < \''.$date_limit.'\'
+            SELECT gl.*, ga.`name` AS employee_action, e.`firstname`, e.`lastname`, s.`name` AS shop_name
+            FROM `' . _DB_PREFIX_ . 'fhy_log` gl
+            LEFT JOIN `' . _DB_PREFIX_ . 'employee` e ON (e.`id_employee` = gl.`id_employee`)
+            LEFT JOIN `' . _DB_PREFIX_ . 'shop` s ON (s.`id_shop` = gl.`id_shop`)
+            LEFT JOIN `' . _DB_PREFIX_ . 'fhy_action` ga ON (ga.`id_fhy_action` = gl.`id_fhy_action`)
+            WHERE `date_add` < \'' . $date_limit . '\'
             ORDER BY `date_add` DESC
         ');
 
         // Build archive content
-        foreach ($archives as $archive)
-        {
+        foreach ($archives as $archive) {
             $sentence = $this->writeLogSentence($archive);
-            $archive_content .= '<tr><td>'.$sentence['hour'].'</td><td>'.strip_tags($sentence['description']).'</td><td>'.Tools::jsonEncode($archive).'</td></tr>'."\n";
+            $archive_content .= '<tr><td>' . $sentence['hour'] . '</td><td>' . strip_tags($sentence['description']) . '</td><td>' . Tools::jsonEncode($archive) . '</td></tr>' . "\n";
         }
 
         // If nothing to archive we continue
-        if (empty($archive_content))
+        if (empty($archive_content)) {
             return true;
+        }
 
         // Build the name of the archive file content
         $month = date('Y-m');
-        $archive_file = dirname(__FILE__).'/../archives/'.$month.'-'.md5(_COOKIE_KEY_.$month).'.xls';
+        $archive_file = dirname(__FILE__) . '/../archives/' . $month . '-' . md5(_COOKIE_KEY_ . $month) . '.xls';
 
         // Create archive file if does not exist
-        if (!file_exists($archive_file))
-            file_put_contents($archive_file, '<table>'."\n");
+        if (!file_exists($archive_file)) {
+            file_put_contents($archive_file, '<table>' . "\n");
+        }
 
         // Archive new data
         file_put_contents($archive_file, $archive_content, FILE_APPEND);

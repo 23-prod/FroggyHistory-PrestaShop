@@ -25,27 +25,30 @@
 defined('_PS_VERSION_') || require dirname(__FILE__).'/index.php';
 
 /**
- * Backward function compatibility
- * Need to be called for each module in 1.4
+ * Class Customer for a Backward compatibility
+ * Allow to use method declared in 1.5
  */
 
-/**
- * Get out if the context is already defined
- */
-if (!in_array('FroggyContext', get_declared_classes())) {
-    require_once(dirname(__FILE__).'/FroggyContext.php');
+class FroggyCustomerBackwardModule extends Customer
+{
+    public $logged = false;
+    /**
+     * Check customer informations and return customer validity
+     *
+     * @since 1.5.0
+     * @param boolean $with_guest
+     * @return boolean customer validity
+     */
+    public function isLogged($with_guest = false)
+    {
+        if (!$with_guest && $this->is_guest == 1) {
+            return false;
+        }
+
+        /* Customer is valid only if it can be load and if object password is the same as database one */
+        if ($this->logged == 1 && $this->id && Validate::isUnsignedId($this->id) && Customer::checkPassword($this->id, $this->passwd)) {
+            return true;
+        }
+        return false;
+    }
 }
-
-/**
- * If not under an object we don't have to set the context
- */
-$var = 'this';
-if (!isset($$var)) {
-    return;
-}
-
-/**
- * Set variables
- */
-$$var->context = FroggyContext::getContext();
-$$var->smarty = $$var->context->smarty;

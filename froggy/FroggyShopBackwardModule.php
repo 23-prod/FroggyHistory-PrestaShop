@@ -25,27 +25,48 @@
 defined('_PS_VERSION_') || require dirname(__FILE__).'/index.php';
 
 /**
- * Backward function compatibility
- * Need to be called for each module in 1.4
+ * Class Shop for Backward compatibility
  */
 
-/**
- * Get out if the context is already defined
- */
-if (!in_array('FroggyContext', get_declared_classes())) {
-    require_once(dirname(__FILE__).'/FroggyContext.php');
+class FroggyShopBackwardModule extends Shop
+{
+    const CONTEXT_ALL = 1;
+
+    public $id = 1;
+    public $id_shop_group = 1;
+    public $physical_uri = __PS_BASE_URI__;
+
+
+    public function getContextType()
+    {
+        return FroggyShopBackwardModule::CONTEXT_ALL;
+    }
+
+    public function setContext($var)
+    {
+        return true;
+    }
+
+    /**
+     * Simulate shop for 1.3 / 1.4
+     */
+    public function getID()
+    {
+        return 1;
+    }
+
+    /**
+     * Get shop theme name
+     *
+     * @return string
+     */
+    public function getTheme()
+    {
+        return _THEME_NAME_;
+    }
+
+    public function isFeatureActive()
+    {
+        return false;
+    }
 }
-
-/**
- * If not under an object we don't have to set the context
- */
-$var = 'this';
-if (!isset($$var)) {
-    return;
-}
-
-/**
- * Set variables
- */
-$$var->context = FroggyContext::getContext();
-$$var->smarty = $$var->context->smarty;
