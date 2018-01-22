@@ -64,7 +64,7 @@ class FroggyHistory extends FroggyModule
     {
         $this->name = 'froggyhistory';
         $this->author = 'Froggy Commerce';
-        $this->version = '1.0.8';
+        $this->version = '1.1.0';
         $this->tab = 'administration';
 
         parent::__construct();

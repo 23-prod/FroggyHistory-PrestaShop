@@ -490,6 +490,14 @@ class FroggyModule extends Module
             }
         }
 
+        // If PS 1.7, we choose 1.7 bootstrap template
+        if (version_compare(_PS_VERSION_, '1.7.0') >= 0)
+        {
+            $template_bootstrap = str_replace('.bootstrap.tpl', '.bootstrap-1.7.tpl', $template);
+            if ($this->getTemplatePath($template_bootstrap) !== null)
+                $template = $template_bootstrap;
+        }
+
         // On PS 1.4, we have to show him the path
         if (version_compare(_PS_VERSION_, '1.5') < 0) {
             return parent::display($file, 'views'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'hook'.DIRECTORY_SEPARATOR.$template, $cacheId, $compileId);
