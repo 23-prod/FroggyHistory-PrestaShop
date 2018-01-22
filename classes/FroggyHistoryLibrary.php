@@ -278,12 +278,37 @@ class FroggyHistoryLibrary
         // Retrieve the object history and compare it
         $diff = '';
         if ($class_name != '') {
+
+            // Instanciate Object
             $new_object = new $class_name((int)$id_object);
+
+            // We calcul diff and delete old products
             $id_fhy_object_log = FroggyHistoryObjectLog::getHistoryObjectLogId($class_name, $id_object);
             if ($id_fhy_object_log > 0) {
                 $history_object = new FroggyHistoryObjectLog((int)$id_fhy_object_log);
                 $diff = $history_object->getDiff($new_object);
                 $history_object->delete();
+            }
+
+            // Check quantities update (PS 1.7 only)
+            if (version_compare(_PS_VERSION_, '1.7.0') >= 0) {
+                if ($class_name == 'Product' || $class_name == 'ProductCore') {
+
+                    if (empty($diff)) {
+                        $diff = array();
+                    } else {
+                        $diff = json_decode($diff, true);
+                    }
+
+                    $stock_before_update = StockAvailable::getQuantityAvailableByProduct($new_object->id);
+                    $stock_after_update = Tools::getValue('qty_0');
+                    if ($stock_before_update != $stock_after_update) {
+                        $diff['General quantities']['before'] = $stock_before_update;
+                        $diff['General quantities']['after'] = $stock_after_update;
+                    }
+
+                    $diff = json_encode($diff);
+                }
             }
 
             $history_object = new FroggyHistoryObjectLog();
