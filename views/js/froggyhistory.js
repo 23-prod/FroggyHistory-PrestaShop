@@ -19,8 +19,15 @@
 
 function loadFroggyHistoryLog(link)
 {
+	var ajax_url = '../modules/froggyhistory/ajax.php' + link;
+
+	// Compliancy with PS 1.7
+	if (window.location.href.indexOf('product/form') >= 0) {
+        ajax_url = fcdirname(fcdirname(fcdirname(fcdirname(window.location.href)))) + '/' + ajax_url;
+	}
+
 	$.ajax({
-		url: '../modules/froggyhistory/ajax.php' + link,
+		url: ajax_url,
 		success: function(data) {
 			$('#froggyhistory-list').html(data);
 		}
@@ -36,6 +43,10 @@ function initFroggyHistoryPagination()
 	});
 }
 
+function fcdirname(path)
+{
+    return path.replace(/\\/g, '/').replace(/\/[^/]*\/?$/, '');
+}
 
 $(document).ready(function() {
 	if ($("#froggyhistory-introduction-configuration a").length)

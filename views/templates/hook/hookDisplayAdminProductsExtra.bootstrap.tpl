@@ -23,7 +23,7 @@
         <legend><img src="{$froggyhistory.module_dir|escape:'html':'UTF-8'}logo.png" alt="" width="16" />{l s='Froggy History' mod='froggyhistory'}</legend>
         </div>
         <ul id="froggyhistory-list">
-            <li class="loader-gif"><img src="..{$module_dir}views/img/loader.gif" /></li>
+            <li class="loader-gif"><img src="../../../../{$module_dir}views/img/loader.gif" /></li>
         </ul>
         <script>$(document).ready(function() { loadFroggyHistoryLog('{FroggyDisplaySafeHtml s=$froggyhistory.url}'); });</script>
     </div>

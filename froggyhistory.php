@@ -248,7 +248,12 @@ class FroggyHistory extends FroggyModule
      */
     public function hookDisplayAdminProductsExtra($params)
     {
-        $url = '?ajax_secure_key='.htmlentities($this->ajax_secure_key).'&admin_object=AdminProductsController&id_object='.(int)Tools::getValue('id_product');
+        $id_product = Tools::getValue('id_product');
+        if (isset($params['id_product']) && $params['id_product'] > 0) {
+            $id_product = $params['id_product'];
+        }
+
+        $url = '?ajax_secure_key='.htmlentities($this->ajax_secure_key).'&object=Product&id_object='.(int)$id_product;
         $url .= '&ajax_id_employee='.(int)$this->ajax_id_employee.'&id_lang='.(int)$this->context->cookie->id_lang;
         $assign = array('module_dir' => $this->_path, 'url' => $url);
         $this->smarty->assign($this->name, $assign);
