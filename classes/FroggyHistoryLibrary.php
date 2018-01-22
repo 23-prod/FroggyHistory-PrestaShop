@@ -301,14 +301,6 @@ class FroggyHistoryLibrary
                         $diff = json_decode($diff, true);
                     }
 
-                    // Get general quantities update
-                    $general_quantities_before_update = StockAvailable::getQuantityAvailableByProduct($new_object->id);
-                    $general_quantities_after_update = Tools::getValue('qty_0');
-                    if ($general_quantities_before_update != $general_quantities_after_update) {
-                        $diff['General quantity']['before'] = $general_quantities_before_update;
-                        $diff['General quantity']['after'] = $general_quantities_after_update;
-                    }
-
                     // Get combinations update
                     $combinations = Tools::getValue('combinations');
                     if (!empty($combinations)) {
@@ -327,9 +319,17 @@ class FroggyHistoryLibrary
                             $quantities_after_update = $combination['attribute_quantity'];
                             if ($quantities_before_update != $quantities_after_update) {
                                 $diff['Combinations'][$idpa]['Name'] = $combination_name;
-                                $diff['Combinations'][$idpa]['Quantity']['before'] = $general_quantities_before_update;
-                                $diff['Combinations'][$idpa]['Quantity']['after'] = $general_quantities_after_update;
+                                $diff['Combinations'][$idpa]['Quantity']['before'] = $quantities_before_update;
+                                $diff['Combinations'][$idpa]['Quantity']['after'] = $quantities_after_update;
                             }
+                        }
+                    } else {
+                        // Get general quantities update
+                        $general_quantities_before_update = StockAvailable::getQuantityAvailableByProduct($new_object->id);
+                        $general_quantities_after_update = Tools::getValue('qty_0');
+                        if ($general_quantities_before_update != $general_quantities_after_update) {
+                            $diff['General quantity']['before'] = $general_quantities_before_update;
+                            $diff['General quantity']['after'] = $general_quantities_after_update;
                         }
                     }
 
