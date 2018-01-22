@@ -294,21 +294,47 @@ class FroggyHistoryLibrary
             if (version_compare(_PS_VERSION_, '1.7.0') >= 0) {
                 if ($class_name == 'Product' || $class_name == 'ProductCore') {
 
-                    $stock_before_update = StockAvailable::getQuantityAvailableByProduct($new_object->id);
-                    $stock_after_update = Tools::getValue('qty_0');
-
-                    if ($stock_before_update != $stock_after_update) {
-                        if (empty($diff)) {
-                            $diff = array();
-                        } else {
-                            $diff = json_decode($diff, true);
-                        }
-
-                        $diff['General quantities']['before'] = $stock_before_update;
-                        $diff['General quantities']['after'] = $stock_after_update;
-
-                        $diff = json_encode($diff);
+                    // Decode diff array
+                    if (empty($diff)) {
+                        $diff = array();
+                    } else {
+                        $diff = json_decode($diff, true);
                     }
+
+                    // Get general quantities update
+                    $general_quantities_before_update = StockAvailable::getQuantityAvailableByProduct($new_object->id);
+                    $general_quantities_after_update = Tools::getValue('qty_0');
+                    if ($general_quantities_before_update != $general_quantities_after_update) {
+                        $diff['General quantity']['before'] = $general_quantities_before_update;
+                        $diff['General quantity']['after'] = $general_quantities_after_update;
+                    }
+
+                    // Get combinations update
+                    $combinations = Tools::getValue('combinations');
+                    if (!empty($combinations)) {
+                        foreach ($combinations as $combination) {
+
+                            // Get product attribute values
+                            $combination_name = '';
+                            $idpa = $combination['id_product_attribute'];
+                            $attributes = $new_object->getAttributeCombinationsById($idpa, $this->context->language->id);
+                            foreach ($attributes as $attribute) {
+                                $combination_name .= $attribute['attribute_name'] . ' ';
+                            }
+
+                            // Get combinations quantities update
+                            $quantities_before_update = StockAvailable::getQuantityAvailableByProduct($new_object->id, $idpa);
+                            $quantities_after_update = $combination['attribute_quantity'];
+                            if ($quantities_before_update != $quantities_after_update) {
+                                $diff['Combinations'][$idpa]['Name'] = $combination_name;
+                                $diff['Combinations'][$idpa]['Quantity']['before'] = $general_quantities_before_update;
+                                $diff['Combinations'][$idpa]['Quantity']['after'] = $general_quantities_after_update;
+                            }
+                        }
+                    }
+
+                    // Re-encode diff array
+                    $diff = json_encode($diff);
                 }
             }
 

@@ -25,19 +25,47 @@
             {if isset($log.sentence.diff)}
                 <div id="froggy-history-details-div-{$log.id_fhy_log|intval}" class="froggy-history-details-div">
                     {foreach from=$log.sentence.diff key=field item=values}
+
+                        <ul>
                         {if isset($values.before)}
-                            <dl>
-                                <dt><strong>- {l s='Field' mod='froggyhistory'} "{$field|escape:'html':'UTF-8'}":</strong></dt>
-                                <dd><u>{l s='Before modification:' mod='froggyhistory'}</u> {$values.before}</dd>
-                                <dd><u>{l s='After modification:' mod='froggyhistory'}</u> {$values.after}</dd>
-                            </dl>
+                            <li>
+                                <dl>
+                                    <dt><strong>{l s='Field' mod='froggyhistory'} "{$field}":</strong></dt>
+                                    <dd><small>{l s='Before update:' mod='froggyhistory'}</small> {$values.before}</dd>
+                                    <dd><small>{l s='After update:' mod='froggyhistory'}</small> {$values.after}</dd>
+                                </dl>
+                            </li>
                         {else}
-                            {foreach from=$values key=iso_lang item=values_lang}
-                                <strong>- {l s='Field' mod='froggyhistory'} "{$field|escape:'html':'UTF-8'}" {l s='in' mod='froggyhistory'} "{$iso_lang|escape:'html':'UTF-8'}":</strong><br>
-                                <u>{l s='Before modification:' mod='froggyhistory'}</u> {$values_lang.before|escape:'html':'UTF-8'}<br>
-                                <u>{l s='After modification:' mod='froggyhistory'}</u> {$values_lang.after|escape:'html':'UTF-8'}<br>
-                            {/foreach}
+                            {if $field == 'Combinations'}
+                                {foreach from=$values key=idpa item=combination}
+                                    <li>
+                                        <dl>
+                                            <dt><strong>{l s='Combination' mod='froggyhistory'} "{$combination.Name} (#{$idpa})":</strong><br></dt>
+                                            {foreach from=$combination key=combination_field item=combination_values}
+                                                {if isset($combination_values.before)}
+                                                    <dd><u>{l s='Field' mod='froggyhistory'} "{$combination_field}":</u></dd>
+                                                    <dd><small>{l s='Before update:' mod='froggyhistory'}</small> {$combination_values.before}</dd>
+                                                    <dd><small>{l s='After update:' mod='froggyhistory'}</small> {$combination_values.after}<br></dd>
+                                                {/if}
+                                             {/foreach}
+                                        </dl>
+                                    </li>
+                                {/foreach}
+                            {else}
+                                <li>
+                                    <dl>
+                                        <dt><strong>{l s='Field' mod='froggyhistory'} "{$field}":</strong><br></dt>
+                                        {foreach from=$values key=iso_lang item=values_lang}
+                                            <dd><u>{l s='Field' mod='froggyhistory'} "{$field}" {l s='in' mod='froggyhistory'} "{$iso_lang}":</u><br></dd>
+                                            <dd><small>{l s='Before update:' mod='froggyhistory'}</small> {$values_lang.before}</dd>
+                                            <dd><small>{l s='After update:' mod='froggyhistory'}</small> {$values_lang.after}</dd>
+                                        {/foreach}
+                                    </dl>
+                                </li>
+                            {/if}
                         {/if}
+                        </ul>
+
                     {/foreach}
                 </div>
             {/if}
