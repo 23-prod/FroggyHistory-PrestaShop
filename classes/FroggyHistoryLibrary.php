@@ -306,12 +306,22 @@ class FroggyHistoryLibrary
                     if (!empty($combinations)) {
                         foreach ($combinations as $combination) {
 
-                            // Get product attribute values
+                            // Init var
                             $combination_name = '';
+                            $combination_values_origin = array(
+                                'ean13' => '',
+                                'upc' => '',
+                                'reference' => '',
+                            );
+
+                            // Get product attribute values
                             $idpa = $combination['id_product_attribute'];
                             $attributes = $new_object->getAttributeCombinationsById($idpa, $this->context->language->id);
                             foreach ($attributes as $attribute) {
-                                $combination_name .= $attribute['attribute_name'] . ' ';
+                                $combination_values_origin['reference'] = $attribute['reference'];
+                                $combination_values_origin['ean13'] = $attribute['ean13'];
+                                $combination_values_origin['upc'] = $attribute['upc'];
+                                $combination_name .= $attribute['attribute_name'].' ';
                             }
 
                             // Get combinations quantities update
@@ -321,6 +331,15 @@ class FroggyHistoryLibrary
                                 $diff['Combinations'][$idpa]['Name'] = $combination_name;
                                 $diff['Combinations'][$idpa]['Quantity']['before'] = $quantities_before_update;
                                 $diff['Combinations'][$idpa]['Quantity']['after'] = $quantities_after_update;
+                            }
+
+                            // Check other diff
+                            foreach ($combination_values_origin as $ckey => $combination_value_origin) {
+                                if ($combination_value_origin != $combination['attribute_'.$ckey]) {
+                                    $diff['Combinations'][$idpa]['Name'] = $combination_name;
+                                    $diff['Combinations'][$idpa][ucfirst($ckey)]['before'] = $combination_value_origin;
+                                    $diff['Combinations'][$idpa][ucfirst($ckey)]['after'] = $combination['attribute_'.$ckey];
+                                }
                             }
                         }
                     } else {
