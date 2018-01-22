@@ -294,20 +294,21 @@ class FroggyHistoryLibrary
             if (version_compare(_PS_VERSION_, '1.7.0') >= 0) {
                 if ($class_name == 'Product' || $class_name == 'ProductCore') {
 
-                    if (empty($diff)) {
-                        $diff = array();
-                    } else {
-                        $diff = json_decode($diff, true);
-                    }
-
                     $stock_before_update = StockAvailable::getQuantityAvailableByProduct($new_object->id);
                     $stock_after_update = Tools::getValue('qty_0');
+
                     if ($stock_before_update != $stock_after_update) {
+                        if (empty($diff)) {
+                            $diff = array();
+                        } else {
+                            $diff = json_decode($diff, true);
+                        }
+
                         $diff['General quantities']['before'] = $stock_before_update;
                         $diff['General quantities']['after'] = $stock_after_update;
-                    }
 
-                    $diff = json_encode($diff);
+                        $diff = json_encode($diff);
+                    }
                 }
             }
 
