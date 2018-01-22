@@ -52,21 +52,21 @@
 
         <p>{l s='You can also access to product history on the product administration forms.' mod='froggyhistory'}</p>
         <p>
-            <a href="{$froggyhistory.module_dir|escape:'html':'UTF-8'}img/screen-catalog-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png">
-                <img src="{$froggyhistory.module_dir|escape:'html':'UTF-8'}img/screen-catalog-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png" />
+            <a href="{$froggyhistory.module_dir|escape:'html':'UTF-8'}views/img/screen-catalog-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png">
+                <img src="{$froggyhistory.module_dir|escape:'html':'UTF-8'}views/img/screen-catalog-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png" />
             </a>
-            <a href="{$froggyhistory.module_dir|escape:'html':'UTF-8'}img/screen-product-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png">
-                <img src="{$froggyhistory.module_dir|escape:'html':'UTF-8'}img/screen-product-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png" height="250" />
+            <a href="{$froggyhistory.module_dir|escape:'html':'UTF-8'}views/img/screen-product-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png">
+                <img src="{$froggyhistory.module_dir|escape:'html':'UTF-8'}views/img/screen-product-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png" height="250" />
             </a>
         </p>
 
         <p>{l s='At last, on every employee profile, you will be able to see his actions history.' mod='froggyhistory'}</p>
         <p>
-            <a href="{$froggyhistory.module_dir|escape:'html':'UTF-8'}img/screen-administration-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png">
-                <img src="{$froggyhistory.module_dir|escape:'html':'UTF-8'}img/screen-administration-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png" />
+            <a href="{$froggyhistory.module_dir|escape:'html':'UTF-8'}views/img/screen-administration-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png">
+                <img src="{$froggyhistory.module_dir|escape:'html':'UTF-8'}views/img/screen-administration-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png" />
             </a>
-            <a href="{$froggyhistory.module_dir|escape:'html':'UTF-8'}img/screen-employee-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png">
-                <img src="{$froggyhistory.module_dir|escape:'html':'UTF-8'}img/screen-employee-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png" width="250" />
+            <a href="{$froggyhistory.module_dir|escape:'html':'UTF-8'}views/img/screen-employee-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png">
+                <img src="{$froggyhistory.module_dir|escape:'html':'UTF-8'}views/img/screen-employee-{$froggyhistory.ps_version|escape:'html':'UTF-8'}.png" width="250" />
             </a>
         </p>
 
@@ -76,7 +76,7 @@
         <p>
             <h3>{l s='General History' mod='froggyhistory'}</h3>
             <ul id="froggyhistory-list">
-                <li class="loader-gif"><img src="../modules/froggyhistory/img/loader.gif" /></li>
+                <li class="loader-gif"><img src="..{$module_dir}views/img/loader.gif" /></li>
             </ul>
         </p>
     </div>
