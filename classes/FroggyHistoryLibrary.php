@@ -167,7 +167,13 @@ class FroggyHistoryLibrary
             // Check if we build link for this type of object
             if (!in_array($log['object'], $match_object_nolink) && in_array($log['object'], $match_multilang_object)) {
                 $object_vars = get_class_vars($log['object']);
-                $object_translation = '<a href="index.php?controller=' . Tools::strtolower($controller_name) . '&' . ($object_vars['definition']['primary']) . '=' . (int)$log['id_object'] . '&update' . Tools::strtolower($object_vars['definition']['table']) . '&token=' . $token_admin . '" target="_blank">' . $object_translation;
+
+                // Handle Admin Product Link on PS 1.7
+                if (version_compare(_PS_VERSION_, '1.7.0') >= 0 && $object_vars['definition']['primary'] == 'id_product') {
+                    $object_translation = '<a href="#">' . $object_translation;
+                } else {
+                    $object_translation = '<a href="index.php?controller=' . Tools::strtolower($controller_name) . '&' . ($object_vars['definition']['primary']) . '=' . (int)$log['id_object'] . '&update' . Tools::strtolower($object_vars['definition']['table']) . '&token=' . $token_admin . '" target="_blank">' . $object_translation;
+                }
             }
 
             // Try to load object to retrieve the name
