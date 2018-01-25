@@ -18,7 +18,7 @@
 */
 
 
-#froggyhistory-list{padding-left:1em}
+#froggyhistory-list{padding-left:2em}
 #froggyhistory-list li{padding:0.3em;border:1px solid #fff}
 #froggyhistory-list li p{margin-bottom:0}
 #froggyhistory-list li.active{background:#FCFDFE;border:1px solid #E5E5E5}
