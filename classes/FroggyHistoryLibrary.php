@@ -389,7 +389,9 @@ class FroggyHistoryLibrary
         $history_log->object = $class_name;
         $history_log->id_object = ((int)$id_object > 0 ? (int)$id_object : (int)$history_log->id_object);
         $history_log->module = Tools::getValue('module');
-        $history_log->diff = $diff;
+        if (empty($history_log->diff) || $history_log->diff == '[]') {
+            $history_log->diff = $diff;
+        }
         $history_log->ip = Tools::getRemoteAddr();
 
         // If log already exists, we update it
