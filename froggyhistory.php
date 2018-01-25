@@ -291,7 +291,7 @@ class FroggyHistory extends FroggyModule
         $id_history_log = (int)FroggyHistoryLibrary::getLib($this)->hookLog('UPDATE', $object);
 
         // Update log history
-        if ($id_history_log > 0) {
+        if ($id_history_log > 0 && version_compare(_PS_VERSION_, '1.7.0') < 0) {
 
             // Get quantity cached
             $idp = (int)Tools::getValue('id_product');
