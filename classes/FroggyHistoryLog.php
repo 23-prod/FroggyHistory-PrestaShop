@@ -93,7 +93,7 @@ class FroggyHistoryLog extends ObjectModel
     /**
      * Return list of History Logs
      */
-    public static function getList($page = 1, $nb_per_page = 25, $admin_object = null, $object = null, $id_object = null, $id_employee = null, $id_shop = null)
+    public static function getList($page = 1, $nb_per_page = 25, $admin_object = null, $object = null, $id_object = null, $id_employee = null, $id_shop = null, $date_start = null, $date_end = null)
     {
         $page = $page - 1;
         return Db::getInstance()->executeS('
@@ -108,6 +108,7 @@ class FroggyHistoryLog extends ObjectModel
 			' . ($id_object !== null ? 'AND gl.`id_object` = ' . (int)$id_object : '') . '
 			' . ($id_employee !== null ? 'AND gl.`id_employee` = ' . (int)$id_employee : '') . '
 			' . ($id_shop !== null ? 'AND gl.`id_shop` = ' . (int)$id_shop : '') . '
+			' . ($date_start !== null ? 'AND gl.`date_add` >= \'' . pSQL($date_start) . '\' AND gl.`date_add` <= \''.pSQL($date_end).'\'' : '') . '
 			ORDER BY `date_add` DESC
 			LIMIT ' . ((int)$page * (int)$nb_per_page) . ',' . (int)$nb_per_page . '
 		');
