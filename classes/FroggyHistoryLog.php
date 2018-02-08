@@ -64,6 +64,11 @@ class FroggyHistoryLog extends ObjectModel
     /** @var Array action type */
     protected static $action_register = array();
 
+    protected static $stock_fields_to_keep = [
+        'General quantity', 'Quantity',
+        'Reference', 'Ean13', 'UPC'
+    ];
+
     /**
      * @see ObjectModel::$definition
      */
@@ -161,4 +166,56 @@ class FroggyHistoryLog extends ObjectModel
         }
         return 0;
     }
+
+    public function add($auto_date = true, $null_values = false)
+    {
+        if (!$this->shouldSaveIt()) {
+            return false;
+        }
+
+        return parent::add($auto_date, $null_values);
+    }
+
+    public function update($null_values = false)
+    {
+        if (!$this->shouldSaveIt()) {
+            return false;
+        }
+
+        return parent::update($null_values);
+    }
+
+    public function shouldSaveIt()
+    {
+        // If stock only, we store only stock movement
+        if (Configuration::get('FH_LOG_STOCK_ONLY') == 1) {
+
+            if (empty($this->diff) || $this->diff == '[]') {
+                return false;
+            }
+
+            $diff = json_decode($this->diff);
+            foreach (self::$stock_fields_to_keep as $field) {
+                if (isset($diff[$field])) {
+                    return true;
+                }
+            }
+
+            if (isset($diff['Combinations'])) {
+                foreach ($diff['Combinations'] as $combination) {
+                    foreach (self::$stock_fields_to_keep as $field) {
+                        if (isset($combination[$field])) {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        return true;
+    }
+
+
 }
