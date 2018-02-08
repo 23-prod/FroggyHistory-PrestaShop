@@ -3,9 +3,14 @@
 require_once __DIR__.'/../../../config/config.inc.php';
 require_once __DIR__.'/../froggyhistory.php';
 
+// Check if email notification is set
+if (Configuration::get('FH_LOG_NOTIF_EMAIL') == '') {
+    die("No notification email has been set yet\n");
+}
+
+// Retrieve data
 $date = date('Y-m-d');
 $list = FroggyHistoryLog::getList(1, 1000, null, null, null, null, null, $date.' 00:00:01', $date.' 23:59:59');
-
 
 $content = '"Product Name incl Combination";"Product Ref";"EAN";"Stock Level Was";"Stock Level Changed to";"Increase/Deduction of";"Date / Time Stamp of Change";"Employee";'."\n";
 foreach ($list as $history) {
@@ -35,7 +40,7 @@ foreach ($list as $history) {
                         $combination_data = Db::getInstance()->getRow('SELECT * FROM `'._DB_PREFIX_.'product_attribute` WHERE `id_product_attribute` = '.(int)$id_product_attribute);
 
                         $content .= buildFileLine([
-                            $product->name.' '.$field_values['name'].' (#'.$product->id.' #'.$id_product_attribute.')',
+                            $product->name.' '.$combination['Name'].' (#'.$product->id.' #'.$id_product_attribute.')',
                             $combination_data['reference'],
                             $combination_data['ean13'],
                             $combination['Quantity']['before'],
@@ -54,7 +59,7 @@ foreach ($list as $history) {
                         $product->ean13,
                         $history['diff']['General quantity']['before'],
                         $history['diff']['General quantity']['after'],
-                        $history['diff']['General quantity']['before'] - $history['diff']['Quantity']['after'],
+                        $history['diff']['General quantity']['before'] - $history['diff']['General quantity']['after'],
                         $history['date_add'],
                         $employee->firstname.' '.$employee->lastname.' (#'.$employee->id.')'
                     ]);
@@ -81,18 +86,41 @@ function buildFileLine($tab)
     return $line;
 }
 
-dump($list);
-exit;
-
 
 $subject = '[FroggyHistory] Daily summary';
 try {
-    Mail::Send($id_lang, $template, $subject, $template_vars, $customer['email'], $customer['firstname'].' '.$customer['lastname'],
-        Configuration::get('PS_SHOP_EMAIL'), Configuration::get('PS_SHOP_NAME'), NULL, NULL, __DIR__.'/../mails/');
-    $customers_success[] = $customer;
+
+    /* Connect with the appropriate configuration */
+    if (Configuration::get('PS_MAIL_METHOD') == 2) {
+
+        if (empty(Configuration::get('PS_MAIL_SERVER')) || empty(Configuration::get('PS_MAIL_SMTP_PORT'))) {
+            die("Error: invalid SMTP server or SMTP port\n");
+        }
+
+        // Create the Transport
+        $transport = (new Swift_SmtpTransport(Configuration::get('PS_MAIL_SERVER'), Configuration::get('PS_MAIL_SMTP_PORT')))
+            ->setUsername(Configuration::get('PS_MAIL_USER'))
+            ->setPassword(Configuration::get('PS_MAIL_PASSWD'))
+        ;
+
+        // Create the Mailer using your created Transport
+        $mailer = new Swift_Mailer($transport);
+    } else {
+        $mailer = new Swift_Mailer();
+    }
+
+    // Create a message
+    $message = (new Swift_Message($subject))
+        ->setFrom([Configuration::get('FH_LOG_NOTIF_EMAIL')])
+        ->setTo([Configuration::get('FH_LOG_NOTIF_EMAIL')])
+        ->setBody($date.': Daily summary attached')
+    ;
+
+    // Send the message
+    $result = $mailer->send($message);
+
 } catch (\Exception $e) {
-    $customer['error'] = $e->getMessage();
-    $customers_failed[] = $customer;
+    die($e->getMessage());
 }
 
 
