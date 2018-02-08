@@ -170,7 +170,7 @@ class FroggyHistoryLog extends ObjectModel
     public function add($auto_date = true, $null_values = false)
     {
         if (!$this->shouldSaveIt()) {
-            return false;
+            return true;
         }
 
         return parent::add($auto_date, $null_values);
@@ -179,7 +179,7 @@ class FroggyHistoryLog extends ObjectModel
     public function update($null_values = false)
     {
         if (!$this->shouldSaveIt()) {
-            return false;
+            return true;
         }
 
         return parent::update($null_values);
@@ -194,7 +194,7 @@ class FroggyHistoryLog extends ObjectModel
                 return false;
             }
 
-            $diff = json_decode($this->diff);
+            $diff = json_decode($this->diff, true);
             foreach (self::$stock_fields_to_keep as $field) {
                 if (isset($diff[$field])) {
                     return true;
