@@ -96,6 +96,7 @@ class FroggyHistory extends FroggyModule
             Configuration::updateValue('FH_DELETE_AFTER', (int)Tools::getValue('FH_DELETE_AFTER'));
             Configuration::updateValue('FH_LOG_DELETED', (Tools::getValue('FH_LOG_DELETED') != '' ? 1 : 0));
             Configuration::updateValue('FH_LOG_STOCK_ONLY', (Tools::getValue('FH_LOG_STOCK_ONLY') != '' ? 1 : 0));
+            Configuration::updateValue('FH_LOG_NOTIF_EMAIL', pSQL(Tools::getValue('FH_LOG_NOTIF_EMAIL')));
             $confirm = 'ok';
         }
 
@@ -108,6 +109,7 @@ class FroggyHistory extends FroggyModule
             'FH_DELETE_AFTER' => Configuration::get('FH_DELETE_AFTER'),
             'FH_LOG_DELETED' => Configuration::get('FH_LOG_DELETED'),
             'FH_LOG_STOCK_ONLY' => Configuration::get('FH_LOG_STOCK_ONLY'),
+            'FH_LOG_NOTIF_EMAIL' => Configuration::get('FH_LOG_NOTIF_EMAIL'),
             'archives_directory' => dirname(__FILE__).'/archives/',
             'archives_directory_is_writable' => is_writable(dirname(__FILE__).'/archives/'),
             'confirm' => (isset($confirm) ? $confirm : ''),

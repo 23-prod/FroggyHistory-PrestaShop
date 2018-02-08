@@ -42,6 +42,17 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label col-lg-3">
+                                {l s='Notification e-mail:' mod='froggyhistory'}
+                            </label>
+                            <div class="col-lg-9">
+                                <input type="text" name="FH_LOG_NOTIF_EMAIL" value="{$froggyhistory.FH_LOG_NOTIF_EMAIL}" />
+                                <p class="help-block">
+                                    {l s='E-mail address that will receive daily summary.' mod='froggyhistory'}<br>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3">
                                 {l s='Delete history older than:' mod='froggyhistory'}
                                 <p class="help-block">({l s='days' mod='froggyhistory'})</p>
                             </label>

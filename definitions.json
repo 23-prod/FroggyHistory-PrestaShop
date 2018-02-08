@@ -18,6 +18,7 @@
     "configurations" : {
         "FH_DELETE_AFTER" : "30",
         "FH_LOG_DELETED" : "0",
-        "FH_LOG_STOCK_ONLY" : "0"
+        "FH_LOG_STOCK_ONLY" : "0",
+        "FH_LOG_NOTIF_EMAIL" : ""
     }
 }
