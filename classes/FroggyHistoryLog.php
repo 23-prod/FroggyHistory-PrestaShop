@@ -64,7 +64,7 @@ class FroggyHistoryLog extends ObjectModel
     /** @var Array action type */
     protected static $action_register = array();
 
-    protected static $stock_fields_to_keep = [
+    protected static $fields_to_keep = [
         'General quantity', 'Quantity',
         'Reference', 'Ean13', 'UPC'
     ];
@@ -195,16 +195,18 @@ class FroggyHistoryLog extends ObjectModel
             }
 
             $diff = json_decode($this->diff, true);
-            foreach (self::$stock_fields_to_keep as $field) {
+            foreach (self::$fields_to_keep as $field) {
                 if (isset($diff[$field])) {
+                    $this->removeUselessHistory();
                     return true;
                 }
             }
 
             if (isset($diff['Combinations'])) {
                 foreach ($diff['Combinations'] as $combination) {
-                    foreach (self::$stock_fields_to_keep as $field) {
+                    foreach (self::$fields_to_keep as $field) {
                         if (isset($combination[$field])) {
+                            $this->removeUselessHistory();
                             return true;
                         }
                     }
@@ -217,5 +219,28 @@ class FroggyHistoryLog extends ObjectModel
         return true;
     }
 
+    public function removeUselessHistory()
+    {
+        $diff = json_decode($this->diff, true);
+        foreach ($diff as $field) {
+            if (!in_array($field, self::$fields_to_keep) && $field != 'Combinations') {
+                unset($diff[$field]);
+            }
+        }
 
+        if (isset($diff['Combinations'])) {
+            foreach ($diff['Combinations'] as $kc => $combination) {
+                foreach ($combination as $field) {
+                    if (!in_array($field, self::$fields_to_keep)) {
+                        unset($diff['Combinations'][$kc][$field]);
+                        if (empty($diff['Combinations'])) {
+                            unset($diff['Combinations']);
+                        }
+                    }
+                }
+            }
+        }
+
+        $this->diff = json_encode($diff);
+    }
 }
