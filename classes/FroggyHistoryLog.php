@@ -222,7 +222,7 @@ class FroggyHistoryLog extends ObjectModel
     public function removeUselessHistory()
     {
         $diff = json_decode($this->diff, true);
-        foreach ($diff as $field) {
+        foreach ($diff as $field => $field_values) {
             if (!in_array($field, self::$fields_to_keep) && $field != 'Combinations') {
                 unset($diff[$field]);
             }
@@ -230,8 +230,8 @@ class FroggyHistoryLog extends ObjectModel
 
         if (isset($diff['Combinations'])) {
             foreach ($diff['Combinations'] as $kc => $combination) {
-                foreach ($combination as $field) {
-                    if (!in_array($field, self::$fields_to_keep)) {
+                foreach ($combination as $field => $field_values) {
+                    if (!in_array($field, self::$fields_to_keep) && $field != 'Name') {
                         unset($diff['Combinations'][$kc][$field]);
                         if (empty($diff['Combinations'])) {
                             unset($diff['Combinations']);
