@@ -9,7 +9,9 @@ if (Configuration::get('FH_LOG_NOTIF_EMAIL') == '') {
 }
 
 // Retrieve data
-$date = date('Y-m-d');
+$datetime = new DateTime();
+$datetime->sub(new DateInterval('P1D'));
+$date = $datetime->format('Y-m-d');
 $list = FroggyHistoryLog::getList(1, 1000, null, null, null, null, null, $date.' 00:00:01', $date.' 23:59:59');
 
 $content = '"Product Name incl Combination";"Product Ref";"EAN";"Stock Level Was";"Stock Level Changed to";"Increase/Deduction of";"Date / Time Stamp of Change";"Employee";'."\n";
