@@ -24,3 +24,6 @@
 #froggyhistory-list li.active{background:#FCFDFE;border:1px solid #E5E5E5}
 #froggyhistory-list li a.froggy-history-details{margin-left:1em}
 .froggy-history-details-div{display:none}
+#froggyhistory-introduction-configuration input[type="checkbox"] {
+    margin-left:0px;
+}

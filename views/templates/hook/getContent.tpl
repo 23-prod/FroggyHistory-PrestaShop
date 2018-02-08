@@ -27,6 +27,14 @@
         {/if}
         <form action="" method="POST">
             <h3>{l s='Configuration' mod='froggyhistory'}</h3>
+
+            <label>{l s='Only store stock movement:' mod='froggyhistory'}</label>
+            <input type="checkbox" name="FH_LOG_STOCK_ONLY"{if $froggyhistory.FH_LOG_STOCK_ONLY} checked="checked"{/if} /><br><br>
+            <p>
+                {l s='If you enable this option, only stock movement will be stored.' mod='froggyhistory'}<br>
+                {l s='Reference, ean13 and upc will be stored too.' mod='froggyhistory'}<br>
+            </p><br><br>
+
             <div><label>{l s='Delete history older than:' mod='froggyhistory'}</label>
                 <input type="text" name="FH_DELETE_AFTER" value="{$froggyhistory.FH_DELETE_AFTER|intval}" /> {l s='days' mod='froggyhistory'}
             </div>
