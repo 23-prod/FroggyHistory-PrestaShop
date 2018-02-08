@@ -114,6 +114,7 @@ try {
         ->setFrom([Configuration::get('FH_LOG_NOTIF_EMAIL')])
         ->setTo([Configuration::get('FH_LOG_NOTIF_EMAIL')])
         ->setBody($date.': Daily summary attached')
+        ->attach(Swift_Attachment::fromPath($file))
     ;
 
     // Send the message
